@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       routes: {
-        '/second': (context) => SecondScreen(), // Define the 'second' route
+        '/second': (context) => const SecondScreen(), // Define the 'second' route
       },
       theme: ThemeData(
         // This is the theme of your application.
@@ -111,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage>
                   borderRadius: BorderRadius.circular(20), // Border radius
                 )
               ),
-              child: Text('Go to Second Screen'),
+              child: const Text('Go to Second Screen'),
             ),
           ],
         ),
