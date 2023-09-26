@@ -210,20 +210,6 @@ class _ButtonConfigState extends State<ButtonConfig> {
   }
 
 
-class AppBarTest extends StatefulWidget {
-  const AppBarTest({super.key});
-  @override
-  State<AppBarTest> createState() => _AppBarTestState();
-}
-
-class _AppBarTestState extends State<AppBarTest>{
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      bottomNavigationBar: BottomNavigationBarExample(),
-    );
-  }
-}
 
 
 
