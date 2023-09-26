@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'second.dart';
 import 'mainscreen.dart';
-import 'package:google_fonts/google_fonts.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -15,12 +14,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       routes: {
-<<<<<<< Updated upstream
-        '/second': (context) => SecondScreen(), // Define the 'second' route
-=======
         '/second': (context) => const SecondScreen(), // Define the 'second' route
         '/mainscreen':(context) => MainScreen()
->>>>>>> Stashed changes
       },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
@@ -103,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage>
                   borderRadius: BorderRadius.circular(20), // Border radius
                 )
               ),
-              child: Text('Go to Second Screen'),
+              child: const Text('Go to Second Screen'),
             ),
           ],
         ),
