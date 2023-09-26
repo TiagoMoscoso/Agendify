@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'second.dart'; 
+import 'package:testeflutter/login/login.dart';
+import 'second.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -13,7 +14,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       routes: {
-        '/second': (context) => const SecondScreen(), // Define the 'second' route
+        '/home': (context) => const SecondScreen(), // Define the 'second' route
+        '/login': (context) => const Login(),
       },
       theme: ThemeData(
         // This is the theme of your application.
@@ -90,11 +92,14 @@ class _MyHomePageState extends State<MyHomePage>
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             // ignore: prefer_const_constructors
-            TextField(
-              cursorColor: Colors.blueAccent,
-              // ignore: prefer_const_constructors
-              decoration: InputDecoration(labelText: 'Nome:',border: UnderlineInputBorder()),
-              onChanged: onTextChanged,
+            SizedBox(
+              width: 25,
+              child:TextField(
+                cursorColor: Colors.blueAccent,
+                // ignore: prefer_const_constructors
+                decoration: InputDecoration(labelText: 'Nome:',border: UnderlineInputBorder()),
+                onChanged: onTextChanged,
+              ),
             ),
             // ignore: prefer_const_constructors
             SizedBox(height: 20),
@@ -103,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage>
 
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/second'); // Navigate to 'second' route
+                Navigator.popAndPushNamed(context, '/login'); // Navigate to 'second' route
               },
               style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding
