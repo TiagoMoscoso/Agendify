@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:testeflutter/login/login.dart';
+import 'second.dart';
 import 'second.dart';
 import 'mainscreen.dart';
+
+
 void main() {
   runApp(const MyApp());
 }
@@ -14,8 +18,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       routes: {
+        '/home': (context) => const SecondScreen(), // Define the 'second' route
+        '/login': (context) => const Login(),
         '/second': (context) => const SecondScreen(), // Define the 'second' route
         '/mainscreen':(context) => MainScreen()
+
       },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
@@ -77,11 +84,14 @@ class _MyHomePageState extends State<MyHomePage>
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             // ignore: prefer_const_constructors
-            TextField(
-              cursorColor: Colors.blueAccent,
-              // ignore: prefer_const_constructors
-              decoration: InputDecoration(labelText: 'Nome:',border: UnderlineInputBorder()),
-              onChanged: onTextChanged,
+            SizedBox(
+              width: 25,
+              child:TextField(
+                cursorColor: Colors.blueAccent,
+                // ignore: prefer_const_constructors
+                decoration: InputDecoration(labelText: 'Nome:',border: UnderlineInputBorder()),
+                onChanged: onTextChanged,
+              ),
             ),
             // ignore: prefer_const_constructors
             SizedBox(height: 20),
@@ -90,7 +100,10 @@ class _MyHomePageState extends State<MyHomePage>
 
             ElevatedButton(
               onPressed: () {
+                Navigator.popAndPushNamed(context, '/login'); // Navigate to 'second' route
+
                 Navigator.pushNamed(context, '/mainscreen'); // Navigate to 'second' route
+
               },
               style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding
