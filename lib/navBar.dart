@@ -1,15 +1,5 @@
 import 'package:flutter/material.dart';
-
-class BottomNavigationBarExampleApp extends StatelessWidget {
-  const BottomNavigationBarExampleApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: BottomNavigationBarExample(),
-    );
-  }
-}
+import 'profile.dart';
 
 class BottomNavigationBarExample extends StatefulWidget {
   const BottomNavigationBarExample({super.key});
@@ -37,10 +27,7 @@ class _BottomNavigationBarExampleState
       'Agenda',
       style: optionStyle,
     ),
-    Text(
-      'Perfil',
-      style: optionStyle,
-    ),
+    ProfileOriginal(),
   ];
 
   void _onItemTapped(int index) {
@@ -52,9 +39,6 @@ class _BottomNavigationBarExampleState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Agendfy'),
-      ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'config.dart';
 import 'navBar.dart';
+
 void main() {
   runApp(const MaterialApp(
       home: Profile()
@@ -34,6 +35,24 @@ class ProfileStateful extends StatefulWidget {
 class _ProfileStatefulState extends State<ProfileStateful> {
   @override
   Widget build(BuildContext context) {
+    return const Scaffold(
+      bottomNavigationBar: BottomNavigationBarExample(),
+      backgroundColor: Color(0xffFAF1E4),
+    );
+  }
+}
+
+
+class ProfileOriginal extends StatefulWidget {
+  const ProfileOriginal({super.key});
+
+  @override
+  State<ProfileOriginal> createState() => _ProfileOriginal();
+}
+
+class _ProfileOriginal extends State<ProfileOriginal> {
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Perfil",
@@ -43,8 +62,9 @@ class _ProfileStatefulState extends State<ProfileStateful> {
           ),
         ),
         centerTitle: true,
-        backgroundColor:const Color(0xff9EDDFF),
+        backgroundColor: const Color(0xffEAD7BB),
       ),
+      backgroundColor: const Color(0xffFFF2D8),
       body: Column(
         children: [
           //NOME E FOTO DE PERFIL
@@ -52,7 +72,7 @@ class _ProfileStatefulState extends State<ProfileStateful> {
             children: [
               Image.asset("imagens/fotoperfil2.png", width: 150, height: 100),
               const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+                  padding: EdgeInsets.symmetric(vertical: 75, horizontal: 15),
                   child: Text(
                     'Helinho Musk',
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, fontFamily: "Kanit"),
@@ -69,7 +89,7 @@ class _ProfileStatefulState extends State<ProfileStateful> {
                   padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: Color(0xffEBE4D1),
+                      color: const Color(0xffEBE4D1),
                       width: 2,
                     ),
                     borderRadius: BorderRadius.circular(10),
@@ -149,11 +169,9 @@ class _ProfileStatefulState extends State<ProfileStateful> {
           ),
         ],
       ),
-      backgroundColor: const Color(0xffFAF1E4),
     );
   }
 }
-
 
 class ButtonSchedule extends StatefulWidget {
   const ButtonSchedule({super.key});
@@ -208,8 +226,6 @@ class _ButtonConfigState extends State<ButtonConfig> {
       );
     }
   }
-
-
 
 
 

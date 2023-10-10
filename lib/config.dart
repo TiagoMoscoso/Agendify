@@ -35,20 +35,26 @@ class _ConfigScreen extends State<ConfigScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.notification_add),
-                const Text("Deseja receber notificações?", style: TextStyle(fontSize: 20, fontFamily: "Kanit")),
-                SizedBox(
-                  width: 50,
-                  child: FloatingActionButton(
-                    onPressed: (){
-                      setState(() {
-                        receberNotificacao = !receberNotificacao;
-                      });
-                    },
-                    backgroundColor: receberNotificacao?const Color(0xff008000):const Color(0xffFF0000),
+                Padding(padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 0),
+                  child: Row(
+                    children:[
+                      const Icon(Icons.notification_add),
+                      const Text("Deseja receber notificações?", style: TextStyle(fontSize: 20, fontFamily: "Kanit")),
+                      SizedBox(
+                        width: 50,
+                        child: FloatingActionButton(
+                          onPressed: (){
+                            setState(() {
+                              receberNotificacao = !receberNotificacao;
+                            });
+                          },
+                          backgroundColor: receberNotificacao?const Color(0xff008000):const Color(0xffFF0000),
 
+                        ),
+                      )
+                  ],
                   ),
-                )
+                ),
               ],
           ),
           Row(
