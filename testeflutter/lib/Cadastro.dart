@@ -2,6 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:testeflutter/Classes/ClassUser.dart';
+import 'package:testeflutter/DB/DbTableUser.dart';
+import 'package:testeflutter/profile.dart';
 import 'second.dart'; // Importe a classe SecondScreen
 
 class Cadastro {
@@ -37,7 +40,7 @@ class _CadastroPageState extends State<CadastroPage> {
     FilteringTextInputFormatter.digitsOnly,
   ];
 
-  void _onConfirmarPressed() {
+  Future<void> _onConfirmarPressed() async {
     String nome = _nomeController.text;
     String telefone = _telefoneController.text;
     String email = _emailController.text;
@@ -86,13 +89,16 @@ class _CadastroPageState extends State<CadastroPage> {
     );
 
     // Após o cadastro bem-sucedido, navegue para a tela SecondScreen
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => SecondScreen()));
+    ClassUser user = ClassUser();
+    user.setName(cadastro.nome);
+    user.setEmail(cadastro.email);
+    user.setTelephone(cadastro.telefone);
+    user.setIdUser(await DbTableUser.addUsertoTables(user));
 
-    print('Nome: ${cadastro.nome}');
-    print('Telefone: ${cadastro.telefone}');
-    print('Email: ${cadastro.email}');
-    print('Senha: ${cadastro.senha}');
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Profile(User: user)),
+    );
   }
 
   @override

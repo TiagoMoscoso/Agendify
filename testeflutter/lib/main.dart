@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:sqflite_common/sqlite_api.dart';
+import 'package:testeflutter/Classes/ClassUser.dart';
+import 'package:testeflutter/DB/DbAllData.dart';
+import 'package:testeflutter/DB/DbTableUser.dart';
+import 'package:testeflutter/profile.dart';
 import 'second.dart';
 import 'mainscreen.dart';
 import 'login/login.dart' as login;
@@ -7,34 +12,58 @@ import 'profile.dart' as profile;
 import 'Cadastro.dart' as cadastro;
 import 'searchBar.dart' as searchBar;
 import 'agenda.dart' as agenda;
-void main() {
+Future<void> main() async {
   runApp(const MyApp());
+  await DbAllData.createDatabase();
+
+  ClassUser user = new ClassUser();
+  user.setName("tegas");
+  user.setEmail("tegas@gmail.com");
+  user.setTelephone("+31 99af01301");
+  user.setPhoto("pasassafd");
+  await user.setIdUser(await DbTableUser.addUsertoTables(user));
+
+  var x = user.getIdUser();
   
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   // This widget is the root of your application.
+  
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Agendfy ',
-      routes: {
-        '/second': (context) => const SecondScreen(), // Define the 'second' route
-        '/mainscreen':(context) => MainScreen(),
-        '/login':(context) => const login.Login(),
-        '/config':(context) => const config.ConfigScreen(),
-        '/profile':(context) => const profile.Profile(),
-        '/cadastro':(context) => const cadastro.CadastroPage(),
-        '/busca':(context) => const searchBar.MyApp(),
-        '/agenda':(context) => const agenda.Agenda(),
+    return FutureBuilder<ClassUser>(
+      future: DbTableUser.GetLastUser(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasData) {
+            ClassUser user = snapshot.data!;
+            return MaterialApp(
+              title: 'Agendfy',
+              routes: {
+                '/second': (context) => const SecondScreen(),
+                '/mainscreen': (context) => MainScreen(),
+                '/login': (context) => const login.Login(),
+                '/config': (context) => const config.ConfigScreen(),
+                '/profile': (context) => Profile(User: user),
+                '/cadastro': (context) => const cadastro.CadastroPage(),
+                '/busca': (context) => const searchBar.MyApp(),
+                '/agenda': (context) => const agenda.Agenda(),
+              },
+              theme: ThemeData(
+                colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
+                useMaterial3: true,
+              ),
+              home: const MyHomePage(title: 'Nav Agendfy'),
+            );
+          } else {
+            return CircularProgressIndicator();
+          }
+        } else {
+          return CircularProgressIndicator();
+        }
       },
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Nav Agendfy'),
     );
   }
 }

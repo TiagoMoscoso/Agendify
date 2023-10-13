@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:testeflutter/Classes/ClassUser.dart';
+import 'package:testeflutter/DB/DbTableUser.dart';
 import 'config.dart';
 import 'navBar.dart';
-void main() {
-  runApp(const MaterialApp(
-      home: Profile()
+
+Future<void> main() async {
+  ClassUser User = await DbTableUser.GetLastUser() as ClassUser;
+  runApp(MaterialApp(
+    home: Profile(User: User),
   ));
 }
 
+
 class Profile extends StatelessWidget {
-  const Profile({super.key});
+  final ClassUser User;
+  const Profile({super.key, required this.User});
 
   @override
+
   Widget build(BuildContext context) {
     return MaterialApp(
         title: "Perfil",
@@ -20,18 +27,21 @@ class Profile extends StatelessWidget {
           /*"/agenda": (context) =>    descomentar quando tiver a tela de agenda
               const Agenda(),*/
         },
-        home: const ProfileStateful(),
+        home: ProfileStateful(User: User),
     );
   }
 }
 class ProfileStateful extends StatefulWidget {
-  const ProfileStateful({super.key});
+  final ClassUser User;
+  const ProfileStateful({super.key, required this.User});
 
   @override
-  State<ProfileStateful> createState() => _ProfileStatefulState();
+  State<ProfileStateful> createState() => _ProfileStatefulState(User : User);
 }
 
 class _ProfileStatefulState extends State<ProfileStateful> {
+  final ClassUser User;
+  _ProfileStatefulState({required this.User});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,10 +61,10 @@ class _ProfileStatefulState extends State<ProfileStateful> {
           Row(
             children: [
               Image.asset("imagens/fotoperfil2.png", width: 150, height: 100),
-              const Padding(
+              Padding(
                   padding: EdgeInsets.symmetric(vertical: 0, horizontal: 15),
                   child: Text(
-                    'Helinho Musk',
+                    User.getName(),
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, fontFamily: "Kanit"),
                   )
               )
@@ -74,14 +84,14 @@ class _ProfileStatefulState extends State<ProfileStateful> {
                     ),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const Padding(
+                  child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                     child: Row(
                       children: [
                         Icon(
                             Icons.call
                         ),
-                        Text("(31) 9 8569-4901", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "Kanit"))
+                        Text(User.getTelephone(), style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "Kanit"))
                       ],
                     ),
                   )
@@ -102,12 +112,12 @@ class _ProfileStatefulState extends State<ProfileStateful> {
                   ),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Row(
+                child: Row(
                   children: [
                     Icon(
                         Icons.mail
                     ),
-                    Text("pcaillaux@sga.pucminas.com", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "Kanit"))
+                    Text(User.getEmail(), style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "Kanit"))
                   ],
                 ),
               ),
