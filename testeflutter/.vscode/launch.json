@@ -5,9 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "testeflutter",
+            "name": "appemulator",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "deviceId": "emulator-5554"
         },
         {
             "name": "testeflutter (profile mode)",

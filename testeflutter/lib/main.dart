@@ -1,27 +1,69 @@
 import 'package:flutter/material.dart';
+import 'package:sqflite_common/sqlite_api.dart';
+import 'package:testeflutter/Classes/ClassUser.dart';
+import 'package:testeflutter/DB/DbAllData.dart';
+import 'package:testeflutter/DB/DbTableUser.dart';
+import 'package:testeflutter/profile.dart';
 import 'second.dart';
 import 'mainscreen.dart';
-void main() {
+import 'login/login.dart' as login;
+import 'config.dart' as config;
+import 'profile.dart' as profile;
+import 'Cadastro.dart' as cadastro;
+import 'searchBar.dart' as searchBar;
+import 'agenda.dart' as agenda;
+Future<void> main() async {
   runApp(const MyApp());
+  await DbAllData.createDatabase();
+
+  ClassUser user = new ClassUser();
+  user.setName("tegas");
+  user.setEmail("tegas@gmail.com");
+  user.setTelephone("+31 99af01301");
+  user.setPhoto("pasassafd");
+  await user.setIdUser(await DbTableUser.addUsertoTables(user));
+
+  var x = user.getIdUser();
+  
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   // This widget is the root of your application.
+  
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      routes: {
-        '/second': (context) => const SecondScreen(), // Define the 'second' route
-        '/mainscreen':(context) => MainScreen()
+    return FutureBuilder<ClassUser>(
+      future: DbTableUser.GetLastUser(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasData) {
+            ClassUser user = snapshot.data!;
+            return MaterialApp(
+              title: 'Agendfy',
+              routes: {
+                '/second': (context) => const SecondScreen(),
+                '/mainscreen': (context) => MainScreen(),
+                '/login': (context) => const login.Login(),
+                '/config': (context) => const config.ConfigScreen(),
+                '/profile': (context) => Profile(User: user),
+                '/cadastro': (context) => const cadastro.CadastroPage(),
+                '/busca': (context) => const searchBar.MyApp(),
+                '/agenda': (context) => const agenda.Agenda(),
+              },
+              theme: ThemeData(
+                colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
+                useMaterial3: true,
+              ),
+              home: const MyHomePage(title: 'Nav Agendfy'),
+            );
+          } else {
+            return CircularProgressIndicator();
+          }
+        } else {
+          return CircularProgressIndicator();
+        }
       },
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -76,18 +118,19 @@ class _MyHomePageState extends State<MyHomePage>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            // ignore: prefer_const_constructors
-            TextField(
-              cursorColor: Colors.blueAccent,
-              // ignore: prefer_const_constructors
-              decoration: InputDecoration(labelText: 'Nome:',border: UnderlineInputBorder()),
-              onChanged: onTextChanged,
-            ),
-            // ignore: prefer_const_constructors
-            SizedBox(height: 20),
             
-            Text('Entered Text: $enteredText'),
-
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/login'); // Navigate to 'second' route
+              },
+              style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding
+                  shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20), // Border radius
+                )
+              ),
+              child: const Text('Login'),
+            ),
             ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/mainscreen'); // Navigate to 'second' route
@@ -98,7 +141,67 @@ class _MyHomePageState extends State<MyHomePage>
                   borderRadius: BorderRadius.circular(20), // Border radius
                 )
               ),
-              child: const Text('Go to Second Screen'),
+              child: const Text('Tela Principal'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/profile'); // Navigate to 'second' route
+              },
+              style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding
+                  shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20), // Border radius
+                )
+              ),
+              child: const Text('Perfil'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/config'); // Navigate to 'second' route
+              },
+              style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding
+                  shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20), // Border radius
+                )
+              ),
+              child: const Text('Configurações'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/cadastro'); // Navigate to 'second' route
+              },
+              style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding
+                  shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20), // Border radius
+                )
+              ),
+              child: const Text('Cadastro'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/busca'); // Navigate to 'second' route
+              },
+              style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding
+                  shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20), // Border radius
+                )
+              ),
+              child: const Text('Busca'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/agenda'); // Navigate to 'second' route
+              },
+              style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding
+                  shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20), // Border radius
+                )
+              ),
+              child: const Text('Agenda'),
             ),
           ],
         ),
