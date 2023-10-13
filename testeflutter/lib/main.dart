@@ -64,6 +64,15 @@ class MyApp extends StatelessWidget {
           return CircularProgressIndicator();
         }
       },
+<<<<<<< HEAD
+=======
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
+        useMaterial3: true,
+      ),
+      home: const MyHomePage(title: 'Nav Agendfy'),
+      debugShowCheckedModeBanner: false,
+>>>>>>> 4251627fbd4eed4c4ef74777bd64981d572e2562
     );
   }
 }
