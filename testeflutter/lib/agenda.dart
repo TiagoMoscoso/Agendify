@@ -64,63 +64,65 @@ class _AgendaState extends State<Agenda> {
         }, 
         child: Icon(Icons.add), 
       ),
-      body: Column(
-        children: [
-          TableCalendar(
-            firstDay: DateTime.utc(2023, 9, 1),
-            lastDay: DateTime.utc(2033, 10, 1),
-            focusedDay: _hoje,
-            startingDayOfWeek: StartingDayOfWeek.monday,
-            selectedDayPredicate: (day) {
-              return isSameDay(_diaSelecionado, day);
-            },
-            onDaySelected: (selectedDay, focusedDay) {
-              setState(() {
-                _diaSelecionado = selectedDay;
-                _hoje = focusedDay; 
-                _eventosSelecionados.value = _getEventosDoDia(_diaSelecionado!);
-              });
-            },
-            calendarFormat: _formatoCalendario,
-            onFormatChanged: (format) {
-              setState(() {
-                _formatoCalendario = format;
-              });
-            },
-            onPageChanged: (focusedDay) {
-              _hoje = focusedDay;
-            },
-            eventLoader: (day) {
-              return _getEventosDoDia(day);
-            },
-          ),
-          Expanded(
-            child: ValueListenableBuilder <List<Evento>>(
-              valueListenable: _eventosSelecionados, 
-              builder: (context, value, _) {
-                return ListView.builder(
-                  itemCount: value.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 12.0,
-                        vertical: 4.0,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(),
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                      child: ListTile(
-                        onTap: () => print(""),
-                        title: Text('${value[index]}')
-                      ),
-                    );
-                  }
-                );
-              }
+      body: SafeArea(
+        child: Column(
+          children: [
+            TableCalendar(
+              firstDay: DateTime.utc(2023, 9, 1),
+              lastDay: DateTime.utc(2033, 10, 1),
+              focusedDay: _hoje,
+              startingDayOfWeek: StartingDayOfWeek.monday,
+              selectedDayPredicate: (day) {
+                return isSameDay(_diaSelecionado, day);
+              },
+              onDaySelected: (selectedDay, focusedDay) {
+                setState(() {
+                  _diaSelecionado = selectedDay;
+                  _hoje = focusedDay; 
+                  _eventosSelecionados.value = _getEventosDoDia(_diaSelecionado!);
+                });
+              },
+              calendarFormat: _formatoCalendario,
+              onFormatChanged: (format) {
+                setState(() {
+                  _formatoCalendario = format;
+                });
+              },
+              onPageChanged: (focusedDay) {
+                _hoje = focusedDay;
+              },
+              eventLoader: (day) {
+                return _getEventosDoDia(day);
+              },
             ),
-          ),
-        ],
+            Expanded(
+              child: ValueListenableBuilder <List<Evento>>(
+                valueListenable: _eventosSelecionados, 
+                builder: (context, value, _) {
+                  return ListView.builder(
+                    itemCount: value.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 12.0,
+                          vertical: 4.0,
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border.all(),
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        child: ListTile(
+                          onTap: () => print(""),
+                          title: Text('${value[index]}')
+                        ),
+                      );
+                    }
+                  );
+                }
+              ),
+            ),
+          ],
+        ),
       ),
     );
     

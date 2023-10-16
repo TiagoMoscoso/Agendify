@@ -3,6 +3,7 @@ import 'package:sqflite_common/sqlite_api.dart';
 import 'package:testeflutter/Classes/ClassUser.dart';
 import 'package:testeflutter/DB/DbAllData.dart';
 import 'package:testeflutter/DB/DbTableUser.dart';
+import 'package:testeflutter/pagEmpresa.dart';
 import 'package:testeflutter/profile.dart';
 import 'second.dart';
 import 'mainscreen.dart';
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
                 '/cadastro': (context) => const cadastro.CadastroPage(),
                 '/busca': (context) => const searchBar.MyApp(),
                 '/agenda': (context) => const agenda.Agenda(),
+                '/pagEmpresa': (context) => const PaginaEmpresa(),
               },
               theme: ThemeData(
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
@@ -203,6 +205,18 @@ class _MyHomePageState extends State<MyHomePage>
                 )
               ),
               child: const Text('Agenda'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/pagEmpresa'); // Navigate to 'second' route
+              },
+              style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding
+                  shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20), // Border radius
+                )
+              ),
+              child: const Text('Página Empresa'),
             ),
           ],
         ),
