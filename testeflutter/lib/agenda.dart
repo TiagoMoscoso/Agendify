@@ -62,7 +62,8 @@ class _AgendaState extends State<Agenda> {
             }
           );
         }, 
-        child: Icon(Icons.add), 
+        child: Icon(Icons.add),
+        backgroundColor: Color.fromARGB(255, 199, 192, 227), 
       ),
       body: SafeArea(
         child: Column(

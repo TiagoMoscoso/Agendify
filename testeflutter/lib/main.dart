@@ -5,6 +5,7 @@ import 'package:testeflutter/DB/DbAllData.dart';
 import 'package:testeflutter/DB/DbTableUser.dart';
 import 'package:testeflutter/pagEmpresa.dart';
 import 'package:testeflutter/profile.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'second.dart';
 import 'mainscreen.dart';
 import 'login/login.dart' as login;
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
           if (snapshot.hasData) {
             ClassUser user = snapshot.data!;
             return MaterialApp(
-              title: 'Agendfy',
+              title: 'Agendify',
               routes: {
                 '/second': (context) => const SecondScreen(),
                 '/mainscreen': (context) => MainScreen(),
@@ -54,10 +55,13 @@ class MyApp extends StatelessWidget {
                 '/pagEmpresa': (context) => const PaginaEmpresa(),
               },
               theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
-              useMaterial3: true,
-            ),
-              home: const MyHomePage(title: 'Nav Agendfy'),
+                colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
+                useMaterial3: true,
+                textTheme: GoogleFonts.rubikTextTheme(
+                  Theme.of(context).textTheme,
+                ),
+              ),
+              home: const MyHomePage(title: 'Nav Agendify'),
               debugShowCheckedModeBanner: false,
             );
           } else {

@@ -18,10 +18,10 @@ class Botao extends StatelessWidget {
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color(0xFF7E72A6),
-            foregroundColor: const Color.fromARGB(255, 184, 175, 175),
+            foregroundColor: Colors.white,
             textStyle: const TextStyle(
               fontSize: 20,
-            )
+            ),
           ),
           child: const Text("Entrar"),
           ),
