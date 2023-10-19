@@ -117,15 +117,50 @@ class _PaginaEmpresa extends State<PaginaEmpresa> {
                     headerStyle: const HeaderStyle(
                       titleTextStyle: TextStyle(color: Colors.white),
                       formatButtonVisible: false,
+                      leftChevronIcon: Icon(Icons.chevron_left_rounded, color: Colors.white),
+                      rightChevronIcon: Icon(Icons.chevron_right_rounded, color: Colors.white),
                     ),
                     daysOfWeekStyle: const DaysOfWeekStyle(
                       weekdayStyle: TextStyle(color: Colors.white),
                       weekendStyle: TextStyle(color: Colors.white),
                     ),
+                    // calendarBuilders: CalendarBuilders(
+                    //   dowBuilder: (context, day) {
+                    //     String text;
+                    //     switch (day.weekday) {
+                    //       case DateTime.monday:
+                    //         text = 'Seg';
+                    //         break;
+                    //       case DateTime.tuesday:
+                    //         text = 'Ter';
+                    //         break;
+                    //       case DateTime.wednesday:
+                    //         text = 'Qua';
+                    //         break;
+                    //       case DateTime.thursday:
+                    //         text = 'Qui';
+                    //         break;
+                    //       case DateTime.friday:
+                    //         text = 'Sex';
+                    //         break;
+                    //       case DateTime.saturday:
+                    //         text = 'Sáb';
+                    //         break;
+                    //       case DateTime.sunday:
+                    //         text = 'Dom';
+                    //         break;
+                    //       default:
+                    //         break;
+                    //     }
+                    //     return Center(child: Text(text,style: const TextStyle(color: Colors.white)));
+                    //   }
+                    // ),
+                    calendarFormat: CalendarFormat.month,
                     focusedDay: DateTime.now(),
                     firstDay: DateTime.utc(2023, 9, 1),
-                    lastDay: DateTime.utc(2033, 10, 1),
+                    lastDay: DateTime.utc(2033, 10, 1), 
                     startingDayOfWeek: StartingDayOfWeek.monday,
+
                   ),
                 ),
               ],
