@@ -42,6 +42,7 @@ dependencies:
   table_calendar: ^3.0.9
   sqflite: ^2.3.0
   sqflite_common: ^2.5.0
+  mask_text_input_formatter: ^2.5.0
 
 dev_dependencies:
   flutter_test:

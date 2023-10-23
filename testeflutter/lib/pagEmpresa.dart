@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'calendario.dart';
 
 class PaginaEmpresa extends StatefulWidget {
   const PaginaEmpresa ({super.key});
@@ -9,6 +10,15 @@ class PaginaEmpresa extends StatefulWidget {
 }
 
 class _PaginaEmpresa extends State<PaginaEmpresa> {
+  DateTime? _selectedDay;
+  DateTime _focusedDay = DateTime.now();
+  CalendarFormat _calendarFormat = CalendarFormat.month;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedDay = _focusedDay;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +99,8 @@ class _PaginaEmpresa extends State<PaginaEmpresa> {
                             SizedBox(width: 2.0),
                             Icon(
                               Icons.star_rounded,
-                              color: Color(0xFFFFAC33)
+                              color: Color(0xFFFFAC33),
+                              size: 17.0,
                             ),
                           ],
                         ),
@@ -109,10 +120,15 @@ class _PaginaEmpresa extends State<PaginaEmpresa> {
                       defaultTextStyle: TextStyle(color: Colors.white),
                       weekendTextStyle: TextStyle(color: Colors.white),
                       todayDecoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(25)),
+                        color: Color(0xFFD9D0C7),
+                        shape: BoxShape.circle,
                       ),
                       todayTextStyle: TextStyle(color: Color(0xFF7E72A6)),
+                      selectedDecoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                      selectedTextStyle: TextStyle(color: Color(0xFF7E72A6)),
                     ),
                     headerStyle: const HeaderStyle(
                       titleTextStyle: TextStyle(color: Colors.white),
@@ -124,43 +140,66 @@ class _PaginaEmpresa extends State<PaginaEmpresa> {
                       weekdayStyle: TextStyle(color: Colors.white),
                       weekendStyle: TextStyle(color: Colors.white),
                     ),
-                    // calendarBuilders: CalendarBuilders(
-                    //   dowBuilder: (context, day) {
-                    //     String text;
-                    //     switch (day.weekday) {
-                    //       case DateTime.monday:
-                    //         text = 'Seg';
-                    //         break;
-                    //       case DateTime.tuesday:
-                    //         text = 'Ter';
-                    //         break;
-                    //       case DateTime.wednesday:
-                    //         text = 'Qua';
-                    //         break;
-                    //       case DateTime.thursday:
-                    //         text = 'Qui';
-                    //         break;
-                    //       case DateTime.friday:
-                    //         text = 'Sex';
-                    //         break;
-                    //       case DateTime.saturday:
-                    //         text = 'Sáb';
-                    //         break;
-                    //       case DateTime.sunday:
-                    //         text = 'Dom';
-                    //         break;
-                    //       default:
-                    //         break;
-                    //     }
-                    //     return Center(child: Text(text,style: const TextStyle(color: Colors.white)));
-                    //   }
-                    // ),
-                    calendarFormat: CalendarFormat.month,
-                    focusedDay: DateTime.now(),
-                    firstDay: DateTime.utc(2023, 9, 1),
-                    lastDay: DateTime.utc(2033, 10, 1), 
+                    calendarBuilders: CalendarBuilders(
+                      dowBuilder: (context, day) {
+                        String text;
+                        switch (day.weekday) {
+                          case DateTime.monday:
+                            text = 'Seg';
+                            break;
+                          case DateTime.tuesday:
+                            text = 'Ter';
+                            break;
+                          case DateTime.wednesday:
+                            text = 'Qua';
+                            break;
+                          case DateTime.thursday:
+                            text = 'Qui';
+                            break;
+                          case DateTime.friday:
+                            text = 'Sex';
+                            break;
+                          case DateTime.saturday:
+                            text = 'Sáb';
+                            break;
+                          case DateTime.sunday:
+                            text = 'Dom';
+                            break;
+                          default:
+                            text = 'Err';
+                            break;
+                        }
+                        return Center(child: Text(text,style: const TextStyle(color: Colors.white)));
+                      },
+                      // headerTitleBuilder: (context, day) {
+                      //   String text;
+                      //   switch(day.month) {
+                      //     case DateTime.october:
+                      //       text = 'Outubro ';
+                      //       break;
+                      //     default:
+                      //       text = 'Erro';
+                      //       break;
+                      //   }
+                      //   return Text(text, style: const TextStyle(color: Colors.white));
+                      // },
+                    ),
+                    focusedDay: _focusedDay,
+                    firstDay: DateTime(_focusedDay.year, _focusedDay.month - 3, _focusedDay.day),
+                    lastDay: DateTime(_focusedDay.year, _focusedDay.month + 3, _focusedDay.day), 
                     startingDayOfWeek: StartingDayOfWeek.monday,
-
+                    selectedDayPredicate: (day) {
+                      return isSameDay(_selectedDay, day);
+                    },
+                    onDaySelected: (selectedDay, focusedDay) {
+                      setState(() {
+                        _selectedDay = selectedDay;
+                        _focusedDay = focusedDay;
+                      });
+                    },
+                    onPageChanged: (focusedDay) {
+                      _focusedDay = focusedDay;
+                    },
                   ),
                 ),
               ],
