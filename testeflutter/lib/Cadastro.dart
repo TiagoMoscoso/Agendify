@@ -211,7 +211,7 @@ class _CadastroPageState extends State<CadastroPage> {
                   obscureText: true, 
                   controller: _confirmarSenhaController, 
                   hintText: 'Confirmação de Senha', 
-                  prefixIcon: const Icon(Icons.lock_rounded),
+                  prefixIcon: const Icon(Icons.lock),
                 ),
                 const SizedBox(height: 20.0),
                 Botao(
