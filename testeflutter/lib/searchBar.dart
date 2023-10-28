@@ -1,6 +1,5 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:testeflutter/mainscreen.dart';
 
@@ -30,6 +29,48 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  var allItems = List.generate(15, (index) => 'item $index');
+  var items = [];
+  var searchHistory = [];
+  final TextEditingController searchController = TextEditingController();
+  final SearchController controller = SearchController();
+
+  @override
+  void initState() {
+    super.initState();
+    searchController.addListener(queryListener);
+    controller.addListener(searchListener);
+  }
+
+  @override
+  void dispose() {
+    searchController.removeListener(queryListener);
+    searchController.dispose();
+    controller.removeListener(searchListener);
+    controller.dispose();
+    super.dispose();
+  }
+
+  void queryListener() {
+    search(searchController.text);
+  }
+
+  void searchListener() {
+    search(controller.text);
+  }
+
+  void search(String query) {
+    if(query.isEmpty) {
+      setState(() {
+        items = allItems;
+      });
+    }
+    else {
+      setState(() {
+        items = allItems.where((e) => e.toLowerCase().contains(query.toLowerCase())).toList();
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +93,10 @@ class _SearchPageState extends State<SearchPage> {
               ),
               const SizedBox(height: 15.0),
               SearchAnchor(
-                builder: (BuildContext context, SearchController controller) {
+                searchController: controller,
+                viewBackgroundColor: Colors.white,
+                viewHintText: "eg: Barbeiro, Motorista ...",
+                builder: (context, controller) {
                   return SearchBar(
                     hintText: "eg: Barbeiro, Motorista ...",
                     hintStyle: MaterialStateProperty.all(const TextStyle(color:Color(0xFFD9D0C7))),
@@ -68,24 +112,36 @@ class _SearchPageState extends State<SearchPage> {
                     controller: controller,
                     onTap: () {
                       controller.openView();
-                    },
-                    onChanged: (_) {
-                      controller.openView();
-                    },
+                    }
                   );
                 },
-                suggestionsBuilder: (BuildContext context, SearchController controller) { 
-                  return List<ListTile>.generate(5, (int index) {
-                    final String item = 'item $index';
-                    return ListTile(
-                      title: Text(item),
-                      onTap: () {
-                        setState(() {
-                          controller.closeView(item);
-                        });
-                      },
-                    );
-                  });
+                suggestionsBuilder: (context, controller) { 
+                  return [
+                    Wrap(
+                      children: List.generate(items.length, (index) {
+                        final item = items[index];
+                        return ListTile(
+                          title: Text(item),
+                        );
+                      }),
+                    )
+                    // ListView.builder(
+                    //   itemCount: items.isEmpty ? allItems.length : items.length,
+                    //   itemBuilder: (context, index)  {
+                    //     final item = items.isEmpty ? allItems[index] : items[index];
+                      
+                    //     return Card(
+                    //       child: Column(
+                    //         children: [
+                    //           Text('Name: $item'),
+                    //           const SizedBox(height: 8.0),
+                    //           Text(item),
+                    //         ],
+                    //       ),
+                    //     );
+                    //   }
+                    // ),
+                  ];
                 }
               ),
               // TextField(
@@ -122,27 +178,23 @@ final List<Widget> categorias = imgList
           borderRadius: const BorderRadius.all(Radius.circular(5.0)),
           child: Stack(
             children: <Widget>[
-              Image.network(item, fit: BoxFit.cover, width: 1000.0),
-              Positioned(
-                bottom: 0.0,
-                left: 0.0,
-                right: 0.0,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Color.fromARGB(200, 0, 0, 0), Color.fromARGB(0, 0, 0, 0)],
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                    ),
+              Image.network(item, fit: BoxFit.cover, height: 500.0, width: 500.0),
+              Container(
+                alignment: Alignment.bottomLeft,
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Color.fromARGB(200, 0, 0, 0), Color.fromARGB(0, 0, 0, 0)],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
                   ),
-                  padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                  child: Text(
-                    nomesCategorias[imgList.indexOf(item)],
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+                ),
+                padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                child: Text(
+                  nomesCategorias[imgList.indexOf(item)],
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
