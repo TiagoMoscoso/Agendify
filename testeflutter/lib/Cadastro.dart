@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:testeflutter/Classes/ClassUser.dart';
 import 'package:testeflutter/DB/DbTableUser.dart';
+import 'package:testeflutter/Firebase/Db/UserTableFB.dart';
 import 'package:testeflutter/profile.dart';
 import 'second.dart'; // Importe a classe SecondScreen
 
@@ -93,7 +94,9 @@ class _CadastroPageState extends State<CadastroPage> {
     user.setName(cadastro.nome);
     user.setEmail(cadastro.email);
     user.setTelephone(cadastro.telefone);
-    user.setIdUser(await DbTableUser.addUsertoTables(user));
+    user.setPhoto(cadastro.senha);//MUDAR DPS
+    user.setIdUser(await UserTableFB.InsertInDatabase(user));
+    DbTableUser.addUsertoTables(user);
 
     Navigator.push(
       context,

@@ -6,16 +6,16 @@ import 'package:testeflutter/Classes/ClassUser.dart';
 class DbTableUser{
   static void createUserTable(Database db) {
     db.execute(
-      'CREATE TABLE User(idUser INTEGER PRIMARY KEY, name TEXT, telephone TEXT, email TEXT, photo TEXT)'
+      'CREATE TABLE User(idUser INTEGER, name TEXT, telephone TEXT, email TEXT, photo TEXT)'
     );
   }
  
   static Future<int> addUsertoTables(ClassUser user) async {
 
     final db = await openDatabase(join(await getDatabasesPath(), 'DataApp.db'));
-    var insertSql = "INSERT INTO User (name, telephone, email, photo) VALUES (?, ?, ?, ?)";
+    var insertSql = "INSERT INTO User (idUser, name, telephone, email, photo) VALUES (?, ?, ?, ?, ?)";
     
-    int rowsAffected = await db.rawInsert(insertSql, [user.getName(), user.getTelephone(), user.getEmail(), user.getPhoto()]);
+    int rowsAffected = await db.rawInsert(insertSql, [user.getIdUser(),user.getName(), user.getTelephone(), user.getEmail(), user.getPhoto()]);
 
 
     if (rowsAffected > 0) {

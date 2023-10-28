@@ -6,8 +6,10 @@ class ClassUser
   var _email;
   var _photo;
   
-  setIdUser(idUser)
+  setIdUser(idUser) async
   {
+    if(idUser.runtimeType == Future<int>)
+      idUser = await idUser;
     _idUser = idUser;
   }
   setName(name)

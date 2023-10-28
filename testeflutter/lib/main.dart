@@ -3,6 +3,7 @@ import 'package:sqflite_common/sqlite_api.dart';
 import 'package:testeflutter/Classes/ClassUser.dart';
 import 'package:testeflutter/DB/DbAllData.dart';
 import 'package:testeflutter/DB/DbTableUser.dart';
+import 'package:testeflutter/Firebase/Db/UserTableFB.dart';
 import 'package:testeflutter/pagEmpresa.dart';
 import 'package:testeflutter/profile.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,19 +15,18 @@ import 'profile.dart' as profile;
 import 'Cadastro.dart' as cadastro;
 import 'searchBar.dart' as searchBar;
 import 'agenda.dart' as agenda;
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
+
 Future<void> main() async {
   runApp(const MyApp());
   await DbAllData.createDatabase();
-
-  ClassUser user = new ClassUser();
-  user.setName("tegas");
-  user.setEmail("tegas@gmail.com");
-  user.setTelephone("+31 99af01301");
-  user.setPhoto("pasassafd");
-  await user.setIdUser(await DbTableUser.addUsertoTables(user));
-
-  var x = user.getIdUser();
   
+  await Firebase.initializeApp(
+  options: DefaultFirebaseOptions.currentPlatform,
+);
+
 }
 
 class MyApp extends StatelessWidget {

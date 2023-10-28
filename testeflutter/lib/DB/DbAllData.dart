@@ -14,7 +14,21 @@ class DbAllData {
         DbTableEnterprise.createEnterpriseTable(db);
         DbTableUser.createUserTable(db);
       },
-      version: 1,
+      onUpgrade: (db, oldVersion, newVersion) async 
+      {
+        if (oldVersion < newVersion) {
+          
+          await db.execute('DROP TABLE IF EXISTS Service');
+          await db.execute('DROP TABLE IF EXISTS Enterprise');
+          await db.execute('DROP TABLE IF EXISTS User');
+
+          
+          DbTableService.createServiceTable(db);
+          DbTableEnterprise.createEnterpriseTable(db);
+          DbTableUser.createUserTable(db);
+        }
+      },
+      version: 3,
     );
 
     return database;
