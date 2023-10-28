@@ -3,7 +3,9 @@ import 'package:sqflite_common/sqlite_api.dart';
 import 'package:testeflutter/Classes/ClassUser.dart';
 import 'package:testeflutter/DB/DbAllData.dart';
 import 'package:testeflutter/DB/DbTableUser.dart';
+import 'package:testeflutter/pagEmpresa.dart';
 import 'package:testeflutter/profile.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'second.dart';
 import 'mainscreen.dart';
 import 'login/login.dart' as login;
@@ -40,7 +42,7 @@ class MyApp extends StatelessWidget {
           if (snapshot.hasData) {
             ClassUser user = snapshot.data!;
             return MaterialApp(
-              title: 'Agendfy',
+              title: 'Agendify',
               routes: {
                 '/second': (context) => const SecondScreen(),
                 '/mainscreen': (context) => MainScreen(),
@@ -50,12 +52,17 @@ class MyApp extends StatelessWidget {
                 '/cadastro': (context) => const cadastro.CadastroPage(),
                 '/busca': (context) => const searchBar.MyApp(),
                 '/agenda': (context) => const agenda.Agenda(),
+                '/pagEmpresa': (context) => const PaginaEmpresa(),
               },
               theme: ThemeData(
                 colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
                 useMaterial3: true,
+                textTheme: GoogleFonts.rubikTextTheme(
+                  Theme.of(context).textTheme,
+                ),
               ),
-              home: const MyHomePage(title: 'Nav Agendfy'),
+              home: const MyHomePage(title: 'Nav Agendify'),
+              debugShowCheckedModeBanner: false,
             );
           } else {
             return CircularProgressIndicator();
@@ -64,15 +71,6 @@ class MyApp extends StatelessWidget {
           return CircularProgressIndicator();
         }
       },
-<<<<<<< HEAD
-=======
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Nav Agendfy'),
-      debugShowCheckedModeBanner: false,
->>>>>>> 4251627fbd4eed4c4ef74777bd64981d572e2562
     );
   }
 }
@@ -211,6 +209,18 @@ class _MyHomePageState extends State<MyHomePage>
                 )
               ),
               child: const Text('Agenda'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/pagEmpresa'); // Navigate to 'second' route
+              },
+              style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding
+                  shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20), // Border radius
+                )
+              ),
+              child: const Text('Página Empresa'),
             ),
           ],
         ),

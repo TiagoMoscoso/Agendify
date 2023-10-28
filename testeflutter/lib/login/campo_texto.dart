@@ -5,12 +5,16 @@ class CampoTexto extends StatelessWidget {
   final String hintText;
   final bool obscureText;
   final Widget prefixIcon;
+  final Widget? suffixIcon;
+  final String? Function(String?)? validator;
 
   const CampoTexto ({
     super.key,
+    this.validator,
+    this.suffixIcon,
+    required this.obscureText,
     required this.controller,
     required this.hintText,
-    required this.obscureText,
     required this.prefixIcon,
   });
 
@@ -23,6 +27,8 @@ class CampoTexto extends StatelessWidget {
           keyboardType: TextInputType.emailAddress,
           style: const TextStyle(color: Color(0xFF7E72A6) ),
           decoration: InputDecoration(
+            suffixIcon: suffixIcon,
+            suffixIconColor: const Color(0xFF7E72A6),
             prefixIcon: prefixIcon,
             prefixIconColor: const Color(0xFF7E72A6),
             enabledBorder: const OutlineInputBorder(
@@ -42,6 +48,8 @@ class CampoTexto extends StatelessWidget {
           ),
           controller: controller,
           obscureText: obscureText,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          validator: validator,
         ),
       ),
     );

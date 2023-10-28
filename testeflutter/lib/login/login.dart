@@ -14,6 +14,50 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   TextEditingController controllerEmail = TextEditingController();
   TextEditingController controllerSenha = TextEditingController();
+  RegExp formatacaoEmail = RegExp(r"^([\w\.-_]+)@+[\w\.]+((\.+\w{2,3}){1,2})$");
+  bool _obscureText = true;
+
+  // void logar() async {
+  //   await FirebaseAuth.instance.signInWithEmailAndPassword(
+  //     email: controllerEmail,
+  //     password: controllerSenha,
+  //   );
+  // }
+
+  void confirmar() {
+    String email = controllerEmail.text;
+    String senha = controllerSenha.text;
+
+    if(email.isEmpty || senha.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Todos os campos são obrigatórios.',
+            textAlign: TextAlign.center,
+            selectionColor: Color(0xFFFFFFFF),
+          ),
+          backgroundColor: Color(0xFF7E72A6),
+        )
+      );
+      return;
+    }   
+
+    if(!formatacaoEmail.hasMatch(email)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Formato Inválido de E-mail.',
+            textAlign: TextAlign.center,
+            selectionColor: Color(0xFFFFFFFF),
+          ),
+          backgroundColor: Color(0xFF7E72A6),
+        )
+      );
+      return;
+    }
+
+    Navigator.popAndPushNamed(context, "/mainscreen");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,8 +104,14 @@ class _LoginState extends State<Login> {
                       controller: controllerEmail,
                       hintText: "E-mail",
                       obscureText: false,
-                      prefixIcon: const Icon(Icons.person),
-                      ),
+                      prefixIcon: const Icon(Icons.mail),
+                      validator: (controllerEmail) {
+                          if(!formatacaoEmail.hasMatch(controllerEmail ?? "")) {
+                            return "Formato Inválido de E-mail.";
+                          }
+                          return null;
+                      },
+                    ),
                   ],
                 ),
                 const SizedBox(height: 10),
@@ -71,8 +121,16 @@ class _LoginState extends State<Login> {
                       CampoTexto(
                         controller: controllerSenha,
                         hintText: "Senha",
-                        obscureText: true,
+                        obscureText: _obscureText,
                         prefixIcon: const Icon(Icons.lock),
+                        suffixIcon: GestureDetector (
+                          onTap: () {
+                            setState(() {
+                              _obscureText = !_obscureText;
+                            });
+                          },
+                          child: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
+                        ),
                       ),
                   ],
                 ),
@@ -88,10 +146,12 @@ class _LoginState extends State<Login> {
                   ],
                 ),
                 const SizedBox(height: 35),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Botao(),
+                    Botao(
+                      onPressed: () => confirmar(),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 20),
@@ -135,7 +195,7 @@ class _LoginState extends State<Login> {
                     const SizedBox(width: 4,),
                     Hyperlink(
                       texto: 'Registre-se agora.',
-                      onTap: () => Navigator.pushNamed(context, '/home'),
+                      onTap: () => Navigator.pushNamed(context, '/cadastro'),
                       negrito: FontWeight.bold,
                     ),
                   ],

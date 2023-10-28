@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Hyperlink extends StatelessWidget {
-  final String texto;
-  final FontWeight negrito;
+  final String? texto;
+  final FontWeight? negrito;
   final Function()? onTap;
 
   const Hyperlink ({
@@ -17,7 +17,7 @@ class Hyperlink extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Text(
-        texto,
+        texto!,
         style: TextStyle(
           color: const Color(0xFF7E72A6),
           fontWeight: negrito,

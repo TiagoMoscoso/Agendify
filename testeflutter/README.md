@@ -1,6 +1,6 @@
-# testeflutter
+# Agendify
 
-A new Flutter project.
+Aplicativo de agendamento de horarios
 
 ## Getting Started
 

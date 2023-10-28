@@ -41,6 +41,7 @@ dependencies:
   flutter_emoji: ^2.5.1
   table_calendar: ^3.0.9
   sqflite: ^2.3.0
+  sqflite_common: ^2.5.0
 
 dev_dependencies:
   flutter_test:
