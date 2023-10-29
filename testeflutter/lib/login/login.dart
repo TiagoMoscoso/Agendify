@@ -120,17 +120,21 @@ class _LoginState extends State<Login> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget> [
-                    CampoTexto(
-                      controller: controllerEmail,
-                      hintText: "E-mail",
-                      obscureText: false,
-                      prefixIcon: const Icon(Icons.mail),
-                      validator: (controllerEmail) {
-                          if(!formatacaoEmail.hasMatch(controllerEmail ?? "")) {
-                            return "Formato Inválido de E-mail.";
-                          }
-                          return null;
-                      },
+                    Expanded(
+                      child: CampoTexto(
+                        inputFormatters: const [],
+                        keyboardType: TextInputType.emailAddress,
+                        controller: controllerEmail,
+                        hintText: "E-mail",
+                        obscureText: false,
+                        prefixIcon: const Icon(Icons.mail_rounded),
+                        validator: (controllerEmail) {
+                            if(!formatacaoEmail.hasMatch(controllerEmail ?? "")) {
+                              return "Formato Inválido de E-mail.";
+                            }
+                            return null;
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -138,7 +142,10 @@ class _LoginState extends State<Login> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget> [
-                      CampoTexto(
+                    Expanded(
+                      child: CampoTexto(
+                        inputFormatters: const [],
+                        keyboardType: TextInputType.text,
                         controller: controllerSenha,
                         hintText: "Senha",
                         obscureText: _obscureText,
@@ -152,6 +159,7 @@ class _LoginState extends State<Login> {
                           child: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
                         ),
                       ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 3),
@@ -170,6 +178,7 @@ class _LoginState extends State<Login> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Botao(
+                      text: 'Entrar',
                       onPressed: () => confirmar(),
                     ),
                   ],
