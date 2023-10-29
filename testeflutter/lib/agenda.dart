@@ -13,9 +13,9 @@ class _AgendaState extends State<Agenda> {
   DateTime? _diaSelecionado;
   DateTime _hoje = DateTime.now();
   CalendarFormat _formatoCalendario = CalendarFormat.month;
-  Map<DateTime, List<Evento>> _eventos = {};
+  final Map<DateTime, List<Evento>> _eventos = {};
   late final ValueNotifier<List<Evento>> _eventosSelecionados;
-  TextEditingController _controladorEvento = TextEditingController();
+  final TextEditingController _controladorEvento = TextEditingController();
 
   @override
   void initState() {
@@ -61,9 +61,9 @@ class _AgendaState extends State<Agenda> {
               );
             }
           );
-        }, 
-        child: Icon(Icons.add),
-        backgroundColor: Color.fromARGB(255, 199, 192, 227), 
+        },
+        backgroundColor: const Color.fromARGB(255, 199, 192, 227), 
+        child: const Icon(Icons.add), 
       ),
       body: SafeArea(
         child: Column(

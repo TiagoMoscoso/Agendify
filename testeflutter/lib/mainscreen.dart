@@ -48,7 +48,7 @@ final List<Widget> Top10 = imgList
     //lista widget do top 10
     .map((item) => Container(
           child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 1.0, vertical: 10), // margem do container
+            margin: const EdgeInsets.symmetric(horizontal: 1.0, vertical: 10), // margem do container
             child: Stack(
               children: <Widget>[
                 Container(
@@ -59,7 +59,7 @@ final List<Widget> Top10 = imgList
                         color: Colors.black.withOpacity(0.2),
                         spreadRadius: 5, 
                         blurRadius: 7,
-                        offset: Offset(0, 3),
+                        offset: const Offset(0, 3),
                         //configuracoes da sombra
                       ),
                     ],
@@ -106,9 +106,9 @@ final List<Widget> Top10 = imgList
 final List<Widget> Categorias = imgList
     .map((item) => Container(
           child: Container(
-            margin: EdgeInsets.all(5.0),
+            margin: const EdgeInsets.all(5.0),
             child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                 child: Stack(
                   children: <Widget>[
                     Image.network(item, fit: BoxFit.cover, width: 1000.0),
@@ -117,7 +117,7 @@ final List<Widget> Categorias = imgList
                       left: 0.0,
                       right: 0.0,
                       child: Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
                               Color.fromARGB(200, 0, 0, 0),
@@ -127,11 +127,11 @@ final List<Widget> Categorias = imgList
                             end: Alignment.topCenter,
                           ),
                         ),
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 20.0),
                         child: Text(
                           nomesCategorias[imgList.indexOf(item)],
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
@@ -166,7 +166,7 @@ return Scaffold(
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Divider(),
+            const Divider(),
             Text(
               //texto do carrossel de Top 10 serviços do dia
               "Em alta 🔥",
@@ -215,7 +215,7 @@ return Scaffold(
             ),
             ListView.builder(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),//impede rolagem da lista interna
+              physics: const NeverScrollableScrollPhysics(),//impede rolagem da lista interna
               scrollDirection: Axis.vertical, //remover barra vertical
               itemCount: nomes.length,
               //for da lista de serviços

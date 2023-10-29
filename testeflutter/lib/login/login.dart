@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:testeflutter/Firebase/Db/UserTableFB.dart';
 import 'package:testeflutter/login/hyperlink.dart';
 import 'campo_texto.dart';
 import 'botao.dart';
@@ -24,7 +25,7 @@ class _LoginState extends State<Login> {
   //   );
   // }
 
-  void confirmar() {
+  Future<void> confirmar() async {
     String email = controllerEmail.text;
     String senha = controllerSenha.text;
 
@@ -41,7 +42,26 @@ class _LoginState extends State<Login> {
       );
       return;
     }   
-
+    
+    if(await UserTableFB.EmailRegistred(email) && await UserTableFB.VerifyPassword(email, senha))
+    {
+      //true
+    }
+    else
+    {
+      //false
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Email ou Senha incorreta.',
+            textAlign: TextAlign.center,
+            selectionColor: Color(0xFFFFFFFF),
+          ),
+          backgroundColor: Color(0xFF7E72A6),
+        )
+      );
+      return;
+    }
     if(!formatacaoEmail.hasMatch(email)) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

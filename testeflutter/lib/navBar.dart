@@ -60,7 +60,7 @@ class _BottomNavigationBarExampleState
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Color.fromARGB(255, 237, 237, 239),
+        backgroundColor: const Color.fromARGB(255, 237, 237, 239),
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
@@ -80,7 +80,7 @@ class _BottomNavigationBarExampleState
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Color.fromARGB(255, 100, 123, 255),
+        selectedItemColor: const Color.fromARGB(255, 100, 123, 255),
         onTap: _onItemTapped,
       ),
     );

@@ -8,8 +8,9 @@ class ClassUser
   
   setIdUser(idUser) async
   {
-    if(idUser.runtimeType == Future<int>)
+    if(idUser.runtimeType == Future<int>) {
       idUser = await idUser;
+    }
     _idUser = idUser;
   }
   setName(name)

@@ -29,7 +29,7 @@ class DbTableUser{
   static Future<ClassUser> GetLastUser() async {
 
     final db = await openDatabase(join(await getDatabasesPath(), 'DataApp.db'));
-    ClassUser user = new ClassUser();
+    ClassUser user = ClassUser();
     var searchSql = "SELECT * FROM User ORDER BY idUser DESC LIMIT 1";
     
     List<Map<String, dynamic>> results = await db.rawQuery(searchSql);

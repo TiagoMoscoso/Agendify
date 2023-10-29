@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite_common/sqlite_api.dart';
 import 'package:testeflutter/Classes/ClassUser.dart';
 import 'package:testeflutter/DB/DbAllData.dart';
 import 'package:testeflutter/DB/DbTableUser.dart';
-import 'package:testeflutter/Firebase/Db/UserTableFB.dart';
 import 'package:testeflutter/pagEmpresa.dart';
 import 'package:testeflutter/profile.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,7 +9,6 @@ import 'second.dart';
 import 'mainscreen.dart';
 import 'login/login.dart' as login;
 import 'config.dart' as config;
-import 'profile.dart' as profile;
 import 'Cadastro.dart' as cadastro;
 import 'searchBar.dart' as searchBar;
 import 'agenda.dart' as agenda;
@@ -45,7 +42,7 @@ class MyApp extends StatelessWidget {
               title: 'Agendify',
               routes: {
                 '/second': (context) => const SecondScreen(),
-                '/mainscreen': (context) => MainScreen(),
+                '/mainscreen': (context) => const MainScreen(),
                 '/login': (context) => const login.Login(),
                 '/config': (context) => const config.ConfigScreen(),
                 '/profile': (context) => Profile(User: user),
@@ -65,10 +62,10 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
             );
           } else {
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           }
         } else {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         }
       },
     );

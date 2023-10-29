@@ -28,8 +28,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: const SearchPage(),
+    return const MaterialApp(
+      home: SearchPage(),
     );
   }
 }
@@ -47,16 +47,16 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
       backgroundColor: const Color(0xffFAF1E4),
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 100, 123, 255),
+        backgroundColor: const Color.fromARGB(255, 100, 123, 255),
         elevation: 0.0,
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               "Pesquise por um serviço",
               style: TextStyle(
                 color: Colors.black,
@@ -64,11 +64,11 @@ class _SearchPageState extends State<SearchPage> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20.0,
             ),
             TextField(
-              style: TextStyle(color: Colors.black),
+              style: const TextStyle(color: Colors.black),
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
@@ -77,14 +77,14 @@ class _SearchPageState extends State<SearchPage> {
                   borderSide: BorderSide.none,
                 ),
                 hintText: "eg: Barbeiro, Motorista ...",
-                suffixIcon: Icon(Icons.search),
+                suffixIcon: const Icon(Icons.search),
                 prefixIconColor: Colors.white,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20.0,
             ),
-            Categories(),
+            const Categories(),
           ],
         ),
       ),
@@ -95,9 +95,9 @@ class _SearchPageState extends State<SearchPage> {
 final List<Widget> Categorias = imgList
     .map((item) => Container(
           child: Container(
-            margin: EdgeInsets.all(5.0),
+            margin: const EdgeInsets.all(5.0),
             child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                 child: Stack(
                   children: <Widget>[
                     Image.network(item, fit: BoxFit.cover, width: 1000.0),
@@ -106,18 +106,18 @@ final List<Widget> Categorias = imgList
                       left: 0.0,
                       right: 0.0,
                       child: Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           gradient: LinearGradient(
                             colors: [Color.fromARGB(200, 0, 0, 0), Colors.blue],
                             begin: Alignment.bottomCenter,
                             end: Alignment.topCenter,
                           ),
                         ),
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 20.0),
                         child: Text(
                           categorias[imgList.indexOf(item)],
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
@@ -139,7 +139,7 @@ class Categories extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Divider(),
+        const Divider(),
         Text(
           //texto de categorias em alta
           "Categorias 📒",
@@ -151,14 +151,14 @@ class Categories extends StatelessWidget {
           textAlign: TextAlign.left,
         ),
         GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             crossAxisSpacing: 5.0,
             mainAxisSpacing: 5.0,
           ),
           shrinkWrap: true,
           physics:
-              NeverScrollableScrollPhysics(), //impede rolagem da lista interna
+              const NeverScrollableScrollPhysics(), //impede rolagem da lista interna
           scrollDirection: Axis.vertical, //remover barra vertical
           itemCount: categorias.length,
           //for da lista de serviços

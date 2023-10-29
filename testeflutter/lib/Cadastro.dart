@@ -1,12 +1,15 @@
 // cadastro.dart
 
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:testeflutter/Classes/ClassUser.dart';
 import 'package:testeflutter/DB/DbTableUser.dart';
 import 'package:testeflutter/Firebase/Db/UserTableFB.dart';
 import 'package:testeflutter/profile.dart';
-import 'second.dart'; // Importe a classe SecondScreen
+import '/Firebase/Db/UserTableFB.dart';
+// Importe a classe SecondScreen
 
 class Cadastro {
   final String nome;
@@ -30,13 +33,13 @@ class CadastroPage extends StatefulWidget {
 }
 
 class _CadastroPageState extends State<CadastroPage> {
-  TextEditingController _nomeController = TextEditingController();
-  TextEditingController _telefoneController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _senhaController = TextEditingController();
-  TextEditingController _confirmarSenhaController = TextEditingController();
+  final TextEditingController _nomeController = TextEditingController();
+  final TextEditingController _telefoneController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _senhaController = TextEditingController();
+  final TextEditingController _confirmarSenhaController = TextEditingController();
 
-  List<TextInputFormatter> _telefoneInputFormatters = [
+  final List<TextInputFormatter> _telefoneInputFormatters = [
     LengthLimitingTextInputFormatter(11),
     FilteringTextInputFormatter.digitsOnly,
   ];
@@ -53,24 +56,31 @@ class _CadastroPageState extends State<CadastroPage> {
         email.isEmpty ||
         senha.isEmpty ||
         confirmarSenha.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Todos os campos são obrigatórios.'),
       ));
       return;
     }
 
     if (senha != confirmarSenha) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('As senhas não coincidem.'),
       ));
       return;
     }
 
+    if(await UserTableFB.EmailRegistred(email))
+    {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Email ja cadastrado.'),
+      ));
+      return;
+    }
     // Remove caracteres não numéricos do telefone
     String telefoneNumerico = telefone.replaceAll(RegExp(r'[^\d]+'), '');
 
     if (telefoneNumerico.length != 11) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('O número de telefone deve ter 11 dígitos.'),
       ));
       return;
@@ -94,8 +104,7 @@ class _CadastroPageState extends State<CadastroPage> {
     user.setName(cadastro.nome);
     user.setEmail(cadastro.email);
     user.setTelephone(cadastro.telefone);
-    user.setPhoto(cadastro.senha);//MUDAR DPS
-    user.setIdUser(await UserTableFB.InsertInDatabase(user));
+    user.setIdUser(await UserTableFB.InsertInDatabase(user, cadastro.senha));
     DbTableUser.addUsertoTables(user);
 
     Navigator.push(
@@ -110,7 +119,7 @@ class _CadastroPageState extends State<CadastroPage> {
       backgroundColor: const Color(0xffFAF1E4),
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('Cadastro'),
+        title: const Text('Cadastro'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -119,33 +128,33 @@ class _CadastroPageState extends State<CadastroPage> {
           children: <Widget>[
             TextField(
               controller: _nomeController,
-              decoration: InputDecoration(labelText: 'Nome:'),
+              decoration: const InputDecoration(labelText: 'Nome:'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextField(
               controller: _telefoneController,
-              decoration: InputDecoration(labelText: 'Telefone:'),
+              decoration: const InputDecoration(labelText: 'Telefone:'),
               keyboardType: TextInputType.number,
               inputFormatters: _telefoneInputFormatters,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextField(
               controller: _emailController,
-              decoration: InputDecoration(labelText: 'Email:'),
+              decoration: const InputDecoration(labelText: 'Email:'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextField(
               controller: _senhaController,
-              decoration: InputDecoration(labelText: 'Senha:'),
+              decoration: const InputDecoration(labelText: 'Senha:'),
               obscureText: true,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextField(
               controller: _confirmarSenhaController,
-              decoration: InputDecoration(labelText: 'Confirmação de Senha:'),
+              decoration: const InputDecoration(labelText: 'Confirmação de Senha:'),
               obscureText: true,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _onConfirmarPressed,
               style: ElevatedButton.styleFrom(

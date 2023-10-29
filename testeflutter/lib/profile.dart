@@ -5,7 +5,7 @@ import 'config.dart';
 import 'navBar.dart';
 
 Future<void> main() async {
-  ClassUser User = await DbTableUser.GetLastUser() as ClassUser;
+  ClassUser User = await DbTableUser.GetLastUser();
   runApp(MaterialApp(
     home: Profile(User: User),
   ));
@@ -62,10 +62,10 @@ class _ProfileStatefulState extends State<ProfileStateful> {
             children: [
               Image.asset("imagens/fotoperfil2.png", width: 150, height: 100),
               Padding(
-                  padding: EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+                  padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 15),
                   child: Text(
                     User.getName(),
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, fontFamily: "Kanit"),
+                    style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold, fontFamily: "Kanit"),
                   )
               )
             ],
@@ -79,19 +79,19 @@ class _ProfileStatefulState extends State<ProfileStateful> {
                   padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: Color(0xffEBE4D1),
+                      color: const Color(0xffEBE4D1),
                       width: 2,
                     ),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                    padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                     child: Row(
                       children: [
-                        Icon(
+                        const Icon(
                             Icons.call
                         ),
-                        Text(User.getTelephone(), style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "Kanit"))
+                        Text(User.getTelephone(), style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "Kanit"))
                       ],
                     ),
                   )
@@ -114,10 +114,10 @@ class _ProfileStatefulState extends State<ProfileStateful> {
                 ),
                 child: Row(
                   children: [
-                    Icon(
+                    const Icon(
                         Icons.mail
                     ),
-                    Text(User.getEmail(), style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "Kanit"))
+                    Text(User.getEmail(), style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "Kanit"))
                   ],
                 ),
               ),
