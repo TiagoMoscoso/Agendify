@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:testeflutter/mainscreen.dart';
 
 final List<String> imgList = [
   'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
@@ -10,7 +12,7 @@ final List<String> imgList = [
   'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
 ];
 
-final List<String> categorias = [
+final List<String> nomesCategorias = [
   'Salão de Beleza',
   'Clínica Médica',
   'Restaurante',
@@ -18,21 +20,6 @@ final List<String> categorias = [
   'Salão de Massagem',
   'Oficina Mecânica',
 ];
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: const SearchPage(),
-    );
-  }
-}
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -42,93 +29,178 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  var allItems = List.generate(15, (index) => 'item $index');
+  var items = [];
+  var searchHistory = [];
+  final TextEditingController searchController = TextEditingController();
+  final SearchController controller = SearchController();
+
+  @override
+  void initState() {
+    super.initState();
+    searchController.addListener(queryListener);
+    controller.addListener(searchListener);
+  }
+
+  @override
+  void dispose() {
+    searchController.removeListener(queryListener);
+    searchController.dispose();
+    controller.removeListener(searchListener);
+    controller.dispose();
+    super.dispose();
+  }
+
+  void queryListener() {
+    search(searchController.text);
+  }
+
+  void searchListener() {
+    search(controller.text);
+  }
+
+  void search(String query) {
+    if(query.isEmpty) {
+      setState(() {
+        items = allItems;
+      });
+    }
+    else {
+      setState(() {
+        items = allItems.where((e) => e.toLowerCase().contains(query.toLowerCase())).toList();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffFAF1E4),
-      appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 100, 123, 255),
-        elevation: 0.0,
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Pesquise por um serviço",
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 22.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            TextField(
-              style: TextStyle(color: Colors.black),
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                  borderSide: BorderSide.none,
+      backgroundColor: const Color(0xFFD9D0C7),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Pesquise por um serviço",
+                style: TextStyle(
+                  color: Color(0xFF7E72A6),
+                  fontSize: 25.0,
+                  fontWeight: FontWeight.bold,
                 ),
-                hintText: "eg: Barbeiro, Motorista ...",
-                suffixIcon: Icon(Icons.search),
-                prefixIconColor: Colors.white,
               ),
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            Categories(),
-          ],
+              const SizedBox(height: 15.0),
+              SearchAnchor(
+                searchController: controller,
+                viewBackgroundColor: Colors.white,
+                viewHintText: "eg: Barbeiro, Motorista ...",
+                builder: (context, controller) {
+                  return SearchBar(
+                    hintText: "eg: Barbeiro, Motorista ...",
+                    hintStyle: MaterialStateProperty.all(const TextStyle(color:Color(0xFFD9D0C7))),
+                    textStyle: MaterialStateProperty.all(const TextStyle(color:Color(0xFF7E72A6))),
+                    backgroundColor: MaterialStateProperty.all(Colors.white),
+                    surfaceTintColor: MaterialStateProperty.all(Colors.white),
+                    overlayColor: MaterialStateProperty.all(Colors.white),
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+                    leading: const Icon(
+                      Icons.search_rounded,
+                      color: Color(0xFF7E72A6),
+                    ),
+                    controller: controller,
+                    onTap: () {
+                      controller.openView();
+                    }
+                  );
+                },
+                suggestionsBuilder: (context, controller) { 
+                  return [
+                    Wrap(
+                      children: List.generate(items.length, (index) {
+                        final item = items[index];
+                        return ListTile(
+                          title: Text(item),
+                        );
+                      }),
+                    )
+                    // ListView.builder(
+                    //   itemCount: items.isEmpty ? allItems.length : items.length,
+                    //   itemBuilder: (context, index)  {
+                    //     final item = items.isEmpty ? allItems[index] : items[index];
+                      
+                    //     return Card(
+                    //       child: Column(
+                    //         children: [
+                    //           Text('Name: $item'),
+                    //           const SizedBox(height: 8.0),
+                    //           Text(item),
+                    //         ],
+                    //       ),
+                    //     );
+                    //   }
+                    // ),
+                  ];
+                }
+              ),
+              // TextField(
+              //   style: const TextStyle(color: Color(0xFF7E72A6)),
+              //   decoration: InputDecoration(
+              //     filled: true,
+              //     fillColor: Colors.white,
+              //     border: OutlineInputBorder(
+              //       borderRadius: BorderRadius.circular(8.0),
+              //       borderSide: BorderSide.none,
+              //     ),
+              //     hintText: "eg: Barbeiro, Motorista ...",
+              //     suffixIcon: const Icon(
+              //       Icons.search_rounded,
+              //       color: Color(0xFF7E72A6),
+              //     ),
+              //     prefixIconColor: Colors.white,
+              //   ),
+              // ),
+              const SizedBox(height: 15.0),
+              const Categories(),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-final List<Widget> Categorias = imgList
+final List<Widget> categorias = imgList
     .map((item) => Container(
-          child: Container(
-            margin: EdgeInsets.all(5.0),
-            child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                child: Stack(
-                  children: <Widget>[
-                    Image.network(item, fit: BoxFit.cover, width: 1000.0),
-                    Positioned(
-                      bottom: 0.0,
-                      left: 0.0,
-                      right: 0.0,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [Color.fromARGB(200, 0, 0, 0), Colors.blue],
-                            begin: Alignment.bottomCenter,
-                            end: Alignment.topCenter,
-                          ),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 20.0),
-                        child: Text(
-                          categorias[imgList.indexOf(item)],
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                )),
-          ),
-        ))
+      margin: const EdgeInsets.all(5.0),
+      child: ClipRRect(
+          borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+          child: Stack(
+            children: <Widget>[
+              Image.network(item, fit: BoxFit.cover, height: 500.0, width: 500.0),
+              Container(
+                alignment: Alignment.bottomLeft,
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Color.fromARGB(200, 0, 0, 0), Color.fromARGB(0, 0, 0, 0)],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                  ),
+                ),
+                padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                child: Text(
+                  nomesCategorias[imgList.indexOf(item)],
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          )),
+    ))
     .toList();
 
 class Categories extends StatelessWidget {
@@ -139,44 +211,56 @@ class Categories extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Divider(),
-        Text(
-          //texto de categorias em alta
-          "Categorias 📒",
-          style: GoogleFonts.lato(
-            color: Colors.black,
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold,
-          ),
-          textAlign: TextAlign.left,
+        const Divider(color: Color(0xFF7E72A6)),
+        const Row(
+          children: <Widget> [
+            Text(
+              //texto de categorias em alta
+              "Categorias",
+              style: TextStyle(
+                color: Color(0xFF7E72A6),
+                fontSize: 22.5,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.left,
+            ),
+            SizedBox(width: 5),
+            Icon(
+              Icons.list_rounded,
+              color: Color(0xFF7E72A6),
+              size: 22.5,
+            ),
+          ],
         ),
+        const SizedBox(height: 7.5),
         GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             crossAxisSpacing: 5.0,
             mainAxisSpacing: 5.0,
           ),
           shrinkWrap: true,
-          physics:
-              NeverScrollableScrollPhysics(), //impede rolagem da lista interna
+          physics: const NeverScrollableScrollPhysics(), //impede rolagem da lista interna
           scrollDirection: Axis.vertical, //remover barra vertical
-          itemCount: categorias.length,
+          itemCount: imgList.length,
           //for da lista de serviços
           itemBuilder: (context, index) {
-            return Card(
-              child: Card(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(5.0),
-                  child: Image.network(
-                    imgList[index],
-                    fit: BoxFit.cover,
-                    width: 180,
-                    height: 180,
-                  ), //imagem do serviço,
-                ),
-                //nota do serviço
-              ),
-            );
+             return categorias[index];
+             
+             
+             
+             
+             //Card(
+            //   child: ClipRRect(
+            //     borderRadius: BorderRadius.circular(5.0),
+            //     child: Image.network(
+            //       imgList[index],
+            //       fit: BoxFit.cover,
+            //       width: 180,
+            //       height: 180,
+            //     ), //imagem do serviço,
+            //   ),
+            // );
           },
         ),
       ],
