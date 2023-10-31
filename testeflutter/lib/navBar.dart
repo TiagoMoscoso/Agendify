@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
-
-class BottomNavigationBarExampleApp extends StatelessWidget {
-  const BottomNavigationBarExampleApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: BottomNavigationBarExample(),
-    );
-  }
-}
+import 'perfil.dart';
+import 'agenda.dart';
+import 'searchBar.dart';
+import 'mainscreen.dart';
 
 class BottomNavigationBarExample extends StatefulWidget {
   const BottomNavigationBarExample({super.key});
@@ -25,22 +18,10 @@ class _BottomNavigationBarExampleState
   static const TextStyle optionStyle =
   TextStyle(fontSize: 12, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Inicio',
-      style: optionStyle,
-    ),
-    Text(
-      'Pesquisa',
-      style: optionStyle,
-    ),
-    Text(
-      'Agenda',
-      style: optionStyle,
-    ),
-    Text(
-      'Perfil',
-      style: optionStyle,
-    ),
+    MainScreen(),
+    SearchPage(),
+    Agenda(),
+    ProfileOriginal(),
   ];
 
   void _onItemTapped(int index) {
@@ -52,15 +33,12 @@ class _BottomNavigationBarExampleState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Agendfy'),
-      ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: const Color.fromARGB(255, 237, 237, 239),
+        backgroundColor: Color.fromARGB(255, 237, 237, 239),
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
@@ -78,9 +56,10 @@ class _BottomNavigationBarExampleState
             icon: Icon(Icons.person),
             label: 'Perfil',
           ),
+
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: const Color.fromARGB(255, 100, 123, 255),
+        selectedItemColor: Color.fromARGB(255, 100, 123, 255),
         onTap: _onItemTapped,
       ),
     );
