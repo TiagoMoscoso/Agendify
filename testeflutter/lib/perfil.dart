@@ -1,47 +1,58 @@
 import 'package:flutter/material.dart';
-import 'package:testeflutter/Classes/ClassUser.dart';
-import 'package:testeflutter/DB/DbTableUser.dart';
 import 'config.dart';
 import 'navBar.dart';
+import 'package:testeflutter/Classes/ClassUser.dart';
 
-Future<void> main() async {
-  ClassUser User = await DbTableUser.GetLastUser();
-  runApp(MaterialApp(
-    home: Profile(User: User),
+
+void main() {
+  runApp(const MaterialApp(
+      home: Profile()
   ));
 }
 
-
 class Profile extends StatelessWidget {
-  final ClassUser User;
-  const Profile({super.key, required this.User});
+  const Profile({super.key});
 
   @override
-
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: "Perfil",
-        routes:  {
-          "/config": (context)=>
-              const ConfigScreen(),
-          /*"/agenda": (context) =>    descomentar quando tiver a tela de agenda
+      title: "Perfil",
+      routes:  {
+        "/config": (context)=>
+        const ConfigScreen(),
+        /*"/agenda": (context) =>    descomentar quando tiver a tela de agenda
               const Agenda(),*/
-        },
-        home: ProfileStateful(User: User),
+      },
+      home: const ProfileStateful(),
     );
   }
 }
 class ProfileStateful extends StatefulWidget {
-  final ClassUser User;
-  const ProfileStateful({super.key, required this.User});
+  const ProfileStateful({super.key});
 
   @override
-  State<ProfileStateful> createState() => _ProfileStatefulState(User : User);
+  State<ProfileStateful> createState() => _ProfileStatefulState();
 }
 
 class _ProfileStatefulState extends State<ProfileStateful> {
-  final ClassUser User;
-  _ProfileStatefulState({required this.User});
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      bottomNavigationBar: BottomNavigationBarExample(),
+      backgroundColor: Color(0xffFAF1E4),
+    );
+  }
+}
+
+
+class ProfileOriginal extends StatefulWidget {
+  const ProfileOriginal({super.key});
+
+  @override
+  State<ProfileOriginal> createState() => _ProfileOriginal();
+}
+
+class _ProfileOriginal extends State<ProfileOriginal> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,19 +64,20 @@ class _ProfileStatefulState extends State<ProfileStateful> {
           ),
         ),
         centerTitle: true,
-        backgroundColor:const Color(0xff9EDDFF),
+        backgroundColor: const Color(0xffEAD7BB),
       ),
+      backgroundColor: const Color(0xffFFF2D8),
       body: Column(
         children: [
           //NOME E FOTO DE PERFIL
           Row(
             children: [
               Image.asset("imagens/fotoperfil2.png", width: 150, height: 100),
-              Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+              const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 75, horizontal: 15),
                   child: Text(
-                    User.getName(),
-                    style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold, fontFamily: "Kanit"),
+                    'Helinho Musk',
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, fontFamily: "Kanit"),
                   )
               )
             ],
@@ -84,14 +96,14 @@ class _ProfileStatefulState extends State<ProfileStateful> {
                     ),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                     child: Row(
                       children: [
-                        const Icon(
+                        Icon(
                             Icons.call
                         ),
-                        Text(User.getTelephone(), style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "Kanit"))
+                        Text("(31) 9 8569-4901", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "Kanit"))
                       ],
                     ),
                   )
@@ -112,12 +124,12 @@ class _ProfileStatefulState extends State<ProfileStateful> {
                   ),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Row(
+                child: const Row(
                   children: [
-                    const Icon(
+                    Icon(
                         Icons.mail
                     ),
-                    Text(User.getEmail(), style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "Kanit"))
+                    Text("pcaillaux@sga.pucminas.com", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "Kanit"))
                   ],
                 ),
               ),
@@ -159,11 +171,9 @@ class _ProfileStatefulState extends State<ProfileStateful> {
           ),
         ],
       ),
-      backgroundColor: const Color(0xffFAF1E4),
     );
   }
 }
-
 
 class ButtonSchedule extends StatefulWidget {
   const ButtonSchedule({super.key});
@@ -215,22 +225,6 @@ class _ButtonConfigState extends State<ButtonConfig> {
           child: const Text("Configurações",
               style: TextStyle(fontSize: 20, fontFamily: "Kanit")),
         )
-      );
-    }
-  }
-
-
-class AppBarTest extends StatefulWidget {
-  const AppBarTest({super.key});
-  @override
-  State<AppBarTest> createState() => _AppBarTestState();
-}
-
-class _AppBarTestState extends State<AppBarTest>{
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      bottomNavigationBar: BottomNavigationBarExample(),
     );
   }
 }
