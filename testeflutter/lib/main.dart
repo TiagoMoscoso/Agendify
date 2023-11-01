@@ -3,9 +3,8 @@ import 'package:testeflutter/Classes/ClassUser.dart';
 import 'package:testeflutter/DB/DbAllData.dart';
 import 'package:testeflutter/DB/DbTableUser.dart';
 import 'package:testeflutter/pagEmpresa.dart';
-import 'package:testeflutter/profile.dart';
+import 'package:testeflutter/perfil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'second.dart';
 import 'mainscreen.dart';
 import 'login/login.dart' as login;
 import 'config.dart' as config;
@@ -21,14 +20,14 @@ Future<void> main() async {
   await DbAllData.createDatabase();
   
   await Firebase.initializeApp(
-  options: DefaultFirebaseOptions.currentPlatform,
-);
-
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  ClassUser user = await DbTableUser.GetLastUser();
+  Profile(user: user);
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  // This widget is the root of your application.
   
   @override
   Widget build(BuildContext context) {
@@ -41,14 +40,13 @@ class MyApp extends StatelessWidget {
             return MaterialApp(
               title: 'Agendify',
               routes: {
-                '/second': (context) => const SecondScreen(),
                 '/mainscreen': (context) => const MainScreen(),
+                '/busca': (context) => const searchBar.SearchPage(),
                 '/login': (context) => const login.Login(),
                 '/config': (context) => const config.ConfigScreen(),
-                '/profile': (context) => Profile(User: user),
-                '/cadastro': (context) => const cadastro.CadastroPage(),
-                '/busca': (context) => const searchBar.SearchPage(),
                 '/agenda': (context) => const agenda.Agenda(),
+                '/perfil': (context) => ProfileOriginal(user: user),
+                '/cadastro': (context) => const cadastro.CadastroPage(),
                 '/pagEmpresa': (context) => const PaginaEmpresa(),
               },
               theme: ThemeData(
@@ -58,7 +56,7 @@ class MyApp extends StatelessWidget {
                   Theme.of(context).textTheme,
                 ),
               ),
-              home: const MyHomePage(title: 'Nav Agendify'),
+              home: const MyHomePage(title: "Nav Agendify"),
               debugShowCheckedModeBanner: false,
             );
           } else {
@@ -74,16 +72,6 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -102,20 +90,9 @@ class _MyHomePageState extends State<MyHomePage>
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
       body: Center(
@@ -149,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage>
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/profile'); // Navigate to 'second' route
+                Navigator.pushNamed(context, '/perfil'); // Navigate to 'second' route
               },
               style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding

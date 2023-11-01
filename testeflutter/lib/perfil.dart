@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:testeflutter/DB/DbTableUser.dart';
 import 'config.dart';
 import 'navBar.dart';
 import 'package:testeflutter/Classes/ClassUser.dart';
 
 
-void main() {
-  runApp(const MaterialApp(
-      home: Profile()
-  ));
+Future<void> main() async {
+  ClassUser user = await DbTableUser.GetLastUser();
+  runApp(Profile(user: user));
 }
 
 class Profile extends StatelessWidget {
-  const Profile({super.key});
+  final ClassUser user;
+  const Profile({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -23,153 +24,218 @@ class Profile extends StatelessWidget {
         /*"/agenda": (context) =>    descomentar quando tiver a tela de agenda
               const Agenda(),*/
       },
-      home: const ProfileStateful(),
+      home: ProfileStateful(user: user),
     );
   }
 }
 class ProfileStateful extends StatefulWidget {
-  const ProfileStateful({super.key});
+  final ClassUser user;
+  const ProfileStateful({super.key, required this.user});
 
   @override
-  State<ProfileStateful> createState() => _ProfileStatefulState();
+  State<ProfileStateful> createState() => _ProfileStatefulState(user: user);
 }
 
 class _ProfileStatefulState extends State<ProfileStateful> {
+  final ClassUser user;
+  _ProfileStatefulState({required this.user});
+
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       bottomNavigationBar: BottomNavigationBarExample(),
       backgroundColor: Color(0xffFAF1E4),
     );
   }
 }
 
+// Future<void> main() async {
+//   ClassUser user = await DbTableUser.GetLastUser();
+//   runApp(ProfileOriginal(user: user));
+// }
 
 class ProfileOriginal extends StatefulWidget {
-  const ProfileOriginal({super.key});
+  final ClassUser user;
+
+  const ProfileOriginal({
+    super.key,
+    required this.user,
+  });
 
   @override
-  State<ProfileOriginal> createState() => _ProfileOriginal();
+  State<ProfileOriginal> createState() => _ProfileOriginal(user: user);
 }
 
 class _ProfileOriginal extends State<ProfileOriginal> {
+  final ClassUser user;
+  _ProfileOriginal({required this.user});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Perfil",
-          style: TextStyle(
-            fontSize: 20.0,
-            color: Color(0xff252B48),
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: const Color(0xffEAD7BB),
-      ),
-      backgroundColor: const Color(0xffFFF2D8),
-      body: Column(
-        children: [
-          //NOME E FOTO DE PERFIL
-          Row(
+      backgroundColor: const Color(0xFFD9D0C7),
+      body: SafeArea(
+        child: Container(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
             children: [
-              Image.asset("imagens/fotoperfil2.png", width: 150, height: 100),
-              const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 75, horizontal: 15),
-                  child: Text(
-                    'Helinho Musk',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, fontFamily: "Kanit"),
-                  )
-              )
-            ],
-          ),
-          //NÚMERO de CELULAR
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                  margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 0),
-                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: const Color(0xffEBE4D1),
-                      width: 2,
+              const Row(
+                children: <Widget>[
+                  Text(
+                    "Perfil",
+                    style: TextStyle(
+                      color: Color(0xFF7E72A6),
+                      fontSize: 36,
+                      fontWeight: FontWeight.bold,
                     ),
-                    borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                  SizedBox(width: 5),
+                  Icon(Icons.person_rounded, color: Color(0xFF7E72A6), size: 36)
+                ],
+              ),
+              const SizedBox(height: 20.0),
+              //NOME E FOTO DE PERFIL
+              Row(
+                children: [
+                  Image.asset("imagens/fotoperfil2.png", width: 150, height: 100),
+                  Text(
+                    user.getName(),
+                    style: const TextStyle(
+                        color: Color(0xFF7E72A6),
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20.0),
+              //NÚMERO de CELULAR
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 15),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(
+                              Icons.call_rounded,
+                              color: Color(0xFF7E72A6),
+                              size: 24,
+                          ),
+                          Text(
+                            user.getTelephone(),
+                            style: const TextStyle(
+                              color: Color(0xFF7E72A6),
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+              
+                ],
+              ),
+              const SizedBox(height: 10.0),
+              //EMAIL
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 15),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(
+                              Icons.mail_rounded,
+                              color: Color(0xFF7E72A6),
+                              size: 24,
+                          ),
+                          Text(
+                            user.getEmail(), 
+                            style: const TextStyle(   
+                              color: Color(0xFF7E72A6),
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              
+              //AGENDA
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
                     child: Row(
                       children: [
                         Icon(
-                            Icons.call
+                            Icons.calendar_month,
+                            color: Color(0xFF7E72A6),
+                            size: 20,
                         ),
-                        Text("(31) 9 8569-4901", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "Kanit"))
+                        SizedBox(width: 5),
+                        ButtonSchedule(),
                       ],
                     ),
                   )
+                ],
               ),
-
-            ],
-          ),
-          //EMAIL
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 50),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: const Color(0xffEBE4D1),
-                    width: 2,
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                    child: Row(
+                      children: [
+                        Icon(
+                            Icons.mail_rounded,
+                            color: Color(0xFF7E72A6),
+                            size: 20,
+                        ),
+                        SizedBox(width: 5),
+                        ButtonConfig()
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(height: 10.0),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(Icons.logout_outlined, color: Colors.red, size: 30),
+                  SizedBox(width: 5),
+                  Text(
+                    "Logout",
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: const Row(
-                  children: [
-                    Icon(
-                        Icons.mail
-                    ),
-                    Text("pcaillaux@sga.pucminas.com", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "Kanit"))
-                  ],
-                ),
+                ],
               ),
             ],
           ),
-
-          //AGENDA
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-                child: Row(
-                  children: [
-                    Icon(
-                        Icons.calendar_month
-                    ),
-                    ButtonSchedule(),
-                  ],
-                ),
-              )
-            ],
-          ),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-                child: Row(
-                  children: [
-                    Icon(
-                        Icons.settings
-                    ),
-                    ButtonConfig()
-                  ],
-                ),
-              )
-            ],
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -189,12 +255,15 @@ class _ButtonScheduleState extends State<ButtonSchedule> {
         child:TextButton(
           style: ButtonStyle(
             foregroundColor: MaterialStateProperty.all<Color>(const Color(0xffFFFFFF)),
-            backgroundColor: MaterialStateProperty.all<Color>(const Color(0xff2E8B57)),
+            backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF7E72A6)),
           ),
           onPressed: (){
-
-          },//VAI PARA A TELA DA AGENDA
-          child: const Text("Agenda", style: TextStyle(fontSize: 20, fontFamily: "Kanit")),
+            //VAI PARA A TELA DA AGENDA
+          },
+          child: const Text(
+            "Agenda",
+            style: TextStyle(fontSize: 20)
+          ),
         )
     );
   }
@@ -215,9 +284,9 @@ class _ButtonConfigState extends State<ButtonConfig> {
         child: ElevatedButton(
           style: ButtonStyle(
             foregroundColor: MaterialStateProperty.all<Color>(
-                const Color(0xff000000)),
+                const Color(0xFFFFFFFF)),
             backgroundColor: MaterialStateProperty.all<Color>(
-                const Color(0xffc1c0c0)),
+                const Color(0xFF7E72A6)),
           ),
           onPressed: () {
             Navigator.pushNamed(context, "/config");

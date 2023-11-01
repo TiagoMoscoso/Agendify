@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'searchBar.dart';
+import 'perfil.dart';
+import 'agenda.dart';
+import 'mainscreen.dart';
 
 void main() => runApp(const BottomNavigationBarExampleApp());
 
@@ -31,18 +34,9 @@ class _BottomNavigationBarExampleState
   static const TextStyle optionStyle =
       TextStyle(fontSize: 12, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Inicio',
-      style: optionStyle,
-    ),
-    Text(
-      'Pesquisa',
-      style: optionStyle,
-    ),
-    Text(
-      'Agenda',
-      style: optionStyle,
-    ),
+    MainScreen(),
+    SearchBar(),
+    Agenda(),
     Text(
       'Perfil',
       style: optionStyle,
