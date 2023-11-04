@@ -1,0 +1,15 @@
+{
+    "uid": "e1bd6e3d-d101-4b06-8385-b220e06fe393",
+    "token": {
+      "sub": "e1bd6e3d-d101-4b06-8385-b220e06fe393",
+      "authFields": {
+        "email": "",
+        "email_verified": false,
+        "phone_number": "",
+        "name": "AgendifyADM"
+      },
+      "firebase": {
+        "sign_in_provider": "google.com"
+      }
+    }
+}

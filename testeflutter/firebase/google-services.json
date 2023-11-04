@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "743578384186",
+    "firebase_url": "https://agendfy-default-rtdb.firebaseio.com",
+    "project_id": "agendfy",
+    "storage_bucket": "agendfy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:743578384186:android:698663f46d4cdbc9188203",
+        "android_client_info": {
+          "package_name": "com.agendify.project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "743578384186-q9mcomuft05hmnj6t1rik3gnass3f7ct.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6Agne1kJqf3oSwx_eF-41BOm9PEJu2RM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "743578384186-q9mcomuft05hmnj6t1rik3gnass3f7ct.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
