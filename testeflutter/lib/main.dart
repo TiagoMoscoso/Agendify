@@ -3,7 +3,7 @@ import 'package:testeflutter/Classes/ClassUser.dart';
 import 'package:testeflutter/DB/DbAllData.dart';
 import 'package:testeflutter/DB/DbTableUser.dart';
 import 'package:testeflutter/pagEmpresa.dart';
-import 'package:testeflutter/profile.dart';
+import 'package:testeflutter/perfil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'second.dart';
 import 'mainscreen.dart';
@@ -14,6 +14,7 @@ import 'searchBar.dart' as searchBar;
 import 'agenda.dart' as agenda;
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'navBar.dart';
 
 
 Future<void> main() async {
@@ -44,12 +45,13 @@ class MyApp extends StatelessWidget {
                 '/second': (context) => const SecondScreen(),
                 '/mainscreen': (context) => const MainScreen(),
                 '/login': (context) => const login.Login(),
-                '/config': (context) => const config.ConfigScreen(),
-                '/profile': (context) => Profile(User: user),
+                '/config': (context) =>  config.ConfigScreen(),
+                '/profile': (context) => Profile(user: user),
                 '/cadastro': (context) => const cadastro.CadastroPage(),
                 '/busca': (context) => const searchBar.SearchPage(),
                 '/agenda': (context) => const agenda.Agenda(),
                 '/pagEmpresa': (context) => const PaginaEmpresa(),
+                '/navBar': (context) => BottomNavigationBarExample(user: user)
               },
               theme: ThemeData(
                 colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
@@ -218,6 +220,18 @@ class _MyHomePageState extends State<MyHomePage>
                 )
               ),
               child: const Text('Página Empresa'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/navBar'); // Navigate to 'second' route
+              },
+              style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20), // Border radius
+                  )
+              ),
+              child: const Text('Nav-Bar-Interação-De-Telas'),
             ),
           ],
         ),
