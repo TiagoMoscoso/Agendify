@@ -5,9 +5,9 @@ import 'package:testeflutter/Classes/ClassUser.dart';
 import 'package:testeflutter/DB/DbTableUser.dart';
 import 'package:testeflutter/login/campo_texto.dart';
 import 'package:testeflutter/login/botao.dart';
-import 'package:testeflutter/profile.dart';
+import 'package:testeflutter/perfil.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'second.dart'; // Importe a classe SecondScreen
+import 'package:testeflutter/navBar.dart';
 
 class Cadastro {
   final String nome;
@@ -140,7 +140,7 @@ class _CadastroPageState extends State<CadastroPage> {
 
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => Profile(User: user)),
+      MaterialPageRoute(builder: (context) => BottomNavigationBarExample(user: user)),
     );
   }
 
