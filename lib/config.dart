@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'main.dart';
-import 'package:testeflutter/Cadastro.dart';
+import 'package:testeflutter/login/login.dart';
 void main() {
   runApp(const MaterialApp(
       home: ConfigScreen()
@@ -17,8 +17,8 @@ class ConfigButton extends StatelessWidget {
       routes:  {
         "/exit": (context)=>
          MyApp(),
-        "/cadastro": (context)=>
-        CadastroPage(),
+        "/login": (context)=>
+            Login(),
       },
       home: ConfigScreen(),
     );
@@ -244,7 +244,7 @@ class _ConfigScreen extends State<ConfigScreen> {
                               content: const Text("Deseja realmente sair do aplicativo?"),
                               actions: [
                                 TextButton(onPressed: ()=> Navigator.pop(context), child: const Text('Cancelar')),
-                                TextButton(onPressed: ()=> Navigator.pushNamed(context, "/cadastro"), child: const Text('Ok'))
+                                TextButton(onPressed: ()=> Navigator.pushNamed(context, "/login"), child: const Text('Ok'))
                               ],
                             ));
                           },//LOGOUT

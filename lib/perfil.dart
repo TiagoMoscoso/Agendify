@@ -69,7 +69,7 @@ class _ProfileOriginal extends State<ProfileOriginal> {
                     ),
                   ),
                   SizedBox(width: 5),
-                  Icon(Icons.person_rounded, color: Color(0xFF7E72A6), size: 36)
+                  Icon(Icons.person_rounded, color: Color(0xFF7E72A6), size: 36),
                 ],
               ),
               const SizedBox(height: 20.0),
@@ -222,7 +222,7 @@ class _ButtonScheduleState extends State<ButtonSchedule> {
             backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF7E72A6)),
           ),
           onPressed: (){
-            //VAI PARA A TELA DA AGENDA
+            Navigator.pushNamed(context, "/agenda");//VAI PARA A TELA DA AGENDA
           },
           child: const Text(
               "Agenda",

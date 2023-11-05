@@ -137,7 +137,6 @@ class _CadastroPageState extends State<CadastroPage> {
     user.setEmail(cadastro.email);
     user.setTelephone(cadastro.telefone);
     user.setIdUser(await DbTableUser.addUsertoTables(user));
-
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => BottomNavigationBarExample(user: user)),
