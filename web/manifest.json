@@ -1,6 +1,11 @@
 {
+<<<<<<< HEAD
     "name": "testeflutter",
     "short_name": "testeflutter",
+=======
+    "name": "profile",
+    "short_name": "profile",
+>>>>>>> b7944b51c2c486a6d80ae1a4fd29d7e416bd4ae8
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -168,7 +168,12 @@
 		97C146E61CF9000F007C117D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+<<<<<<< HEAD
 				LastUpgradeCheck = 1300;
+=======
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+>>>>>>> b7944b51c2c486a6d80ae1a4fd29d7e416bd4ae8
 				ORGANIZATIONNAME = "";
 				TargetAttributes = {
 					331C8080294A63A400263BE5 = {
@@ -366,7 +371,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+<<<<<<< HEAD
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.testeflutter;
+=======
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.profile;
+>>>>>>> b7944b51c2c486a6d80ae1a4fd29d7e416bd4ae8
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -383,7 +392,11 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
+<<<<<<< HEAD
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.testeflutter.RunnerTests;
+=======
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.profile.RunnerTests;
+>>>>>>> b7944b51c2c486a6d80ae1a4fd29d7e416bd4ae8
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -401,7 +414,11 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
+<<<<<<< HEAD
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.testeflutter.RunnerTests;
+=======
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.profile.RunnerTests;
+>>>>>>> b7944b51c2c486a6d80ae1a4fd29d7e416bd4ae8
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Runner.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Runner";
@@ -417,7 +434,11 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
+<<<<<<< HEAD
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.testeflutter.RunnerTests;
+=======
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.profile.RunnerTests;
+>>>>>>> b7944b51c2c486a6d80ae1a4fd29d7e416bd4ae8
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Runner.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Runner";
@@ -544,7 +565,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+<<<<<<< HEAD
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.testeflutter;
+=======
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.profile;
+>>>>>>> b7944b51c2c486a6d80ae1a4fd29d7e416bd4ae8
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -566,7 +591,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+<<<<<<< HEAD
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.testeflutter;
+=======
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.profile;
+>>>>>>> b7944b51c2c486a6d80ae1a4fd29d7e416bd4ae8
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

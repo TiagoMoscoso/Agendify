@@ -5,10 +5,17 @@
 // 'flutter create' template.
 
 // The application's name. By default this is also the title of the Flutter window.
+<<<<<<< HEAD
 PRODUCT_NAME = testeflutter
 
 // The application's bundle identifier
 PRODUCT_BUNDLE_IDENTIFIER = com.example.testeflutter
+=======
+PRODUCT_NAME = profile
+
+// The application's bundle identifier
+PRODUCT_BUNDLE_IDENTIFIER = com.example.profile
+>>>>>>> b7944b51c2c486a6d80ae1a4fd29d7e416bd4ae8
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2023 com.example. All rights reserved.

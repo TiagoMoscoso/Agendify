@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'perfil.dart';
 import 'agenda.dart';
 import 'searchBar.dart';
@@ -12,10 +13,21 @@ class BottomNavigationBarExample extends StatefulWidget {
   @override
   State<BottomNavigationBarExample> createState() =>
       _BottomNavigationBarExampleState(user: user);
+=======
+import 'profile.dart';
+
+class BottomNavigationBarExample extends StatefulWidget {
+  const BottomNavigationBarExample({super.key});
+
+  @override
+  State<BottomNavigationBarExample> createState() =>
+      _BottomNavigationBarExampleState();
+>>>>>>> b7944b51c2c486a6d80ae1a4fd29d7e416bd4ae8
 }
 
 class _BottomNavigationBarExampleState
     extends State<BottomNavigationBarExample> {
+<<<<<<< HEAD
   final ClassUser user; // Declare uma variável para armazenar o User
 
   _BottomNavigationBarExampleState({required this.user}); // Construtor que recebe o User
@@ -28,6 +40,25 @@ class _BottomNavigationBarExampleState
     const SearchPage(),
     const Agenda(),
     Profile(user: user),
+=======
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle =
+  TextStyle(fontSize: 12, fontWeight: FontWeight.bold);
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'Inicio',
+      style: optionStyle,
+    ),
+    Text(
+      'Pesquisa',
+      style: optionStyle,
+    ),
+    Text(
+      'Agenda',
+      style: optionStyle,
+    ),
+    ProfileOriginal(),
+>>>>>>> b7944b51c2c486a6d80ae1a4fd29d7e416bd4ae8
   ];
 
   void _onItemTapped(int index) {
@@ -40,7 +71,11 @@ class _BottomNavigationBarExampleState
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
+<<<<<<< HEAD
         child: _widgetOptions(user).elementAt(_selectedIndex), // Passe o User como argumento
+=======
+        child: _widgetOptions.elementAt(_selectedIndex),
+>>>>>>> b7944b51c2c486a6d80ae1a4fd29d7e416bd4ae8
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -48,7 +83,11 @@ class _BottomNavigationBarExampleState
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
+<<<<<<< HEAD
             label: 'Inicio',
+=======
+            label: 'Início',
+>>>>>>> b7944b51c2c486a6d80ae1a4fd29d7e416bd4ae8
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search_outlined),

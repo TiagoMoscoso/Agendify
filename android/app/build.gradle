@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+=======
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+}
+
+>>>>>>> b7944b51c2c486a6d80ae1a4fd29d7e416bd4ae8
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
@@ -6,11 +15,14 @@ if (localPropertiesFile.exists()) {
     }
 }
 
+<<<<<<< HEAD
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
     throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
+=======
+>>>>>>> b7944b51c2c486a6d80ae1a4fd29d7e416bd4ae8
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
     flutterVersionCode = '1'
@@ -21,12 +33,17 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+<<<<<<< HEAD
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
     namespace "com.example.testeflutter"
+=======
+android {
+    namespace "com.example.profile"
+>>>>>>> b7944b51c2c486a6d80ae1a4fd29d7e416bd4ae8
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
@@ -45,14 +62,21 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+<<<<<<< HEAD
         applicationId "com.example.testeflutter"
+=======
+        applicationId "com.example.profile"
+>>>>>>> b7944b51c2c486a6d80ae1a4fd29d7e416bd4ae8
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+<<<<<<< HEAD
         multiDexEnabled true
+=======
+>>>>>>> b7944b51c2c486a6d80ae1a4fd29d7e416bd4ae8
     }
 
     buildTypes {
@@ -68,6 +92,10 @@ flutter {
     source '../..'
 }
 
+<<<<<<< HEAD
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
+=======
+dependencies {}
+>>>>>>> b7944b51c2c486a6d80ae1a4fd29d7e416bd4ae8

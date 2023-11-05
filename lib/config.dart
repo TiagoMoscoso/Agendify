@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'main.dart';
 import 'package:testeflutter/login/login.dart';
 void main() {
@@ -24,6 +25,16 @@ class ConfigButton extends StatelessWidget {
     );
   }
 }
+=======
+import 'package:flutter/services.dart';
+
+/*void main() {
+  runApp(const MaterialApp(
+      home: ConfigScreen()
+  ));
+}*/
+
+>>>>>>> b7944b51c2c486a6d80ae1a4fd29d7e416bd4ae8
 
 class ConfigScreen extends StatefulWidget {
   const ConfigScreen({super.key});
@@ -32,6 +43,7 @@ class ConfigScreen extends StatefulWidget {
 }
 
 class _ConfigScreen extends State<ConfigScreen> {
+<<<<<<< HEAD
   bool isOn = false;
   TextEditingController textController1 = TextEditingController();
   TextEditingController textController2 = TextEditingController();
@@ -58,6 +70,10 @@ class _ConfigScreen extends State<ConfigScreen> {
     );
   }
 
+=======
+  bool receberNotificacao = true;
+  @override
+>>>>>>> b7944b51c2c486a6d80ae1a4fd29d7e416bd4ae8
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -75,6 +91,7 @@ class _ConfigScreen extends State<ConfigScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+<<<<<<< HEAD
                 const Icon(Icons.notification_add),
                 const Text("Deseja receber notificações?", style: TextStyle(fontSize: 20, fontFamily: "Kanit")),
                 const SizedBox(height: 20),
@@ -85,6 +102,27 @@ class _ConfigScreen extends State<ConfigScreen> {
                       isOn = newValue;
                     });
                   },
+=======
+                Padding(padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 0),
+                  child: Row(
+                    children:[
+                      const Icon(Icons.notification_add),
+                      const Text("Deseja receber notificações?", style: TextStyle(fontSize: 20, fontFamily: "Kanit")),
+                      SizedBox(
+                        width: 50,
+                        child: FloatingActionButton(
+                          onPressed: (){
+                            setState(() {
+                              receberNotificacao = !receberNotificacao;
+                            });
+                          },
+                          backgroundColor: receberNotificacao?const Color(0xff008000):const Color(0xffFF0000),
+
+                        ),
+                      )
+                  ],
+                  ),
+>>>>>>> b7944b51c2c486a6d80ae1a4fd29d7e416bd4ae8
                 ),
               ],
           ),
@@ -92,6 +130,7 @@ class _ConfigScreen extends State<ConfigScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
+<<<<<<< HEAD
                 padding: const EdgeInsets.symmetric(vertical: 45, horizontal: 0),
                 child: Row(
                   /*Botão para alterar a senha*/
@@ -226,19 +265,27 @@ class _ConfigScreen extends State<ConfigScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 0),
+=======
+                padding: const EdgeInsets.symmetric(vertical: 150, horizontal: 0),
+>>>>>>> b7944b51c2c486a6d80ae1a4fd29d7e416bd4ae8
                 child: Row(
                   children: [
                     const Icon(
                         Icons.logout
                     ),
                     SizedBox(
+<<<<<<< HEAD
                         width: 275,
+=======
+                        width: 250,
+>>>>>>> b7944b51c2c486a6d80ae1a4fd29d7e416bd4ae8
                         child:TextButton(
                           style: ButtonStyle(
                             foregroundColor: MaterialStateProperty.all<Color>(const Color(0xff000000)),
                             backgroundColor: MaterialStateProperty.all<Color>(const Color(0xffAEC3AE)),
                           ),
                           onPressed: (){
+<<<<<<< HEAD
                             showDialog(context: context, builder: (context)=> AlertDialog(
                               //title: const Text(""),
                               content: const Text("Deseja realmente sair do aplicativo?"),
@@ -247,6 +294,9 @@ class _ConfigScreen extends State<ConfigScreen> {
                                 TextButton(onPressed: ()=> Navigator.pushNamed(context, "/login"), child: const Text('Ok'))
                               ],
                             ));
+=======
+                            exit(0);
+>>>>>>> b7944b51c2c486a6d80ae1a4fd29d7e416bd4ae8
                           },//LOGOUT
                           child: const Text("Sair", style: TextStyle(fontSize: 20, fontFamily: "Kanit")),
                         )
@@ -255,7 +305,11 @@ class _ConfigScreen extends State<ConfigScreen> {
                 ),
               )
             ],
+<<<<<<< HEAD
           ),
+=======
+          )
+>>>>>>> b7944b51c2c486a6d80ae1a4fd29d7e416bd4ae8
         ],
       ),
       backgroundColor: const Color(0xffFAF1E4),
