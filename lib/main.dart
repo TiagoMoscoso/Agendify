@@ -20,17 +20,17 @@ import 'navBar.dart';
 Future<void> main() async {
   runApp(const MyApp());
   await DbAllData.createDatabase();
-  
+
   await Firebase.initializeApp(
-  options: DefaultFirebaseOptions.currentPlatform,
-);
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   // This widget is the root of your application.
-  
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<ClassUser>(
@@ -92,7 +92,7 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> 
+class _MyHomePageState extends State<MyHomePage>
 {
   String enteredText = '';
 
@@ -124,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            
+
             ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/login'); // Navigate to 'second' route
@@ -132,8 +132,8 @@ class _MyHomePageState extends State<MyHomePage>
               style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding
                   shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20), // Border radius
-                )
+                    borderRadius: BorderRadius.circular(20), // Border radius
+                  )
               ),
               child: const Text('Login'),
             ),
@@ -144,8 +144,8 @@ class _MyHomePageState extends State<MyHomePage>
               style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding
                   shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20), // Border radius
-                )
+                    borderRadius: BorderRadius.circular(20), // Border radius
+                  )
               ),
               child: const Text('Tela Principal'),
             ),
@@ -156,8 +156,8 @@ class _MyHomePageState extends State<MyHomePage>
               style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding
                   shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20), // Border radius
-                )
+                    borderRadius: BorderRadius.circular(20), // Border radius
+                  )
               ),
               child: const Text('Perfil'),
             ),
@@ -168,8 +168,8 @@ class _MyHomePageState extends State<MyHomePage>
               style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding
                   shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20), // Border radius
-                )
+                    borderRadius: BorderRadius.circular(20), // Border radius
+                  )
               ),
               child: const Text('Configurações'),
             ),
@@ -180,8 +180,8 @@ class _MyHomePageState extends State<MyHomePage>
               style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding
                   shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20), // Border radius
-                )
+                    borderRadius: BorderRadius.circular(20), // Border radius
+                  )
               ),
               child: const Text('Cadastro'),
             ),
@@ -192,8 +192,8 @@ class _MyHomePageState extends State<MyHomePage>
               style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding
                   shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20), // Border radius
-                )
+                    borderRadius: BorderRadius.circular(20), // Border radius
+                  )
               ),
               child: const Text('Busca'),
             ),
@@ -204,8 +204,8 @@ class _MyHomePageState extends State<MyHomePage>
               style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding
                   shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20), // Border radius
-                )
+                    borderRadius: BorderRadius.circular(20), // Border radius
+                  )
               ),
               child: const Text('Agenda'),
             ),
@@ -216,8 +216,8 @@ class _MyHomePageState extends State<MyHomePage>
               style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding
                   shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20), // Border radius
-                )
+                    borderRadius: BorderRadius.circular(20), // Border radius
+                  )
               ),
               child: const Text('Página Empresa'),
             ),
@@ -235,9 +235,9 @@ class _MyHomePageState extends State<MyHomePage>
             ),
           ],
         ),
-        
+
       ),
-       // This trailing comma makes auto-formatting nicer for build methods.
+      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

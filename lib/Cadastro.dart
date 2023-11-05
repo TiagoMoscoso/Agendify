@@ -61,42 +61,42 @@ class _CadastroPageState extends State<CadastroPage> {
         senha.isEmpty ||
         confirmarSenha.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'Todos os campos são obrigatórios.',
-            textAlign: TextAlign.center,
-            selectionColor: Colors.white,
-          ),
-          backgroundColor: Color(0xFF7E72A6),
-        )
+          const SnackBar(
+            content: Text(
+              'Todos os campos são obrigatórios.',
+              textAlign: TextAlign.center,
+              selectionColor: Colors.white,
+            ),
+            backgroundColor: Color(0xFF7E72A6),
+          )
       );
       return;
     }
-    
+
     if(!formatacaoEmail.hasMatch(email)) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'Formato Inválido de E-mail.',
-            textAlign: TextAlign.center,
-            selectionColor: Color(0xFFFFFFFF),
-          ),
-          backgroundColor: Color(0xFF7E72A6),
-        )
+          const SnackBar(
+            content: Text(
+              'Formato Inválido de E-mail.',
+              textAlign: TextAlign.center,
+              selectionColor: Color(0xFFFFFFFF),
+            ),
+            backgroundColor: Color(0xFF7E72A6),
+          )
       );
       return;
     }
 
     if (senha != confirmarSenha) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'As senhas não coincidem.',
-            textAlign: TextAlign.center,
-            selectionColor: Color(0xFFFFFFFF),
-          ),
-          backgroundColor: Color(0xFF7E72A6),
-        )
+          const SnackBar(
+            content: Text(
+              'As senhas não coincidem.',
+              textAlign: TextAlign.center,
+              selectionColor: Color(0xFFFFFFFF),
+            ),
+            backgroundColor: Color(0xFF7E72A6),
+          )
       );
       return;
     }
@@ -106,14 +106,14 @@ class _CadastroPageState extends State<CadastroPage> {
 
     if (telefone.length != 15) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'O número de telefone deve ter 11 dígitos',
-            textAlign: TextAlign.center,
-            selectionColor: Color(0xFFFFFFFF),
-          ),
-          backgroundColor: Color(0xFF7E72A6),
-        )
+          const SnackBar(
+            content: Text(
+              'O número de telefone deve ter 11 dígitos',
+              textAlign: TextAlign.center,
+              selectionColor: Color(0xFFFFFFFF),
+            ),
+            backgroundColor: Color(0xFF7E72A6),
+          )
       );
       return;
     }
@@ -171,45 +171,45 @@ class _CadastroPageState extends State<CadastroPage> {
                 CampoTexto(
                   inputFormatters: [],
                   keyboardType: TextInputType.name,
-                  obscureText: false, 
-                  controller: _nomeController, 
-                  hintText: 'Nome', 
+                  obscureText: false,
+                  controller: _nomeController,
+                  hintText: 'Nome',
                   prefixIcon: const Icon(Icons.person_rounded),
                 ),
                 const SizedBox(height: 15.0),
                 CampoTexto(
                   inputFormatters: _telefoneInputFormatters,
                   keyboardType: TextInputType.phone,
-                  obscureText: false, 
-                  controller: _telefoneController, 
-                  hintText: 'Telefone', 
+                  obscureText: false,
+                  controller: _telefoneController,
+                  hintText: 'Telefone',
                   prefixIcon: const Icon(Icons.phone_rounded),
                 ),
                 const SizedBox(height: 15.0),
                 CampoTexto(
                   inputFormatters: [],
                   keyboardType: TextInputType.emailAddress,
-                  obscureText: false, 
-                  controller: _emailController, 
-                  hintText: 'E-mail', 
+                  obscureText: false,
+                  controller: _emailController,
+                  hintText: 'E-mail',
                   prefixIcon: const Icon(Icons.mail_rounded),
                 ),
                 const SizedBox(height: 15.0),
                 CampoTexto(
                   inputFormatters: [],
                   keyboardType: TextInputType.text,
-                  obscureText: true, 
-                  controller: _senhaController, 
-                  hintText: 'Senha', 
+                  obscureText: true,
+                  controller: _senhaController,
+                  hintText: 'Senha',
                   prefixIcon: const Icon(Icons.lock_rounded),
                 ),
                 const SizedBox(height: 15.0),
                 CampoTexto(
                   inputFormatters: [],
                   keyboardType: TextInputType.text,
-                  obscureText: true, 
-                  controller: _confirmarSenhaController, 
-                  hintText: 'Confirmação de Senha', 
+                  obscureText: true,
+                  controller: _confirmarSenhaController,
+                  hintText: 'Confirmação de Senha',
                   prefixIcon: const Icon(Icons.lock),
                 ),
                 const SizedBox(height: 20.0),

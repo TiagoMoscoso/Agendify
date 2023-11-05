@@ -20,9 +20,9 @@ class Profile extends StatelessWidget {
       title: "Perfil",
       routes:  {
         "/config": (context)=>
-         ConfigButton(),
+            ConfigButton(),
         "/agenda": (context) =>
-              const Agenda(),
+        const Agenda(),
       },
       home: ProfileOriginal(user: user),
     );
