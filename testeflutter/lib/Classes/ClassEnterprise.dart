@@ -17,9 +17,9 @@ class ClassEnterprise
 
   setEnterpriseById(idEnterprise)
   {
-    //pega do db pelo idEnterprise
+   
     _idEnterprise = idEnterprise;
-    //_name = name;
+  
   }
 
   getNameEnterprise()

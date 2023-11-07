@@ -5,6 +5,7 @@ import 'package:testeflutter/DB/DbTableUser.dart';
 import 'package:testeflutter/pagEmpresa.dart';
 import 'package:testeflutter/perfil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'second.dart';
 import 'mainscreen.dart';
 import 'login/login.dart' as login;
 import 'config.dart' as config;
@@ -13,22 +14,23 @@ import 'searchBar.dart' as searchBar;
 import 'agenda.dart' as agenda;
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'navBar.dart';
 
 
 Future<void> main() async {
   runApp(const MyApp());
   await DbAllData.createDatabase();
-  
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  ClassUser user = await DbTableUser.GetLastUser();
-  Profile(user: user);
+
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  
+  // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<ClassUser>(
@@ -37,26 +39,37 @@ class MyApp extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasData) {
             ClassUser user = snapshot.data!;
+            var home;
+            if(user.getName() != null)
+            {
+              home = BottomNavigationBarExample(user: user);
+            }
+            else
+            {
+              home = login.Login();
+            }
             return MaterialApp(
               title: 'Agendify',
               routes: {
+                '/second': (context) => const SecondScreen(),
                 '/mainscreen': (context) => const MainScreen(),
-                '/busca': (context) => const searchBar.SearchPage(),
                 '/login': (context) => const login.Login(),
-                '/config': (context) => const config.ConfigScreen(),
-                '/agenda': (context) => const agenda.Agenda(),
-                '/perfil': (context) => ProfileOriginal(user: user),
+                '/config': (context) =>  config.ConfigScreen(),
+                '/profile': (context) => Profile(user: user),
                 '/cadastro': (context) => const cadastro.CadastroPage(),
+                '/busca': (context) => const searchBar.SearchPage(),
+                '/agenda': (context) => const agenda.Agenda(),
                 '/pagEmpresa': (context) => const PaginaEmpresa(),
+                '/navBar': (context) => BottomNavigationBarExample(user: user)
               },
               theme: ThemeData(
-                colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
+                colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
                 useMaterial3: true,
                 textTheme: GoogleFonts.rubikTextTheme(
                   Theme.of(context).textTheme,
                 ),
               ),
-              home: const MyHomePage(title: "Nav Agendify"),
+              home: home,
               debugShowCheckedModeBanner: false,
             );
           } else {
@@ -72,13 +85,23 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
+
+  // This widget is the home page of your application. It is stateful, meaning
+  // that it has a State object (defined below) that contains fields that affect
+  // how it looks.
+
+  // This class is the configuration for the state. It holds the values (in this
+  // case the title) provided by the parent (in this case the App widget) and
+  // used by the build method of the State. Fields in a Widget subclass are
+  // always marked "final".
+
   final String title;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> 
+class _MyHomePageState extends State<MyHomePage>
 {
   String enteredText = '';
 
@@ -90,16 +113,27 @@ class _MyHomePageState extends State<MyHomePage>
 
   @override
   Widget build(BuildContext context) {
+    // This method is rerun every time setState is called, for instance as done
+    // by the _incrementCounter method above.
+    //
+    // The Flutter framework has been optimized to make rerunning build methods
+    // fast, so that you can just rebuild anything that needs updating rather
+    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
+        // TRY THIS: Try changing the color here to a specific color (to
+        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
+        // change color while the other colors stay the same.
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        // Here we take the value from the MyHomePage object that was created by
+        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
       body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            
+
             ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/login'); // Navigate to 'second' route
@@ -107,8 +141,8 @@ class _MyHomePageState extends State<MyHomePage>
               style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding
                   shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20), // Border radius
-                )
+                    borderRadius: BorderRadius.circular(20), // Border radius
+                  )
               ),
               child: const Text('Login'),
             ),
@@ -119,20 +153,20 @@ class _MyHomePageState extends State<MyHomePage>
               style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding
                   shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20), // Border radius
-                )
+                    borderRadius: BorderRadius.circular(20), // Border radius
+                  )
               ),
               child: const Text('Tela Principal'),
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/perfil'); // Navigate to 'second' route
+                Navigator.pushNamed(context, '/profile'); // Navigate to 'second' route
               },
               style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding
                   shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20), // Border radius
-                )
+                    borderRadius: BorderRadius.circular(20), // Border radius
+                  )
               ),
               child: const Text('Perfil'),
             ),
@@ -143,8 +177,8 @@ class _MyHomePageState extends State<MyHomePage>
               style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding
                   shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20), // Border radius
-                )
+                    borderRadius: BorderRadius.circular(20), // Border radius
+                  )
               ),
               child: const Text('Configurações'),
             ),
@@ -155,8 +189,8 @@ class _MyHomePageState extends State<MyHomePage>
               style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding
                   shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20), // Border radius
-                )
+                    borderRadius: BorderRadius.circular(20), // Border radius
+                  )
               ),
               child: const Text('Cadastro'),
             ),
@@ -167,8 +201,8 @@ class _MyHomePageState extends State<MyHomePage>
               style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding
                   shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20), // Border radius
-                )
+                    borderRadius: BorderRadius.circular(20), // Border radius
+                  )
               ),
               child: const Text('Busca'),
             ),
@@ -179,8 +213,8 @@ class _MyHomePageState extends State<MyHomePage>
               style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding
                   shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20), // Border radius
-                )
+                    borderRadius: BorderRadius.circular(20), // Border radius
+                  )
               ),
               child: const Text('Agenda'),
             ),
@@ -191,16 +225,28 @@ class _MyHomePageState extends State<MyHomePage>
               style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding
                   shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20), // Border radius
-                )
+                    borderRadius: BorderRadius.circular(20), // Border radius
+                  )
               ),
               child: const Text('Página Empresa'),
             ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/navBar'); // Navigate to 'second' route
+              },
+              style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20), // Border radius
+                  )
+              ),
+              child: const Text('Nav-Bar-Interação-De-Telas'),
+            ),
           ],
         ),
-        
+
       ),
-       // This trailing comma makes auto-formatting nicer for build methods.
+      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

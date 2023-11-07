@@ -50,7 +50,7 @@ class _AgendaState extends State<Agenda> {
                   ElevatedButton(
                     onPressed: () {
                       _eventos.addAll({
-                        _diaSelecionado!: [Evento(hora: _controladorEvento.text)],
+                        _diaSelecionado!: [Evento(nome: _controladorEvento.text)],
                       });
                       Navigator.of(context).pop();
                       _eventosSelecionados.value = _getEventosDoDia(_diaSelecionado!);

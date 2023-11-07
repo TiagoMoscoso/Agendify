@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:crypto/crypto.dart';
 
-String Converter(String inputString){
+String Converter(String inputString)
+{
 
   //Pega os bytes
   Uint8List bytes = Uint8List.fromList(utf8.encode(inputString));

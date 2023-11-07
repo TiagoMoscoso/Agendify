@@ -1,42 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:testeflutter/DB/DbTableUser.dart';
-import 'package:testeflutter/perfil.dart';
 import 'perfil.dart';
 import 'agenda.dart';
 import 'searchBar.dart';
 import 'mainscreen.dart';
+import 'package:testeflutter/Classes/ClassUser.dart';
 
 class BottomNavigationBarExample extends StatefulWidget {
-  BottomNavigationBarExample({Key? key}) : super(key: key);
+  final ClassUser user;
+  const BottomNavigationBarExample({super.key, required this.user});
 
   @override
   State<BottomNavigationBarExample> createState() =>
-      _BottomNavigationBarExampleState();
+      _BottomNavigationBarExampleState(user: user);
 }
 
-class _BottomNavigationBarExampleState extends State<BottomNavigationBarExample> {
+class _BottomNavigationBarExampleState
+    extends State<BottomNavigationBarExample> {
+  final ClassUser user; // Declare uma variável para armazenar o User
+
+  _BottomNavigationBarExampleState({required this.user}); // Construtor que recebe o User
+
   int _selectedIndex = 0;
-  static const TextStyle optionStyle = TextStyle(fontSize: 12, fontWeight: FontWeight.bold);
-
-  List<Widget> _widgetOptions = [];
-
-  @override
-  void initState() {
-    super.initState();
-    loadUserData();
-  }
-
-  Future<void> loadUserData() async {
-    final user = await DbTableUser.GetLastUser();
-    setState(() {
-      _widgetOptions = [
-        MainScreen(),
-        SearchPage(),
-        Agenda(),
-        //ProfileOriginal(user: user),
-      ];
-    });
-  }
+  static const TextStyle optionStyle =
+  TextStyle(fontSize: 12, fontWeight: FontWeight.bold);
+  static List<Widget> _widgetOptions(ClassUser user) => <Widget>[
+    const MainScreen(),
+    const SearchPage(),
+    const Agenda(),
+    Profile(user: user),
+  ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -48,7 +40,7 @@ class _BottomNavigationBarExampleState extends State<BottomNavigationBarExample>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: _widgetOptions(user).elementAt(_selectedIndex), // Passe o User como argumento
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -56,7 +48,7 @@ class _BottomNavigationBarExampleState extends State<BottomNavigationBarExample>
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
-            label: 'Iní­cio',
+            label: 'Inicio',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search_outlined),

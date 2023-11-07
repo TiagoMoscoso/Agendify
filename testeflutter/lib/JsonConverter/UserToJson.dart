@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:testeflutter/Classes/ClassUser.dart';
 
 Map<String, dynamic> UserToJson(ClassUser user) {
@@ -11,3 +13,4 @@ Map<String, dynamic> UserToJson(ClassUser user) {
     }
   };
 }
+

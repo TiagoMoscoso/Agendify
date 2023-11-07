@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:testeflutter/Classes/ClassUser.dart';
 import 'package:testeflutter/DB/DbTableUser.dart';
+import 'package:testeflutter/Firebase/Db/UserTableFB.dart';
 import 'package:testeflutter/login/campo_texto.dart';
 import 'package:testeflutter/login/botao.dart';
+import 'package:testeflutter/navBar.dart';
 import 'package:testeflutter/perfil.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart'; 
 
@@ -100,6 +102,21 @@ class _CadastroPageState extends State<CadastroPage> {
       return;
     }
 
+    if(await UserTableFB.EmailRegistred(email))
+    {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Email ja cadastrado.',
+            textAlign: TextAlign.center,
+            selectionColor: Color(0xFFFFFFFF),
+          ),
+          backgroundColor: Color(0xFF7E72A6),
+        )
+      );
+      return;
+    }
+
     // Remove caracteres não numéricos do telefone
     // String telefoneNumerico = telefone.replaceAll(RegExp(r'[^\d]+'), '');
 
@@ -135,11 +152,13 @@ class _CadastroPageState extends State<CadastroPage> {
     user.setName(cadastro.nome);
     user.setEmail(cadastro.email);
     user.setTelephone(cadastro.telefone);
-    user.setIdUser(await DbTableUser.addUsertoTables(user));
-
+    user.setIdUser(await UserTableFB.InsertInDatabase(user, senha));
+    user.setPhoto(await UserTableFB.GetUserPhotoFromFbDb(user.getIdUser()));
+    await DbTableUser.addUsertoTables(user);
+    
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ProfileOriginal(user: user)),
+      MaterialPageRoute(builder: (context) => BottomNavigationBarExample(user: user)),
     );
   }
 

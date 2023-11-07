@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:testeflutter/Classes/ClassUser.dart';
+import 'package:testeflutter/DB/DbTableUser.dart';
 import 'main.dart';
-import 'package:testeflutter/Cadastro.dart';
+import 'package:testeflutter/login/login.dart';
 void main() {
   runApp(const MaterialApp(
       home: ConfigScreen()
@@ -16,9 +18,9 @@ class ConfigButton extends StatelessWidget {
       title: "Perfil",
       routes:  {
         "/exit": (context)=>
-         MyApp(),
-        "/cadastro": (context)=>
-        CadastroPage(),
+            MyApp(),
+        "/login": (context)=>
+            Login(),
       },
       home: ConfigScreen(),
     );
@@ -72,21 +74,21 @@ class _ConfigScreen extends State<ConfigScreen> {
       ),
       body: Column(
         children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.notification_add),
-                const Text("Deseja receber notificações?", style: TextStyle(fontSize: 20, fontFamily: "Kanit")),
-                const SizedBox(height: 20),
-                Switch(
-                  value: isOn,
-                  onChanged: (bool newValue) {
-                    setState(() {
-                      isOn = newValue;
-                    });
-                  },
-                ),
-              ],
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.notification_add),
+              const Text("Deseja receber notificações?", style: TextStyle(fontSize: 20, fontFamily: "Kanit")),
+              const SizedBox(height: 20),
+              Switch(
+                value: isOn,
+                onChanged: (bool newValue) {
+                  setState(() {
+                    isOn = newValue;
+                  });
+                },
+              ),
+            ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -109,60 +111,60 @@ class _ConfigScreen extends State<ConfigScreen> {
                           onPressed: (){
                             showDialog(context: context,
                                 builder: (context) =>
-                                  StatefulBuilder(
-                                    builder: (context, setState){
-                                      return AlertDialog(
-                                        title: const Text("Troca de senha"),
-                                        scrollable: true,
-                                        content: Column(
-                                          children: [
-                                            Row(
-                                                children: <Widget>[
-                                                  const Padding(
-                                                    padding: EdgeInsets.all(8.0),
-                                                    child: Icon(Icons.person, color: Colors.black),
-                                                  ),
-                                                  Expanded(
-                                                    child: TextField(
-                                                      controller: textController1,
-                                                      obscureText: !senhaVisivel,
-                                                      decoration: const InputDecoration(
-                                                        border: InputBorder.none, // Remove the default border
-                                                        hintText: 'Nova senha',
+                                    StatefulBuilder(
+                                      builder: (context, setState){
+                                        return AlertDialog(
+                                          title: const Text("Troca de senha"),
+                                          scrollable: true,
+                                          content: Column(
+                                            children: [
+                                              Row(
+                                                  children: <Widget>[
+                                                    const Padding(
+                                                      padding: EdgeInsets.all(8.0),
+                                                      child: Icon(Icons.person, color: Colors.black),
+                                                    ),
+                                                    Expanded(
+                                                      child: TextField(
+                                                        controller: textController1,
+                                                        obscureText: !senhaVisivel,
+                                                        decoration: const InputDecoration(
+                                                          border: InputBorder.none, // Remove the default border
+                                                          hintText: 'Nova senha',
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                ]
-                                            ),
-                                            Row(
-                                                children: <Widget>[
-                                                  const Padding(
-                                                    padding: EdgeInsets.all(8.0),
-                                                    child: Icon(Icons.person, color: Colors.black),
-                                                  ),
-                                                  Expanded(
-                                                    child: TextField(
-                                                      controller: textController2,
-                                                      obscureText: !senhaVisivel,
-                                                      decoration: InputDecoration(
-                                                        border: InputBorder.none, // Remove the default border
-                                                        hintText: 'Confirmação da nova senha',
-                                                        suffixIcon: IconButton(
-                                                            onPressed: (){
-                                                              setState((){
-                                                                senhaVisivel = !senhaVisivel;
-                                                              });
-                                                            },
-                                                            icon: Icon(
-                                                              senhaVisivel?Icons.visibility:Icons.visibility_off
-                                                            ))
+                                                  ]
+                                              ),
+                                              Row(
+                                                  children: <Widget>[
+                                                    const Padding(
+                                                      padding: EdgeInsets.all(8.0),
+                                                      child: Icon(Icons.person, color: Colors.black),
+                                                    ),
+                                                    Expanded(
+                                                      child: TextField(
+                                                        controller: textController2,
+                                                        obscureText: !senhaVisivel,
+                                                        decoration: InputDecoration(
+                                                            border: InputBorder.none, // Remove the default border
+                                                            hintText: 'Confirmação da nova senha',
+                                                            suffixIcon: IconButton(
+                                                                onPressed: (){
+                                                                  setState((){
+                                                                    senhaVisivel = !senhaVisivel;
+                                                                  });
+                                                                },
+                                                                icon: Icon(
+                                                                    senhaVisivel?Icons.visibility:Icons.visibility_off
+                                                                ))
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                ]
-                                            ),
-                                          ],
-                                        ),
+                                                  ]
+                                              ),
+                                            ],
+                                          ),
                                           actions: [
                                             TextButton(onPressed: ()=> Navigator.pop(context), child: const Text('Cancelar')),
                                             TextButton(onPressed: (){
@@ -174,9 +176,9 @@ class _ConfigScreen extends State<ConfigScreen> {
                                               verificaSenha(text1 == text2);
                                             }, child: const Text('Ok'))
                                           ],
-                                      );
-                                    },
-                                ));
+                                        );
+                                      },
+                                    ));
                           },//LOGOUT
                           child: const Text("Alterar senha", style: TextStyle(fontSize: 20, fontFamily: "Kanit")),
                         )
@@ -241,10 +243,16 @@ class _ConfigScreen extends State<ConfigScreen> {
                           onPressed: (){
                             showDialog(context: context, builder: (context)=> AlertDialog(
                               //title: const Text(""),
-                              content: const Text("Deseja realmente sair do aplicativo?"),
+                              content: const Text("Deseja realmente deslogar do aplicativo?"),
                               actions: [
                                 TextButton(onPressed: ()=> Navigator.pop(context), child: const Text('Cancelar')),
-                                TextButton(onPressed: ()=> Navigator.pushNamed(context, "/cadastro"), child: const Text('Ok'))
+                                TextButton(
+                                  onPressed: () async 
+                                  {
+                                    await DbTableUser.DeleteUsertoTables(await DbTableUser.GetLastUser());
+                                    Navigator.pushNamed(context, "/login");
+                                  }, child: Text('Ok'),
+                                ),
                               ],
                             ));
                           },//LOGOUT

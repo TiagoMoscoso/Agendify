@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:testeflutter/Classes/ClassUser.dart';
+import 'package:testeflutter/DB/DbTableUser.dart';
 import 'package:testeflutter/Firebase/Db/UserTableFB.dart';
 import 'package:testeflutter/login/hyperlink.dart';
+import 'package:testeflutter/navBar.dart';
+import 'package:testeflutter/perfil.dart';
 import 'campo_texto.dart';
 import 'botao.dart';
 import 'imagem.dart';
@@ -42,10 +46,13 @@ class _LoginState extends State<Login> {
       );
       return;
     }   
-    
     if(await UserTableFB.EmailRegistred(email) && await UserTableFB.VerifyPassword(email, senha))
     {
-      //true
+      ClassUser user = await UserTableFB.GetUserFromFbDb(email);
+      DbTableUser.addUsertoTables(user);
+      Navigator.push(context,
+       MaterialPageRoute( builder: (context) => BottomNavigationBarExample(user: user) ), 
+      );
     }
     else
     {
@@ -76,7 +83,6 @@ class _LoginState extends State<Login> {
       return;
     }
 
-    Navigator.popAndPushNamed(context, "/mainscreen");
   }
 
   @override
