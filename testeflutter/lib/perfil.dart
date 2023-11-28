@@ -101,6 +101,7 @@ class _ProfileOriginal extends State<ProfileOriginal> {
                       ),
                     ),
                   ),
+                  const SizedBox(width: 25),
                   Text(
                     user.getName(),
                     style: const TextStyle(
@@ -116,6 +117,12 @@ class _ProfileOriginal extends State<ProfileOriginal> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  const Icon(
+                    Icons.call_rounded,
+                    color: Color(0xFF7E72A6),
+                    size: 24,
+                  ),
+                  const SizedBox(width: 5.0),
                   Expanded(
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 15),
@@ -126,11 +133,6 @@ class _ProfileOriginal extends State<ProfileOriginal> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(
-                            Icons.call_rounded,
-                            color: Color(0xFF7E72A6),
-                            size: 24,
-                          ),
                           Text(
                             user.getTelephone(),
                             style: const TextStyle(
@@ -151,6 +153,12 @@ class _ProfileOriginal extends State<ProfileOriginal> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  const Icon(
+                    Icons.mail_rounded,
+                    color: Color(0xFF7E72A6),
+                    size: 24,
+                  ),
+                  const SizedBox(width: 5.0),
                   Expanded(
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 15),
@@ -161,11 +169,6 @@ class _ProfileOriginal extends State<ProfileOriginal> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(
-                            Icons.mail_rounded,
-                            color: Color(0xFF7E72A6),
-                            size: 24,
-                          ),
                           Text(
                             user.getEmail(),
                             style: const TextStyle(
@@ -180,44 +183,31 @@ class _ProfileOriginal extends State<ProfileOriginal> {
                   ),
                 ],
               ),
+              const SizedBox(height: 30),
 
               //AGENDA
               const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.calendar_month,
-                          color: Color(0xFF7E72A6),
-                          size: 20,
-                        ),
-                        SizedBox(width: 5),
-                        ButtonSchedule(),
-                      ],
-                    ),
-                  )
+                  Icon(
+                    Icons.calendar_month,
+                    color: Color(0xFF7E72A6),
+                    size: 20,
+                  ),
+                  SizedBox(width: 5),
+                  ButtonSchedule()
                 ],
               ),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.mail_rounded,
-                          color: Color(0xFF7E72A6),
-                          size: 20,
-                        ),
-                        SizedBox(width: 5),
-                        ButtonConfig()
-                      ],
-                    ),
-                  )
+                  Icon(
+                    Icons.settings_rounded,
+                    color: Color(0xFF7E72A6),
+                    size: 20,
+                  ),
+                  SizedBox(width: 5),
+                  ButtonConfig()
                 ],
               ),
               const SizedBox(height: 10.0),
