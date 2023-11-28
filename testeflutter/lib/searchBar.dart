@@ -1,6 +1,8 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:testeflutter/firebase_options.dart';
 import 'package:testeflutter/mainscreen.dart';
 
 final List<String> imgList = [
@@ -26,6 +28,13 @@ class SearchPage extends StatefulWidget {
 
   @override
   State<SearchPage> createState() => _SearchPageState();
+}
+
+Future<void> loadFb() async 
+{
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 }
 
 class _SearchPageState extends State<SearchPage> {

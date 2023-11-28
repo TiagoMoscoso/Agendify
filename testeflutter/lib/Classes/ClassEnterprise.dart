@@ -4,41 +4,58 @@ class ClassEnterprise
   var _name;
   var _description;
   var _photo;
+  var _cnpj;
   
-  setNameEnterprise(name)
+  setName(name)
   {
     _name = name;
   }
 
-  setDescriptionEnterprise(description)
+  setDescription(description)
   {
     _description = description;
   }
 
-  setEnterpriseById(idEnterprise)
+  setId(idEnterprise)
   {
    
     _idEnterprise = idEnterprise;
   
   }
 
-  getNameEnterprise()
+  setCNPJ(cnpj)
+  {
+    _cnpj = cnpj;
+  }
+    
+  setPhoto(photo)
+  {
+   
+    _photo = photo;
+  
+  }
+  getName()
   {
     return _name;
   }
 
-  getidEnterprise()
+  getid()
   {
     return _idEnterprise;
   }
 
-  getDescriptionEnterprise()
+  getDescription()
   {
     return _description;
   }
 
-  getPhotoEnterprise()
+  getPhoto()
   {
     return _photo;
+  }
+
+  getCNPJ()
+  {
+    return _cnpj;
   }
 }

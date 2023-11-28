@@ -8,7 +8,6 @@ import 'package:testeflutter/Classes/ClassUser.dart';
 class BottomNavigationBarExample extends StatefulWidget {
   final ClassUser user;
   const BottomNavigationBarExample({super.key, required this.user});
-
   @override
   State<BottomNavigationBarExample> createState() =>
       _BottomNavigationBarExampleState(user: user);

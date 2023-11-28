@@ -15,16 +15,15 @@ import 'agenda.dart' as agenda;
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'navBar.dart';
-
+import 'Firebase/Db/EnterpriseTableFB.dart';
 
 Future<void> main() async {
-  runApp(const MyApp());
-  await DbAllData.createDatabase();
-
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
+  await DbAllData.createDatabase();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
