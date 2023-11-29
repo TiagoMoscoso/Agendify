@@ -1,5 +1,4 @@
 class Evento {
-  final String nome;
-  const Evento ({required this.nome});
-  
+  final String hora;
+  const Evento ({required this.hora});
 }

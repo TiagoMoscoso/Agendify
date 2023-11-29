@@ -43,11 +43,11 @@ class _BottomNavigationBarExampleState
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Color.fromARGB(255, 237, 237, 239),
+        backgroundColor: Colors.white,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
-            label: 'Inicio',
+            label: 'Início',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search_outlined),
@@ -63,7 +63,8 @@ class _BottomNavigationBarExampleState
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Color.fromARGB(255, 100, 123, 255),
+        selectedItemColor: const Color(0xFF7E72A6),
+        selectedFontSize: 15,
         onTap: _onItemTapped,
       ),
     );

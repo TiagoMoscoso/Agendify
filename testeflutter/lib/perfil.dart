@@ -112,7 +112,7 @@ class _ProfileOriginal extends State<ProfileOriginal> {
                   ),
                 ],
               ),
-              const SizedBox(height: 20.0),
+              const SizedBox(height: 30.0),
               //NÚMERO de CELULAR
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -183,21 +183,9 @@ class _ProfileOriginal extends State<ProfileOriginal> {
                   ),
                 ],
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 20.0),
 
-              //AGENDA
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.calendar_month,
-                    color: Color(0xFF7E72A6),
-                    size: 20,
-                  ),
-                  SizedBox(width: 5),
-                  ButtonSchedule()
-                ],
-              ),
+              //CONFIGURAÇÕES
               const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -219,46 +207,15 @@ class _ProfileOriginal extends State<ProfileOriginal> {
   }
 }
 
+Future<String> uploadImage({required int id}) async {
+  final ImagePicker picker = ImagePicker();
+  final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
-  Future<String> uploadImage({required int id}) async 
-  {
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-
-    if (image != null) {
-      return await UserTableFB.uploadImageFB(image,id);
-    }
-    return await UserTableFB.GetUserPhotoFromFbDb(id);
+  if (image != null) {
+    return await UserTableFB.uploadImageFB(image,id);
   }
-
-class ButtonSchedule extends StatefulWidget {
-  const ButtonSchedule({super.key});
-  @override
-  State<ButtonSchedule> createState() => _ButtonScheduleState();
+  return await UserTableFB.GetUserPhotoFromFbDb(id);
 }
-
-class _ButtonScheduleState extends State<ButtonSchedule> {
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-        width: 250,
-        child:TextButton(
-          style: ButtonStyle(
-            foregroundColor: MaterialStateProperty.all<Color>(const Color(0xffFFFFFF)),
-            backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF7E72A6)),
-          ),
-          onPressed: (){
-            Navigator.pushNamed(context, "/agenda");//VAI PARA A TELA DA AGENDA
-          },
-          child: const Text(
-              "Agenda",
-              style: TextStyle(fontSize: 20)
-          ),
-        )
-    );
-  }
-}
-
 
 class ButtonConfig extends StatefulWidget {
   const ButtonConfig({super.key});
