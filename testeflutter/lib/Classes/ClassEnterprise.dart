@@ -1,3 +1,5 @@
+import 'package:testeflutter/Classes/ClassService.dart';
+
 class ClassEnterprise
 {
   var _idEnterprise;
@@ -5,7 +7,8 @@ class ClassEnterprise
   var _description;
   var _photo;
   var _cnpj;
-  
+  List<ClassService> services = [];
+
   setName(name)
   {
     _name = name;

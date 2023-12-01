@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:testeflutter/evento.dart';
+import 'package:testeflutter/Classes/ClassEnterprise.dart';
 import 'calendario.dart';
 
 class PaginaEmpresa extends StatefulWidget {
-  const PaginaEmpresa ({super.key});
+  final ClassEnterprise empresa;
+  const PaginaEmpresa ({super.key, required this.empresa});
 
   @override
-  State<PaginaEmpresa> createState() => _PaginaEmpresa();
+  State<PaginaEmpresa> createState() => _PaginaEmpresa(empresa: empresa);
 }
 
 class _PaginaEmpresa extends State<PaginaEmpresa> {
+  final ClassEnterprise empresa;
   DateTime? _selectedDay;
   DateTime _focusedDay = DateTime.utc(DateTime.now().year, DateTime.now().month, DateTime.now().day);
   final Map<DateTime, List<Evento>> _horarios = {};
   late final ValueNotifier<List<Evento>> _horariosDoDia;
   List<Evento> horas = List.generate(13, (index) => Evento(hora: (index+8).toString() + ':00'));
+
+  _PaginaEmpresa({required this.empresa});
 
   @override
   void initState() {
@@ -52,22 +57,22 @@ class _PaginaEmpresa extends State<PaginaEmpresa> {
                       children: <Widget>[
                         ClipRRect(
                           borderRadius: BorderRadius.circular(22),
-                          child: Image.asset(
-                            "assets/logoApp.png",
+                          child: Image.network(
+                            empresa.getPhoto(),
                             height: 120,
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(width: 15.0,),
-                    const Column(
+                     SizedBox(width: 15.0,),
+                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              "Nome da Empresa",
+                              empresa.getName(),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 28,
@@ -81,7 +86,7 @@ class _PaginaEmpresa extends State<PaginaEmpresa> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              "Tipo de Serviço",
+                              empresa.getDescription(),
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Color(0xFF7E72A6),

@@ -1,27 +1,27 @@
-import 'package:testeflutter/Classes/ClassEnterprise.dart';
+import 'package:testeflutter/Classes/ClassSchedule.dart';
 
-class ClassService extends ClassEnterprise
+class ClassService
 {
   var _idService;
-  var _name;
-  var _photo;
-  setName(name)
-  {
-    _name = name;
-  }
+  Map<DateTime, ClassSchedule> _schedules = {};
 
-  getNameService()
+  setId(idService)
   {
-    return _name;
+    _idService = idService;
   }
-
   getIdservice()
   {
     return _idService;
   }
 
-  getServicePhoto()
+  addSchedule(DateTime dt , ClassSchedule schedule)
   {
-    return _photo;
+    _schedules[dt] = schedule;
   }
+
+  getSchedule(DateTime dt )
+  {
+    return _schedules[dt];
+  }
+
 }

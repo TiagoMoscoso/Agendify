@@ -4,6 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:testeflutter/Classes/ClassEnterprise.dart';
 import 'package:testeflutter/Firebase/Db/EnterpriseTableFB.dart';
 import 'package:testeflutter/Firebase/Db/UserTableFB.dart';
+import 'package:testeflutter/pagEmpresa.dart';
 
 void main() {
   runApp(MyApp());
@@ -89,45 +90,63 @@ class _MainScreenState extends State<MainScreen> {
       'Oficina Mecânica',
     ];
 
-    final List<Widget> top10 = top10ent
-        .map(
-          (item) => Container(
-            margin: const EdgeInsets.symmetric(horizontal: 1.0, vertical: 10),
-            child: Center(
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100.0),
-                      border: Border.all(color: const Color(0xFF7E72A6), width: 1.5),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100.0),
-                      child: Image.network(
-                        item.getPhoto(),
-                        fit: BoxFit.cover,
-                        width: 90.0,
-                        height: 90.0,
-                      ),
+final List<Widget> top10 = List.generate(
+  top10ent.length,
+  (index) {
+    final item = top10ent[index];
+    if (index < top10ent.length && item.getPhoto() != null) {
+      return GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PaginaEmpresa(empresa: nomesEnt[index]),
+            ),
+          );
+        },
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 1.0, vertical: 10),
+          child: Center(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100.0),
+                    border: Border.all(color: const Color(0xFF7E72A6), width: 1.5),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(100.0),
+                    child: Image.network(
+                      item.getPhoto(),
+                      fit: BoxFit.cover,
+                      width: 90.0,
+                      height: 90.0,
                     ),
                   ),
-                  Text(
-                    item.getName(),
-                    style: const TextStyle(
-                      color: Color(0xFF7E72A6),
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  item.getName(),
+                  style: const TextStyle(
+                    color: Color(0xFF7E72A6),
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold,
                   ),
-                ],
-              ),
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
             ),
           ),
-        )
-        .toList();
+        ),
+      );
+    } else {
+      return SizedBox.shrink();
+    }
+  },
+);
+
+
 
     final List<Widget> categorias = imgList
         .map(
@@ -269,8 +288,17 @@ class _MainScreenState extends State<MainScreen> {
                   scrollDirection: Axis.vertical,
                   itemCount: nomesEnt.length,
                   itemBuilder: (context, index) {
-                  if (index < nomesEnt.length) {
-                    return Card(
+                    if (index < nomesEnt.length && nomesEnt[index].getPhoto() != null) {
+                      return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PaginaEmpresa(empresa: nomesEnt[index]),
+                          ),
+                        );
+                      },
+                    child: Card(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                         side: const BorderSide(color: Color(0xFF7E72A6), width: 1),
@@ -294,10 +322,11 @@ class _MainScreenState extends State<MainScreen> {
                           style: const TextStyle(color: Color(0xFF7E72A6)),
                         ),
                       ),
-                    );
-                  } else {
-                    return CircularProgressIndicator();
-                  }
+                    ),
+                  );
+                } else {
+                  return CircularProgressIndicator();
+                }
                 },
                 ),
               ],

@@ -6,7 +6,6 @@ class ClassUser
   var _email;
   var _photo;
   
-  
   setIdUser(idUser) async
   {
     if(idUser.runtimeType == Future<int>) {

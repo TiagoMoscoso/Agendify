@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
                 '/cadastro': (context) => const cadastro.CadastroPage(),
                 '/busca': (context) => const searchBar.SearchPage(),
                 '/agenda': (context) => const agenda.Agenda(),
-                '/pagEmpresa': (context) => const PaginaEmpresa(),
+                //'/pagEmpresa': (context) => const PaginaEmpresa(),
                 '/navBar': (context) => BottomNavigationBarExample(user: user)
               },
               theme: ThemeData(
