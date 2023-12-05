@@ -1,7 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:testeflutter/Classes/ClassUser.dart';
-import 'package:testeflutter/DB/DbTableUser.dart';
 import 'main.dart';
 import 'package:testeflutter/login/login.dart';
 void main() {
@@ -243,16 +241,10 @@ class _ConfigScreen extends State<ConfigScreen> {
                           onPressed: (){
                             showDialog(context: context, builder: (context)=> AlertDialog(
                               //title: const Text(""),
-                              content: const Text("Deseja realmente deslogar do aplicativo?"),
+                              content: const Text("Deseja realmente sair do aplicativo?"),
                               actions: [
                                 TextButton(onPressed: ()=> Navigator.pop(context), child: const Text('Cancelar')),
-                                TextButton(
-                                  onPressed: () async 
-                                  {
-                                    await DbTableUser.DeleteUsertoTables(await DbTableUser.GetLastUser());
-                                    Navigator.pushNamed(context, "/login");
-                                  }, child: Text('Ok'),
-                                ),
+                                TextButton(onPressed: ()=> Navigator.pushNamed(context, "/login"), child: const Text('Ok'))
                               ],
                             ));
                           },//LOGOUT
@@ -270,5 +262,3 @@ class _ConfigScreen extends State<ConfigScreen> {
     );
   }
 }
-
-

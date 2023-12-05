@@ -24,7 +24,7 @@ class Profile extends StatelessWidget {
       title: "Perfil",
       routes:  {
         "/config": (context)=>
-            ConfigButton(),
+            ConfigScreen(),
         "/agenda": (context) =>
         const Agenda(),
       },
