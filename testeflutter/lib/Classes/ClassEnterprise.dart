@@ -7,7 +7,7 @@ class ClassEnterprise
   var _description;
   var _photo;
   var _cnpj;
-  List<ClassService> services = [];
+  ClassService services = new ClassService();
 
   setName(name)
   {
