@@ -7,7 +7,7 @@ class ClassEnterprise
   var _description;
   var _photo;
   var _cnpj;
-  ClassService services = new ClassService();
+  ClassService service = new ClassService();
 
   setName(name)
   {

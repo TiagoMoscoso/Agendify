@@ -2,26 +2,19 @@ import 'package:testeflutter/Classes/ClassSchedule.dart';
 
 class ClassService
 {
-  var _idService;
-  Map<DateTime, ClassSchedule> _schedules = {};
+  Map<DateTime, int> _schedules = {};
 
-  setId(idService)
-  {
-    _idService = idService;
-  }
-  getIdservice()
-  {
-    return _idService;
+  schedule(DateTime dt, int userId) {
+    _schedules[dt] = userId;
   }
 
-  addSchedule(DateTime dt , ClassSchedule schedule)
-  {
-    _schedules[dt] = schedule;
+  void unschedule(DateTime dt) {
+    _schedules[dt] = 0;
   }
 
-  getSchedule(DateTime dt )
+  getSchedules()
   {
-    return _schedules[dt];
+    return _schedules;
   }
 
 }

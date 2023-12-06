@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:testeflutter/evento.dart';
+import 'package:testeflutter/Firebase/Db/ServiceTable.dart';
+import 'package:testeflutter/horario.dart';
 import 'package:testeflutter/Classes/ClassEnterprise.dart';
 import 'calendario.dart';
 
@@ -13,12 +14,74 @@ class PaginaEmpresa extends StatefulWidget {
 }
 
 class _PaginaEmpresa extends State<PaginaEmpresa> {
-  final ClassEnterprise empresa;
+  ClassEnterprise empresa;
   DateTime? _selectedDay;
   DateTime _focusedDay = DateTime.utc(DateTime.now().year, DateTime.now().month, DateTime.now().day);
-  final Map<DateTime, List<Evento>> _horarios = {};
-  late final ValueNotifier<List<Evento>> _horariosDoDia;
-  List<Evento> horas = List.generate(13, (index) => Evento(hora: (index+8).toString() + ':00'));
+  CalendarStyle designCalendario = 
+  const CalendarStyle(
+    markerDecoration: BoxDecoration(color: Colors.transparent),
+    outsideTextStyle: TextStyle(color: Color(0xFFD9D0C7)),
+    defaultTextStyle: TextStyle(color: Colors.white),
+    weekendTextStyle: TextStyle(color: Colors.white),
+    todayDecoration: BoxDecoration(
+      color: Color(0xFFD9D0C7),
+      shape: BoxShape.circle,
+    ),
+    todayTextStyle: TextStyle(color: Color(0xFF7E72A6)),
+    selectedDecoration: BoxDecoration(
+      color: Colors.white,
+      shape: BoxShape.circle,
+    ),
+    selectedTextStyle: TextStyle(color: Color(0xFF7E72A6)),
+  );
+  HeaderStyle designCabecalho = 
+  const HeaderStyle(
+    titleTextStyle: TextStyle(color: Colors.white),
+    formatButtonVisible: false,
+    leftChevronIcon: Icon(Icons.chevron_left_rounded, color: Colors.white),
+    rightChevronIcon: Icon(Icons.chevron_right_rounded, color: Colors.white),
+  );
+  DaysOfWeekStyle designDiasDaSemana =
+  const DaysOfWeekStyle (
+    weekdayStyle: TextStyle(color: Colors.white),
+    weekendStyle: TextStyle(color: Colors.white),
+  );
+  CalendarBuilders construtorCalendario = 
+  CalendarBuilders(
+    dowBuilder: (context, day) {
+      String text;
+      switch (day.weekday) {
+        case DateTime.monday:
+          text = 'Seg';
+          break;
+        case DateTime.tuesday:
+          text = 'Ter';
+          break;
+        case DateTime.wednesday:
+          text = 'Qua';
+          break;
+        case DateTime.thursday:
+          text = 'Qui';
+          break;
+        case DateTime.friday:
+          text = 'Sex';
+          break;
+        case DateTime.saturday:
+          text = 'Sáb';
+          break;
+        case DateTime.sunday:
+          text = 'Dom';
+          break;
+        default:
+          text = 'Err';
+          break;
+      }
+      return Center(child: Text(text,style: const TextStyle(color: Colors.white)));
+    },
+  );
+  Map<DateTime, int> _horarios = {};
+  late ValueNotifier<List<DateTime>> _horariosDoDia;
+  List<Horario> horas = [];
 
   _PaginaEmpresa({required this.empresa});
 
@@ -26,14 +89,28 @@ class _PaginaEmpresa extends State<PaginaEmpresa> {
   void initState() {
     super.initState();
     _selectedDay = _focusedDay;
-    _horarios.addAll({
-      _selectedDay!: horas.toList(),
-    });
+    for(int j = 0; j < 3; j++) {
+      for (int i = 0; i < 24; i++) {
+        DateTime hour = DateTime(_selectedDay!.year, _selectedDay!.month, (_selectedDay!.day) + j, i);
+        _horarios[hour] = 0;  
+      }
+    }
+    // addHorarios();
     _horariosDoDia = ValueNotifier(_getHorariosDoDia(_selectedDay!));
   }
 
-  List<Evento> _getHorariosDoDia(DateTime day) {
-    return _horarios[day] ?? [];
+  Future addHorarios() async {
+    empresa = await ServiceTableFB.GetServiceFromFbDb(empresa);
+    _horarios = empresa.service.getSchedules();
+  }
+
+  List<DateTime> _getHorariosDoDia(DateTime day) {
+    List<DateTime> listaTodos = List.of(_horarios.keys);
+    List<DateTime> horariosDoDia = [];
+    for(DateTime horario in listaTodos) {
+      if(horario.day == day.day) horariosDoDia.add(horario); 
+    }
+    return horariosDoDia;
   }
 
   @override
@@ -52,75 +129,65 @@ class _PaginaEmpresa extends State<PaginaEmpresa> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(22),
-                          child: Image.network(
-                            empresa.getPhoto(),
-                            height: 120,
-                          ),
-                        ),
-                      ],
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(100.0),
+                      child: Image.network(
+                        empresa.getPhoto(),
+                        fit: BoxFit.cover,
+                        width: 100.0,
+                        height: 100.0,
+                      ),
                     ),
-                     SizedBox(width: 15.0,),
-                     Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              empresa.getName(),
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 28,
-                                color: Color(0xFF7E72A6),
+                    const SizedBox(width: 15.0),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            empresa.getName(),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 28,
+                              color: Color(0xFF7E72A6),
+                            ),
+                          ),
+                          const SizedBox(height: 5.0),
+                          SizedBox(
+                            height: 50.0,
+                            child: Scrollbar(
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.vertical,
+                                child: Text(
+                                  empresa.getDescription(),
+                                  textAlign: TextAlign.justify,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Color(0xFF7E72A6),
+                                  ),
+                                ),
                               ),
                             ),
-                          ],
-                        ),
-                        SizedBox(height: 2.0),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              empresa.getDescription(),
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Color(0xFF7E72A6),
+                          ),
+                          const SizedBox(height: 15.0),
+                          const Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                "5",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 15.0),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              "À X Km de você",
-                              style: TextStyle(
-                                fontSize: 17,
-                                color: Color(0xFF7E72A6),
+                              SizedBox(width: 2.0),
+                              Icon(
+                                Icons.star_rounded,
+                                color: Color(0xFFFFAC33),
+                                size: 17.0,
                               ),
-                            ),
-                            SizedBox(width: 65.0),
-                            Text(
-                              "5",
-                              style: TextStyle(
-                                fontSize: 17,
-                              ),
-                            ),
-                            SizedBox(width: 2.0),
-                            Icon(
-                              Icons.star_rounded,
-                              color: Color(0xFFFFAC33),
-                              size: 17.0,
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -133,76 +200,11 @@ class _PaginaEmpresa extends State<PaginaEmpresa> {
                   child: Column(
                     children: <Widget> [
                       TableCalendar(
-                        calendarStyle: const CalendarStyle(
-                          markerDecoration: BoxDecoration(color: Colors.transparent),
-                          outsideTextStyle: TextStyle(color: Color(0xFFD9D0C7)),
-                          defaultTextStyle: TextStyle(color: Colors.white),
-                          weekendTextStyle: TextStyle(color: Colors.white),
-                          todayDecoration: BoxDecoration(
-                            color: Color(0xFFD9D0C7),
-                            shape: BoxShape.circle,
-                          ),
-                          todayTextStyle: TextStyle(color: Color(0xFF7E72A6)),
-                          selectedDecoration: BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.circle,
-                          ),
-                          selectedTextStyle: TextStyle(color: Color(0xFF7E72A6)),
-                        ),
-                        headerStyle: const HeaderStyle(
-                          titleTextStyle: TextStyle(color: Colors.white),
-                          formatButtonVisible: false,
-                          leftChevronIcon: Icon(Icons.chevron_left_rounded, color: Colors.white),
-                          rightChevronIcon: Icon(Icons.chevron_right_rounded, color: Colors.white),
-                        ),
-                        daysOfWeekStyle: const DaysOfWeekStyle(
-                          weekdayStyle: TextStyle(color: Colors.white),
-                          weekendStyle: TextStyle(color: Colors.white),
-                        ),
-                        calendarBuilders: CalendarBuilders(
-                          dowBuilder: (context, day) {
-                            String text;
-                            switch (day.weekday) {
-                              case DateTime.monday:
-                                text = 'Seg';
-                                break;
-                              case DateTime.tuesday:
-                                text = 'Ter';
-                                break;
-                              case DateTime.wednesday:
-                                text = 'Qua';
-                                break;
-                              case DateTime.thursday:
-                                text = 'Qui';
-                                break;
-                              case DateTime.friday:
-                                text = 'Sex';
-                                break;
-                              case DateTime.saturday:
-                                text = 'Sáb';
-                                break;
-                              case DateTime.sunday:
-                                text = 'Dom';
-                                break;
-                              default:
-                                text = 'Err';
-                                break;
-                            }
-                            return Center(child: Text(text,style: const TextStyle(color: Colors.white)));
-                          },
-                          // headerTitleBuilder: (context, day) {
-                          //   String text;
-                          //   switch(day.month) {
-                          //     case DateTime.october:
-                          //       text = 'Outubro ';
-                          //       break;
-                          //     default:
-                          //       text = 'Erro';
-                          //       break;
-                          //   }
-                          //   return Text(text, style: const TextStyle(color: Colors.white));
-                          // },
-                        ),
+                        locale: 'pt_BR',
+                        calendarStyle: designCalendario,
+                        headerStyle: designCabecalho,
+                        daysOfWeekStyle: designDiasDaSemana,
+                        calendarBuilders: construtorCalendario,
                         focusedDay: _focusedDay,
                         firstDay: DateTime.utc(_focusedDay.year, _focusedDay.month - 3, _focusedDay.day),
                         lastDay: DateTime.utc(_focusedDay.year, _focusedDay.month + 3, _focusedDay.day), 
@@ -214,12 +216,7 @@ class _PaginaEmpresa extends State<PaginaEmpresa> {
                           setState(() {
                             _selectedDay = selectedDay;
                             _focusedDay = focusedDay;
-                            if(_horarios.containsKey(_selectedDay) == false) {
-                              _horarios.addAll({
-                              _selectedDay!: horas.toList(),
-                              });
-                              _horariosDoDia.value = _getHorariosDoDia(_selectedDay!);
-                            }
+                            _horariosDoDia = ValueNotifier(_getHorariosDoDia(_selectedDay!));
                           });
                         },
                         onPageChanged: (focusedDay) {
@@ -243,7 +240,7 @@ class _PaginaEmpresa extends State<PaginaEmpresa> {
                           color: Color(0xFF7E72A6),
                         ),
                         height: 250,
-                        child: ValueListenableBuilder <List<Evento>>(
+                        child: ValueListenableBuilder <List<DateTime>>(
                           valueListenable: _horariosDoDia, 
                           builder: (context, value, _) {
                             return ListView.builder(
@@ -259,11 +256,11 @@ class _PaginaEmpresa extends State<PaginaEmpresa> {
                                     borderRadius: BorderRadius.circular(14),
                                   ),
                                   child: ListTile(
-                                    onTap: () { 
+                                    onTap: _horarios[value[index]] != 0 ? () {} : () { 
                                       AlertDialog confirmar = AlertDialog(
                                         backgroundColor: Colors.white,
                                         title: Text(
-                                          '${value[index].hora} - Marcar Horário?', 
+                                          '${value[index].hour} - Marcar Horário?', 
                                           textAlign: TextAlign.center,
                                           style: const TextStyle(color: Color(0xFF7E72A6)),
                                         ),
@@ -273,8 +270,7 @@ class _PaginaEmpresa extends State<PaginaEmpresa> {
                                             children: <Widget> [
                                               ElevatedButton(
                                                 onPressed: () {
-                                                  _horarios[_selectedDay]!.removeAt(index);
-                                                  _horariosDoDia.value = _getHorariosDoDia(_selectedDay!);
+                                                  _horarios[value[index]] = 1;
                                                   Navigator.of(context).pop();
                                                 },
                                                 style: ButtonStyle(backgroundColor: MaterialStateProperty.all(const Color(0xFF7E72A6)),),
@@ -283,7 +279,6 @@ class _PaginaEmpresa extends State<PaginaEmpresa> {
                                               const SizedBox(width: 5.0,),
                                               ElevatedButton(
                                                 onPressed: () {
-                                                  _horariosDoDia.value = _getHorariosDoDia(_selectedDay!);
                                                   Navigator.of(context).pop();
                                                 },
                                                 style: ButtonStyle(backgroundColor: MaterialStateProperty.all(const Color(0xFF7E72A6)),),
@@ -300,7 +295,7 @@ class _PaginaEmpresa extends State<PaginaEmpresa> {
                                         }
                                       );
                                     },
-                                    title: Text(value[index].hora),
+                                    title: _horarios[value[index]] != 0 ? Text('${value[index].hour} - Ocupado') : Text('${value[index].hour} - Disponível'),
                                     textColor: Colors.white,
                                     trailing: const Icon(
                                       Icons.chevron_right_rounded,

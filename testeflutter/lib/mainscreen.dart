@@ -95,18 +95,6 @@ Future<void> loadMoreData() async {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 20),
-                const Center(
-                  child: Text(
-                    "Bem vindo de volta!",
-                    style: TextStyle(
-                      color: Color(0xFF7E72A6),
-                      fontSize: 35.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20.0),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Row(
