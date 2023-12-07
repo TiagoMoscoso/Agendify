@@ -81,7 +81,6 @@ class _PaginaEmpresa extends State<PaginaEmpresa> {
   );
   Map<DateTime, int> _horarios = {};
   late ValueNotifier<List<DateTime>> _horariosDoDia;
-  List<Horario> horas = [];
 
   _PaginaEmpresa({required this.empresa});
 
@@ -271,6 +270,7 @@ class _PaginaEmpresa extends State<PaginaEmpresa> {
                                               ElevatedButton(
                                                 onPressed: () {
                                                   _horarios[value[index]] = 1;
+                                                  setState(() => _horariosDoDia = ValueNotifier(_getHorariosDoDia(_selectedDay!)));
                                                   Navigator.of(context).pop();
                                                 },
                                                 style: ButtonStyle(backgroundColor: MaterialStateProperty.all(const Color(0xFF7E72A6)),),
