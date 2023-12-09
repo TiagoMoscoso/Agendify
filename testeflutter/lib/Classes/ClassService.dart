@@ -1,4 +1,3 @@
-import 'package:testeflutter/Classes/ClassSchedule.dart';
 
 class ClassService
 {
@@ -17,4 +16,13 @@ class ClassService
     return _schedules;
   }
 
+  addSchedule(DateTime dt , int schedule)
+  {
+    _schedules[dt] = schedule;
+  }
+
+  getSchedule(DateTime dt )
+  {
+    return _schedules[dt];
+  }
 }
