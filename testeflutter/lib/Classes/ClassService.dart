@@ -1,11 +1,6 @@
-
 class ClassService
 {
   Map<DateTime, int> _schedules = {};
-
-  schedule(DateTime dt, int userId) {
-    _schedules[dt] = userId;
-  }
 
   void unschedule(DateTime dt) {
     _schedules[dt] = 0;
@@ -23,6 +18,6 @@ class ClassService
 
   getSchedule(DateTime dt )
   {
-    return _schedules[dt];
+    return _schedules[dt]!;
   }
 }

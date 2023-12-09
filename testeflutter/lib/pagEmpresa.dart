@@ -269,8 +269,10 @@ class _PaginaEmpresa extends State<PaginaEmpresa> {
                                             children: <Widget> [
                                               ElevatedButton(
                                                 onPressed: () {
-                                                  _horarios[value[index]] = 1;
+                                                  _horarios[value[index]] = 1;//tem q colocar aqui o userID
                                                   setState(() => _horariosDoDia = ValueNotifier(_getHorariosDoDia(_selectedDay!)));
+                                                  empresa.service.addSchedule(value[index], _horarios[value[index]]!);
+                                                  ServiceTableFB.addSchedule(empresa.getid(), value[index], empresa.service.getSchedule(value[index]));
                                                   Navigator.of(context).pop();
                                                 },
                                                 style: ButtonStyle(backgroundColor: MaterialStateProperty.all(const Color(0xFF7E72A6)),),

@@ -8,7 +8,7 @@
             "name": "appemulator",
             "request": "launch",
             "type": "dart",
-            "deviceId": "RQ8NA04VYVK"
+            "deviceId": "192.168.0.226:36797"
         },
         {
             "name": "testeflutter (profile mode)",

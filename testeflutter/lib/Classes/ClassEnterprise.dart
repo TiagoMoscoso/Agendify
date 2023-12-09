@@ -1,6 +1,6 @@
 import 'package:testeflutter/Classes/ClassService.dart';
 
-class ClassEnterprise
+class ClassEnterprise extends ClassService
 {
   var _idEnterprise;
   var _name;
