@@ -86,15 +86,8 @@ class _AgendaState extends State<Agenda> {
   @override
   void initState() {
     super.initState();
-    _selectedDay = _focusedDay;
     // addHorarios();
-    for(int j = 0; j < 3; j++) {
-      for (int i = 0; i < 24; i++) {
-        DateTime hour = DateTime.utc(_selectedDay!.year, _selectedDay!.month, (_selectedDay!.day) + j, i);
-        _horariosUsuario[hour] = 1;  
-      }
-    }
-    _horariosDoDia = ValueNotifier(_getHorariosDoDia(_selectedDay!));
+    
   }
 
   Future addHorarios() async {
@@ -147,6 +140,10 @@ class _AgendaState extends State<Agenda> {
                       _hoje = DateTime.utc(DateTime.now().year, DateTime.now().month, DateTime.now().day, DateTime.now().hour);
                       _selectedDay = selectedDay;
                       _focusedDay = focusedDay;
+                      for (int i = 8; i <= 20; i++) {
+                        DateTime hour = DateTime.utc(_selectedDay!.year, _selectedDay!.month, _selectedDay!.day, i);
+                        _horariosUsuario[hour] = 1;  
+                      }
                       _horariosDoDia = ValueNotifier(_getHorariosDoDia(_selectedDay!));
                     });
                   },

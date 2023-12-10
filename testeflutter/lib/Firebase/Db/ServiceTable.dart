@@ -15,7 +15,7 @@ class ServiceTableFB
     DatabaseEvent dataSnapshot = (await databaseReference.once());
     if (dataSnapshot.snapshot.value != null) 
     {
-      //enterprise.service.schedule(dataSnapshot.snapshot.child("dt").value as DateTime, dataSnapshot.snapshot.child("userId").value as int);
+      //enterprise.service.addSchedule(dataSnapshot.snapshot.child("dt").value as DateTime, dataSnapshot.snapshot.child("userId").value as int);
     }
     return enterprise;
   }
