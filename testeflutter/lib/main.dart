@@ -54,13 +54,13 @@ class MyApp extends StatelessWidget {
               title: 'Agendify',
               routes: {
                 '/second': (context) => const SecondScreen(),
-                '/mainscreen': (context) => const MainScreen(),
+                '/mainscreen': (context) => MainScreen(user: user),
                 '/login': (context) => const login.Login(),
                 '/config': (context) =>  config.ConfigScreen(),
                 '/profile': (context) => Profile(user: user),
                 '/cadastro': (context) => const cadastro.CadastroPage(),
                 '/busca': (context) => const searchBar.SearchPage(),
-                '/agenda': (context) => const agenda.Agenda(),
+                '/agenda': (context) => agenda.Agenda(user: user),
                 //'/pagEmpresa': (context) => const PaginaEmpresa(),
                 '/navBar': (context) => BottomNavigationBarExample(user: user)
               },

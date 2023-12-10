@@ -3,20 +3,23 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:testeflutter/Firebase/Db/ServiceTable.dart';
 import 'package:testeflutter/horario.dart';
 import 'package:testeflutter/Classes/ClassEnterprise.dart';
-import 'calendario.dart';
+import 'Classes/ClassUser.dart';
 
 class PaginaEmpresa extends StatefulWidget {
   final ClassEnterprise empresa;
-  const PaginaEmpresa ({super.key, required this.empresa});
+  final ClassUser user;
+  const PaginaEmpresa ({super.key, required this.empresa, required this.user});
 
   @override
-  State<PaginaEmpresa> createState() => _PaginaEmpresa(empresa: empresa);
+  State<PaginaEmpresa> createState() => _PaginaEmpresa(empresa: empresa, user: user);
 }
 
 class _PaginaEmpresa extends State<PaginaEmpresa> {
   ClassEnterprise empresa;
+  ClassUser user;
   DateTime? _selectedDay;
-  DateTime _focusedDay = DateTime.utc(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+  static DateTime _hoje = DateTime.utc(DateTime.now().year, DateTime.now().month, DateTime.now().day, DateTime.now().hour);
+  DateTime _focusedDay = DateTime.utc(_hoje.year, _hoje.month, _hoje.day);
   CalendarStyle designCalendario = 
   const CalendarStyle(
     markerDecoration: BoxDecoration(color: Colors.transparent),
@@ -82,19 +85,17 @@ class _PaginaEmpresa extends State<PaginaEmpresa> {
   Map<DateTime, int> _horarios = {};
   late ValueNotifier<List<DateTime>> _horariosDoDia;
 
-  _PaginaEmpresa({required this.empresa});
+  _PaginaEmpresa({required this.empresa, required this.user});
 
   @override
   void initState() {
     super.initState();
     _selectedDay = _focusedDay;
-    for(int j = 0; j < 3; j++) {
-      for (int i = 0; i < 24; i++) {
-        DateTime hour = DateTime(_selectedDay!.year, _selectedDay!.month, (_selectedDay!.day) + j, i);
-        _horarios[hour] = 0;  
-      }
+    //addHorarios();
+    for (int i = 8; i <= 20; i++) {
+      DateTime hour = DateTime.utc(_selectedDay!.year, _selectedDay!.month, _selectedDay!.day, i);
+      _horarios.putIfAbsent(hour, () => 0);  
     }
-    // addHorarios();
     _horariosDoDia = ValueNotifier(_getHorariosDoDia(_selectedDay!));
   }
 
@@ -107,7 +108,7 @@ class _PaginaEmpresa extends State<PaginaEmpresa> {
     List<DateTime> listaTodos = List.of(_horarios.keys);
     List<DateTime> horariosDoDia = [];
     for(DateTime horario in listaTodos) {
-      if(horario.day == day.day) horariosDoDia.add(horario); 
+      if(horario.day == day.day && horario.month == day.month && horario.year == day.year) horariosDoDia.add(horario);
     }
     return horariosDoDia;
   }
@@ -205,21 +206,27 @@ class _PaginaEmpresa extends State<PaginaEmpresa> {
                         daysOfWeekStyle: designDiasDaSemana,
                         calendarBuilders: construtorCalendario,
                         focusedDay: _focusedDay,
-                        firstDay: DateTime.utc(_focusedDay.year, _focusedDay.month - 3, _focusedDay.day),
-                        lastDay: DateTime.utc(_focusedDay.year, _focusedDay.month + 3, _focusedDay.day), 
+                        firstDay: DateTime.utc(_hoje.year, _hoje.month - 3, _hoje.day),
+                        lastDay: DateTime.utc(_hoje.year, _hoje.month + 3, _hoje.day), 
                         startingDayOfWeek: StartingDayOfWeek.monday,
                         selectedDayPredicate: (day) {
                           return isSameDay(_selectedDay, day);
+                        },
+                        onPageChanged: (focusedDay) {
+                          _hoje = DateTime.utc(DateTime.now().year, DateTime.now().month, DateTime.now().day, DateTime.now().hour);
+                          _focusedDay = focusedDay;
                         },
                         onDaySelected: (selectedDay, focusedDay) {
                           setState(() {
                             _selectedDay = selectedDay;
                             _focusedDay = focusedDay;
+                            _hoje = DateTime.utc(DateTime.now().year, DateTime.now().month, DateTime.now().day, DateTime.now().hour);
+                            for (int i = 8; i <= 20; i++) {
+                              DateTime hour = DateTime.utc(_selectedDay!.year, _selectedDay!.month, _selectedDay!.day, i);
+                              _horarios.putIfAbsent(hour, () => 0);  
+                            }
                             _horariosDoDia = ValueNotifier(_getHorariosDoDia(_selectedDay!));
                           });
-                        },
-                        onPageChanged: (focusedDay) {
-                          _focusedDay = focusedDay;
                         },
                         eventLoader: (day) {
                           return _getHorariosDoDia(day);
@@ -255,11 +262,11 @@ class _PaginaEmpresa extends State<PaginaEmpresa> {
                                     borderRadius: BorderRadius.circular(14),
                                   ),
                                   child: ListTile(
-                                    onTap: _horarios[value[index]] != 0 ? () {} : () { 
+                                    onTap: _horarios[value[index]] != 0 || value[index].isBefore(_hoje) || value[index].isAtSameMomentAs(_hoje) ? () {} : () { 
                                       AlertDialog confirmar = AlertDialog(
                                         backgroundColor: Colors.white,
                                         title: Text(
-                                          '${value[index].hour} - Marcar Horário?', 
+                                          '${value[index].hour}:00 - Marcar Horário?', 
                                           textAlign: TextAlign.center,
                                           style: const TextStyle(color: Color(0xFF7E72A6)),
                                         ),
@@ -269,7 +276,7 @@ class _PaginaEmpresa extends State<PaginaEmpresa> {
                                             children: <Widget> [
                                               ElevatedButton(
                                                 onPressed: () {
-                                                  _horarios[value[index]] = 1;//tem q colocar aqui o userID
+                                                  _horarios[value[index]] = user.getIdUser();
                                                   setState(() => _horariosDoDia = ValueNotifier(_getHorariosDoDia(_selectedDay!)));
                                                   empresa.service.addSchedule(value[index], _horarios[value[index]]!);
                                                   ServiceTableFB.addSchedule(empresa.getid(), value[index], empresa.service.getSchedule(value[index]));
@@ -297,7 +304,7 @@ class _PaginaEmpresa extends State<PaginaEmpresa> {
                                         }
                                       );
                                     },
-                                    title: _horarios[value[index]] != 0 ? Text('${value[index].hour} - Ocupado') : Text('${value[index].hour} - Disponível'),
+                                    title: _horarios[value[index]] != 0 || value[index].isBefore(_hoje) || value[index].isAtSameMomentAs(_hoje) ? Text('${value[index].hour}:00 - Indisponível') : Text('${value[index].hour}:00 - Disponível'),
                                     textColor: Colors.white,
                                     trailing: const Icon(
                                       Icons.chevron_right_rounded,

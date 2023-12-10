@@ -25,8 +25,6 @@ class Profile extends StatelessWidget {
       routes:  {
         "/config": (context)=>
             ConfigScreen(),
-        "/agenda": (context) =>
-        const Agenda(),
       },
       debugShowCheckedModeBanner: false,
       home: ProfileOriginal(user: user),

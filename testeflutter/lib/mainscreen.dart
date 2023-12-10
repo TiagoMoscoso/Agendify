@@ -2,31 +2,21 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:testeflutter/Classes/ClassEnterprise.dart';
+import 'package:testeflutter/Classes/ClassUser.dart';
 import 'package:testeflutter/Firebase/Db/EnterpriseTableFB.dart';
 import 'package:testeflutter/pagEmpresa.dart';
 import 'package:testeflutter/searchBar.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: MainScreen(),
-    );
-  }
-}
-
 class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key});
+  final ClassUser user;
+  const MainScreen({Key? key, required this.user});
 
   @override
-  _MainScreenState createState() => _MainScreenState();
+  _MainScreenState createState() => _MainScreenState(user: user);
 }
 
 class _MainScreenState extends State<MainScreen> {
+  final ClassUser user;
   final ScrollController _scrollController = ScrollController();
   List<ClassEnterprise> top10ent = [];
   List<ClassEnterprise> nomesEnt = [];
@@ -80,7 +70,7 @@ Future<void> loadMoreData() async {
   }
 }
 
-
+_MainScreenState({required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +138,7 @@ Future<void> loadMoreData() async {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => PaginaEmpresa(empresa: item),
+                                builder: (context) => PaginaEmpresa(empresa: item, user: user),
                               ),
                             );
                           },
@@ -300,7 +290,7 @@ Future<void> loadMoreData() async {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => PaginaEmpresa(empresa: item),
+                                builder: (context) => PaginaEmpresa(empresa: item, user: user),
                               ),
                             );
                           },

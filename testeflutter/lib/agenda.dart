@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'horario.dart';
+import 'package:testeflutter/Classes/ClassEnterprise.dart';
+import 'package:testeflutter/Classes/ClassUser.dart';
 
 class Agenda extends StatefulWidget {
-  const Agenda ({super.key});
+  final ClassUser user;
+  const Agenda ({super.key, required this.user});
 
   @override
-  State<Agenda> createState() => _AgendaState();
+  State<Agenda> createState() => _AgendaState(user: user);
 }
 
 class _AgendaState extends State<Agenda> {
+  ClassUser user;
   DateTime? _selectedDay;
-  DateTime _focusedDay = DateTime.utc(DateTime.now().year, DateTime.now().month, DateTime.now().day);
-  // final Map<DateTime, List<Evento>> _eventos = {};
-  // late final ValueNotifier<List<Evento>> _eventosSelecionados;
+  static DateTime _hoje = DateTime.utc(DateTime.now().year, DateTime.now().month, DateTime.now().day, DateTime.now().hour);
+  DateTime _focusedDay = DateTime.utc(_hoje.year, _hoje.month, _hoje.day);
   CalendarStyle designCalendario = 
   const CalendarStyle(
     markerDecoration: BoxDecoration(color: Colors.transparent),
@@ -76,56 +78,43 @@ class _AgendaState extends State<Agenda> {
       return Center(child: Text(text,style: const TextStyle(color: Colors.white)));
     },
   );
+  Map<DateTime, int> _horariosUsuario = {};
+  late ValueNotifier<List<DateTime>> _horariosDoDia;
   
+  _AgendaState({required this.user});
 
   @override
   void initState() {
     super.initState();
     _selectedDay = _focusedDay;
-    // _eventosSelecionados = ValueNotifier(_getEventosDoDia(_selectedDay!));
+    // addHorarios();
+    for(int j = 0; j < 3; j++) {
+      for (int i = 0; i < 24; i++) {
+        DateTime hour = DateTime.utc(_selectedDay!.year, _selectedDay!.month, (_selectedDay!.day) + j, i);
+        _horariosUsuario[hour] = 1;  
+      }
+    }
+    _horariosDoDia = ValueNotifier(_getHorariosDoDia(_selectedDay!));
   }
 
-  // List<Evento> _getEventosDoDia(DateTime day) {
-  //   return _eventos[day] ?? [];
-  // }
+  Future addHorarios() async {
+    //Preencher com histórico local
+  }
+
+  List<DateTime> _getHorariosDoDia(DateTime day) {
+    List<DateTime> listaTodos = List.of(_horariosUsuario.keys);
+    List<DateTime> horariosDoDia = [];
+    for(DateTime horario in listaTodos) {
+      if(horario.day == day.day && horario.month == day.month && horario.year == day.year) horariosDoDia.add(horario);
+    }
+    return horariosDoDia;
+  }
+
   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFD9D0C7),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     showDialog(
-      //       context: context,
-      //       builder: (context) {
-      //         return AlertDialog(
-      //           scrollable: true,
-      //           title: const Text("Nome do Evento"),
-      //           content: Padding(
-      //             padding: const EdgeInsets.all(8),
-      //             child: TextField(
-      //               controller: _controladorEvento,
-      //             )
-      //           ),
-      //           actions: [
-      //             ElevatedButton(
-      //               onPressed: () {
-      //                 _eventos.addAll({
-      //                   _selectedDay!: [Evento(hora: _controladorEvento.text)],
-      //                 });
-      //                 Navigator.of(context).pop();
-      //                 _eventosSelecionados.value = _getEventosDoDia(_selectedDay!);
-      //               },
-      //               child: const Text("Confirmar"),
-      //             ),
-      //           ],
-      //         );
-      //       }
-      //     );
-      //   },
-      //   backgroundColor: const Color.fromARGB(255, 199, 192, 227), 
-      //   child: const Icon(Icons.add), 
-      // ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(15.0),
@@ -137,35 +126,33 @@ class _AgendaState extends State<Agenda> {
             child: Column(
               children: [
                 TableCalendar(
+                  locale: 'pt_BR',
                   calendarStyle: designCalendario,
                   headerStyle: designCabecalho,
                   daysOfWeekStyle: designDiasDaSemana,
                   calendarBuilders: construtorCalendario,
                   focusedDay: _focusedDay,
-                  firstDay: DateTime.utc(_focusedDay.year, _focusedDay.month - 3, _focusedDay.day),
-                  lastDay: DateTime.utc(_focusedDay.year, _focusedDay.month + 3, _focusedDay.day), 
+                  firstDay: DateTime.utc(_hoje.year, _hoje.month, _hoje.day),
+                  lastDay: DateTime.utc(_hoje.year, _hoje.month + 3, _hoje.day), 
                   startingDayOfWeek: StartingDayOfWeek.monday,
                   selectedDayPredicate: (day) {
                     return isSameDay(_selectedDay, day);
                   },
-                  onDaySelected: (selectedDay, focusedDay) {
-                    setState(() {
-                      _selectedDay = selectedDay;
-                      _focusedDay = focusedDay;
-                      // if(_horarios.containsKey(_selectedDay) == false) {
-                      //   _horarios.addAll({
-                      //   _selectedDay!: horas.toList(),
-                      //   });
-                      //   _horariosDoDia.value = _getHorariosDoDia(_selectedDay!);
-                      // }
-                    });
-                  },
                   onPageChanged: (focusedDay) {
+                    _hoje = DateTime.utc(DateTime.now().year, DateTime.now().month, DateTime.now().day, DateTime.now().hour);
                     _focusedDay = focusedDay;
                   },
-                  // eventLoader: (day) {
-                  //   return _getHorariosDoDia(day);
-                  // },
+                  onDaySelected: (selectedDay, focusedDay) {
+                    setState(() {
+                      _hoje = DateTime.utc(DateTime.now().year, DateTime.now().month, DateTime.now().day, DateTime.now().hour);
+                      _selectedDay = selectedDay;
+                      _focusedDay = focusedDay;
+                      _horariosDoDia = ValueNotifier(_getHorariosDoDia(_selectedDay!));
+                    });
+                  },
+                  eventLoader: (day) {
+                    return _getHorariosDoDia(day);
+                  },
                 ),
                 const SizedBox(height: 8.0,),
                 const Divider(
@@ -174,33 +161,83 @@ class _AgendaState extends State<Agenda> {
                   indent: 15.0,
                   thickness: 2.0,
                 ), 
-                const SizedBox(height: 8.0,),
-                // Expanded(
-                //   child: ValueListenableBuilder <List<Evento>>(
-                //     valueListenable: _eventosSelecionados, 
-                //     builder: (context, value, _) {
-                //       return ListView.builder(
-                //         itemCount: value.length,
-                //         itemBuilder: (context, index) {
-                //           return Container(
-                //             margin: const EdgeInsets.symmetric(
-                //               horizontal: 12.0,
-                //               vertical: 4.0,
-                //             ),
-                //             decoration: BoxDecoration(
-                //               border: Border.all(),
-                //               borderRadius: BorderRadius.circular(14),
-                //             ),
-                //             child: ListTile(
-                //               onTap: () => print(""),
-                //               title: Text('${value[index]}')
-                //             ),
-                //           );
-                //         }
-                //       );
-                //     }
-                //   ),
-                // ),
+                const SizedBox(height: 8.0),
+                Container(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    color: Color(0xFF7E72A6),
+                  ),
+                  height: 250,
+                  child: ValueListenableBuilder <List<DateTime>>(
+                    valueListenable: _horariosDoDia, 
+                    builder: (context, value, _) {
+                      return ListView.builder(
+                        itemCount: value.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            margin: const EdgeInsets.symmetric(
+                              horizontal: 12.0,
+                              vertical: 4.0,
+                            ),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white),
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                            child: ListTile(
+                              onTap: _horariosUsuario[value[index]] == 0 || value[index].isBefore(_hoje) || value[index].isAtSameMomentAs(_hoje) ? () {} : () { 
+                                AlertDialog confirmar = AlertDialog(
+                                  backgroundColor: Colors.white,
+                                  title: Text(
+                                    '${value[index].hour} - Desmarcar Horário?', 
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(color: Color(0xFF7E72A6)),
+                                  ),
+                                  actions: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: <Widget> [
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            _horariosUsuario[value[index]] = 0;
+                                            setState(() => _horariosDoDia = ValueNotifier(_getHorariosDoDia(_selectedDay!)));
+                                            Navigator.of(context).pop();
+                                          },
+                                          style: ButtonStyle(backgroundColor: MaterialStateProperty.all(const Color(0xFF7E72A6)),),
+                                          child: const Icon(Icons.done_rounded, color: Colors.white,),
+                                        ),
+                                        const SizedBox(width: 5.0,),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          style: ButtonStyle(backgroundColor: MaterialStateProperty.all(const Color(0xFF7E72A6)),),
+                                          child: const Icon(Icons.close_rounded, color: Colors.white,),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                );
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return confirmar;
+                                  }
+                                );
+                              },
+                              title: _horariosUsuario[value[index]] == 0 || value[index].isBefore(_hoje) || value[index].isAtSameMomentAs(_hoje) ? Text('${value[index].hour}:00 - Evento Expirado') : Text('${value[index].hour}:00 - Evento Marcado'),
+                              textColor: Colors.white,
+                              trailing: const Icon(
+                                Icons.chevron_right_rounded,
+                                color: Colors.white, 
+                                size: 30.0
+                              ),
+                            ),
+                          );
+                        }
+                      );
+                    }
+                  ),
+                ),
               ],
             ),
           ),
