@@ -79,7 +79,7 @@ class _AgendaState extends State<Agenda> {
     },
   );
   Map<DateTime, int> _horariosUsuario = {};
-  late ValueNotifier<List<DateTime>> _horariosDoDia;
+  ValueNotifier<List<DateTime>> _horariosDoDia = ValueNotifier([]);
   
   _AgendaState({required this.user});
 

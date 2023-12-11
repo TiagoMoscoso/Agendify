@@ -1,9 +1,6 @@
-
-Map<String, dynamic> scheduleToJson(DateTime value, int idUser) {
+Map<String, dynamic> scheduleToJson(String value, int idUser) {
   return 
   {
-    value.toUtc().hour.toString() : idUser.toString(),
+    value : idUser.toString(),
   };
 }
-
-

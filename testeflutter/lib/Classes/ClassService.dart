@@ -15,6 +15,10 @@ class ClassService
   {
     _schedules[dt] = schedule;
   }
+  
+  setSchedules(Map<DateTime, int> schedules) {
+    _schedules = schedules;
+  }
 
   getSchedule(DateTime dt )
   {

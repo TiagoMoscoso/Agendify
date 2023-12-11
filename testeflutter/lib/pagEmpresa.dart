@@ -94,7 +94,7 @@ class _PaginaEmpresa extends State<PaginaEmpresa> {
   }
 
   Future addHorarios() async {
-    empresa = await ServiceTableFB.GetServiceFromFbDb(empresa);
+    empresa.service.setSchedules(await ServiceTableFB.GetServiceFromFbDb(empresa)); 
     _horarios = empresa.service.getSchedules();
   }
 
@@ -273,8 +273,8 @@ class _PaginaEmpresa extends State<PaginaEmpresa> {
                                                   _horarios[value[index]] = user.getIdUser();
                                                   setState(() => _horariosDoDia = ValueNotifier(_getHorariosDoDia(_selectedDay!)));
                                                   // Deixei comentado pq a parte de puxar do banco de dados ainda não tá rolando, e isso é com o Titi
-                                                  // empresa.service.addSchedule(value[index], _horarios[value[index]]!);
-                                                  // ServiceTableFB.addSchedule(empresa.getid(), value[index], empresa.service.getSchedule(value[index]));
+                                                  empresa.service.addSchedule(value[index], _horarios[value[index]]!);
+                                                  ServiceTableFB.addSchedule(empresa.getid(), value[index], user.getIdUser());
                                                   Navigator.of(context).pop();
                                                 },
                                                 style: ButtonStyle(backgroundColor: MaterialStateProperty.all(const Color(0xFF7E72A6)),),
