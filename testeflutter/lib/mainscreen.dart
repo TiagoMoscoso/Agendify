@@ -39,11 +39,11 @@ void _onScroll() {
 Future<void> loadData() async {
   top10ent = await EnterpriseTableFB.GetEnterprisesList(10);
   nomesEnt = List.from(top10ent);
-  setState(() {
-  });
+  try{
   setState(() {
     isLoading = false;
   });
+  }catch(e){}
 }
 
 Future<void> loadMoreData() async {
@@ -85,18 +85,7 @@ _MainScreenState({required this.user});
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 20),
-                const Center(
-                  child: Text(
-                    "Bem vindo de volta!",
-                    style: TextStyle(
-                      color: Color(0xFF7E72A6),
-                      fontSize: 35.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20.0),
+                const SizedBox(height: 10.0),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Row(

@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
                 '/config': (context) =>  config.ConfigScreen(),
                 '/profile': (context) => Profile(user: user),
                 '/cadastro': (context) => const cadastro.CadastroPage(),
-                '/busca': (context) => const searchBar.SearchPage(),
+                '/busca': (context) => searchBar.SearchPage(user: user),
                 '/agenda': (context) => agenda.Agenda(user: user),
                 //'/pagEmpresa': (context) => const PaginaEmpresa(),
                 '/navBar': (context) => BottomNavigationBarExample(user: user)

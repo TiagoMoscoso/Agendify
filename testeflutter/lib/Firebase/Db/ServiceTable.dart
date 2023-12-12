@@ -36,7 +36,7 @@ class ServiceTableFB
     try 
     {
       String aux = value.toString().split(".")[0];
-      await newSchedule.set(scheduleToJson(aux, idUser));
+      await newSchedule.update(scheduleToJson(aux, idUser));
     } catch (error) {
       print("Erro ao definir dados no Firebase: $error");
     }

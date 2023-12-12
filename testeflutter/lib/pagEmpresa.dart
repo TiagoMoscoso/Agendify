@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:testeflutter/Firebase/Db/ServiceTable.dart';
@@ -163,17 +165,17 @@ class _PaginaEmpresa extends State<PaginaEmpresa> {
                             ),
                           ),
                           const SizedBox(height: 15.0),
-                          const Row(
+                          Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                "5",
-                                style: TextStyle(
+                                '${Random().nextInt(6)}',
+                                style: const TextStyle(
                                   fontSize: 17,
                                 ),
                               ),
-                              SizedBox(width: 2.0),
-                              Icon(
+                              const SizedBox(width: 2.0),
+                              const Icon(
                                 Icons.star_rounded,
                                 color: Color(0xFFFFAC33),
                                 size: 17.0,

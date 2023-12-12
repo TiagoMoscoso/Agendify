@@ -2,8 +2,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:testeflutter/Classes/ClassEnterprise.dart';
+import 'package:testeflutter/Classes/ClassUser.dart';
+import 'package:testeflutter/Firebase/Db/EnterpriseTableFB.dart';
 import 'package:testeflutter/firebase_options.dart';
 import 'package:testeflutter/mainscreen.dart';
+import 'package:testeflutter/pagEmpresa.dart';
+import 'package:testeflutter/querySearchBar.dart';
 
 final List<String> imgList = [
   'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
@@ -24,10 +29,11 @@ final List<String> nomesCategorias = [
 ];
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({super.key});
+  final ClassUser user;
+  const SearchPage({super.key, required this.user});
 
   @override
-  State<SearchPage> createState() => _SearchPageState();
+  State<SearchPage> createState() => _SearchPageState(user: user);
 }
 
 Future<void> loadFb() async 
@@ -38,11 +44,14 @@ Future<void> loadFb() async
 }
 
 class _SearchPageState extends State<SearchPage> {
+  final ClassUser user;
   var allItems = List.generate(15, (index) => 'item $index');
-  var items = [];
+  List<ClassEnterprise> items = [];
   var searchHistory = [];
   final TextEditingController searchController = TextEditingController();
   final SearchController controller = SearchController();
+
+  _SearchPageState({required this.user});
 
   @override
   void initState() {
@@ -68,17 +77,21 @@ class _SearchPageState extends State<SearchPage> {
     search(controller.text);
   }
 
-  void search(String query) {
+  void search(String query) async{
+    print(query);
+    var empresas = await EnterpriseQuery.getEnterprise(query);
+    print(empresas);
     if(query.isEmpty) {
       setState(() {
-        items = allItems;
+        items = [];
       });
     }
     else {
       setState(() {
-        items = allItems.where((e) => e.toLowerCase().contains(query.toLowerCase())).toList();
+        items = empresas;
       });
     }
+    print(items);
   }
 
   @override
@@ -130,7 +143,11 @@ class _SearchPageState extends State<SearchPage> {
                       children: List.generate(items.length, (index) {
                         final item = items[index];
                         return ListTile(
-                          title: Text(item),
+                          title: Text(item.getName()),
+                          onTap: () async => {
+                            item.setPhoto(await EnterpriseTableFB.GetEnterprisePhotoFromFbDb(item.getid())),
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => PaginaEmpresa(empresa: item, user: user))),
+                          }
                         );
                       }),
                     )

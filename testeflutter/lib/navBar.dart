@@ -24,7 +24,7 @@ class _BottomNavigationBarExampleState
   TextStyle(fontSize: 12, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions(ClassUser user) => <Widget>[
     MainScreen(user: user),
-    const SearchPage(),
+    SearchPage(user: user),
     Agenda(user: user),
     Profile(user: user),
   ];
