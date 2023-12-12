@@ -1,9 +1,7 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:testeflutter/Firebase/Db/ServiceTable.dart';
-import 'package:testeflutter/horario.dart';
 import 'package:testeflutter/Classes/ClassEnterprise.dart';
 import 'Classes/ClassUser.dart';
 
@@ -274,7 +272,6 @@ class _PaginaEmpresa extends State<PaginaEmpresa> {
                                                 onPressed: () {
                                                   _horarios[value[index]] = user.getIdUser();
                                                   setState(() => _horariosDoDia = ValueNotifier(_getHorariosDoDia(_selectedDay!)));
-                                                  // Deixei comentado pq a parte de puxar do banco de dados ainda não tá rolando, e isso é com o Titi
                                                   empresa.service.addSchedule(value[index], _horarios[value[index]]!);
                                                   ServiceTableFB.addSchedule(empresa.getid(), value[index], user.getIdUser());
                                                   Navigator.of(context).pop();

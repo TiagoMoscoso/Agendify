@@ -30,7 +30,7 @@ class CampoTexto extends StatelessWidget {
         cursorColor: const Color(0xFF7E72A6),
         keyboardType: keyboardType,
         inputFormatters: inputFormatters,
-        style: const TextStyle(color: Color(0xFF7E72A6) ),
+        style: const TextStyle(color: Color(0xFF7E72A6)),
         decoration: InputDecoration(
           suffixIcon: suffixIcon,
           suffixIconColor: const Color(0xFF7E72A6),

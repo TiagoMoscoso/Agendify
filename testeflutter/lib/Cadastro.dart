@@ -156,10 +156,7 @@ class _CadastroPageState extends State<CadastroPage> {
     user.setPhoto(await UserTableFB.GetUserPhotoFromFbDb(user.getIdUser()));
     await DbTableUser.addUsertoTables(user);
     
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => BottomNavigationBarExample(user: user)),
-    );
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => BottomNavigationBarExample(user: user)), (Route<dynamic> route) => false);
   }
 
   @override
@@ -229,7 +226,7 @@ class _CadastroPageState extends State<CadastroPage> {
                   obscureText: true, 
                   controller: _confirmarSenhaController, 
                   hintText: 'Confirmação de Senha', 
-                  prefixIcon: const Icon(Icons.lock),
+                  prefixIcon: const Icon(Icons.lock_rounded),
                 ),
                 const SizedBox(height: 20.0),
                 Botao(

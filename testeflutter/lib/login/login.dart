@@ -50,9 +50,7 @@ class _LoginState extends State<Login> {
     {
       ClassUser user = await UserTableFB.GetUserFromFbDb(email);
       DbTableUser.addUsertoTables(user);
-      Navigator.push(context,
-       MaterialPageRoute( builder: (context) => BottomNavigationBarExample(user: user) ), 
-      );
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => BottomNavigationBarExample(user: user)), (Route<dynamic> route) => false);
     }
     else
     {

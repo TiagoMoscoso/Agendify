@@ -47,11 +47,11 @@ class _ConfigScreen extends State<ConfigScreen> {
         context: context,
         builder: (context){
           return AlertDialog(
-            content: valor? const Text("Senha alterada com sucesso!"): const Text("As senhas não se coincidem"),
+            content: valor? const Text("Senha alterada com sucesso!", style: TextStyle(color: Color(0xFF7E72A6))) : const Text("As senhas não se coincidem", style: TextStyle(color: Color(0xFF7E72A6))),
             actions: [
               TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text("Ok"))
+                  child: const Text("Ok", style: TextStyle(color: Color(0xFF7E72A6))))
             ],
           );
         }
@@ -64,22 +64,34 @@ class _ConfigScreen extends State<ConfigScreen> {
         title: const Text("Configurações",
           style: TextStyle(
             fontSize: 20.0,
-            color: Color(0xff252B48),
+            color: Colors.white,
           ),
         ),
         centerTitle: true,
-        backgroundColor:const Color(0xffc1c0c0),
+        backgroundColor:const Color(0xFF7E72A6),
       ),
       body: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.notification_add),
-              const Text("Deseja receber notificações?", style: TextStyle(fontSize: 20, fontFamily: "Kanit")),
-              const SizedBox(height: 20),
+              const Icon(
+                Icons.notification_add,
+                color: Color(0xFF7E72A6)
+              ),
+              const SizedBox(width: 15),
+              const Text(
+                "Deseja receber notificações?",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Color(0xFF7E72A6),
+                )
+              ),
+              const SizedBox(width: 10),
               Switch(
                 value: isOn,
+                activeColor: const Color(0xFF7E72A6),
                 onChanged: (bool newValue) {
                   setState(() {
                     isOn = newValue;
@@ -92,19 +104,21 @@ class _ConfigScreen extends State<ConfigScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 45, horizontal: 0),
+                padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 0),
                 child: Row(
                   /*Botão para alterar a senha*/
                   children: [
                     const Icon(
-                        Icons.person_2_rounded
+                        Icons.person_2_rounded,
+                        color: Color(0xFF7E72A6)
                     ),
+                    const SizedBox(width: 7.5),
                     SizedBox(
-                        width: 275,
+                        width: 315,
                         child:TextButton(
                           style: ButtonStyle(
-                            foregroundColor: MaterialStateProperty.all<Color>(const Color(0xff000000)),
-                            backgroundColor: MaterialStateProperty.all<Color>(const Color(0xffAEC3AE)),
+                            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                            backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF7E72A6)),
                           ),
                           onPressed: (){
                             showDialog(context: context,
@@ -112,7 +126,7 @@ class _ConfigScreen extends State<ConfigScreen> {
                                     StatefulBuilder(
                                       builder: (context, setState){
                                         return AlertDialog(
-                                          title: const Text("Troca de senha"),
+                                          title: const Text("Troca de senha", style: TextStyle(color: Color(0xFF7E72A6))),
                                           scrollable: true,
                                           content: Column(
                                             children: [
@@ -120,15 +134,18 @@ class _ConfigScreen extends State<ConfigScreen> {
                                                   children: <Widget>[
                                                     const Padding(
                                                       padding: EdgeInsets.all(8.0),
-                                                      child: Icon(Icons.person, color: Colors.black),
+                                                      child: Icon(Icons.person, color: Color(0xFF7E72A6)),
                                                     ),
                                                     Expanded(
                                                       child: TextField(
                                                         controller: textController1,
+                                                        cursorColor: const Color(0xFF7E72A6),
+                                                        style: const TextStyle(color: Color(0xFF7E72A6)),
                                                         obscureText: !senhaVisivel,
                                                         decoration: const InputDecoration(
-                                                          border: InputBorder.none, // Remove the default border
+                                                          border: InputBorder.none,
                                                           hintText: 'Nova senha',
+                                                          hintStyle: TextStyle(color: Color(0xFFD9D0C7)),
                                                         ),
                                                       ),
                                                     ),
@@ -138,15 +155,19 @@ class _ConfigScreen extends State<ConfigScreen> {
                                                   children: <Widget>[
                                                     const Padding(
                                                       padding: EdgeInsets.all(8.0),
-                                                      child: Icon(Icons.person, color: Colors.black),
+                                                      child: Icon(Icons.person, color: Color(0xFF7E72A6)),
                                                     ),
                                                     Expanded(
                                                       child: TextField(
                                                         controller: textController2,
+                                                        cursorColor: const Color(0xFF7E72A6),
+                                                        style: const TextStyle(color: Color(0xFF7E72A6)),
                                                         obscureText: !senhaVisivel,
                                                         decoration: InputDecoration(
                                                             border: InputBorder.none, // Remove the default border
                                                             hintText: 'Confirmação da nova senha',
+                                                            hintStyle: const TextStyle(color: Color(0xFFD9D0C7)),
+                                                            suffixIconColor: const Color(0xFF7E72A6),
                                                             suffixIcon: IconButton(
                                                                 onPressed: (){
                                                                   setState((){
@@ -164,7 +185,7 @@ class _ConfigScreen extends State<ConfigScreen> {
                                             ],
                                           ),
                                           actions: [
-                                            TextButton(onPressed: ()=> Navigator.pop(context), child: const Text('Cancelar')),
+                                            TextButton(onPressed: ()=> Navigator.pop(context), child: const Text('Cancelar', style: TextStyle(color: Color(0xFF7E72A6)))),
                                             TextButton(onPressed: (){
                                               String text1 = textController1.text;
                                               String text2 = textController2.text;
@@ -172,13 +193,13 @@ class _ConfigScreen extends State<ConfigScreen> {
                                                 Navigator.pop(context);
                                               }
                                               verificaSenha(text1 == text2);
-                                            }, child: const Text('Ok'))
+                                            }, child: const Text('Ok', style: TextStyle(color: Color(0xFF7E72A6))))
                                           ],
                                         );
                                       },
                                     ));
                           },//LOGOUT
-                          child: const Text("Alterar senha", style: TextStyle(fontSize: 20, fontFamily: "Kanit")),
+                          child: const Text("Alterar senha", style: TextStyle(fontSize: 20)),
                         )
                     )
                   ],
@@ -191,29 +212,31 @@ class _ConfigScreen extends State<ConfigScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 45, horizontal: 0),
+                padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 0),
                 child: Row(
                   children: [
                     const Icon(
-                        Icons.info_rounded
+                        Icons.info_rounded,
+                        color: Color(0xFF7E72A6),
                     ),
+                    const SizedBox(width: 7.5),
                     SizedBox(
-                        width: 275,
+                        width: 315,
                         child:TextButton(
                           style: ButtonStyle(
-                            foregroundColor: MaterialStateProperty.all<Color>(const Color(0xff000000)),
-                            backgroundColor: MaterialStateProperty.all<Color>(const Color(0xffAEC3AE)),
+                            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                            backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF7E72A6)),
                           ),
                           onPressed: (){
                             showDialog(context: context, builder: (context)=> AlertDialog(
-                              title: const Text("Agendify"),
-                              content: const Text("Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock"),
+                              title: const Text("Agendify", style: TextStyle(color: Color(0xFF7E72A6), fontWeight: FontWeight.bold)),
+                              content: const Text("Desenvolvido durante a matéria de Laboratório de Desenvolvimento para Dispositivos Móveis, este aplicativo possui o objetivo de simplificar o processo de agendamento de compromissos e de gerenciamento de horários ocupados dos mais diversos serviços.\n\nAutores: Gabriel Luís, Leonardo Pizani, Pedro Caillaux, Rafael Vicente, Tiago Moscoso", style: TextStyle(color: Color(0xFF7E72A6))),
                               actions: [
-                                TextButton(onPressed: ()=> Navigator.pop(context), child: const Text('Top!'))
+                                TextButton(onPressed: ()=> Navigator.pop(context), child: const Text('Top!', style: TextStyle(color: Color(0xFF7E72A6))))
                               ],
                             ));
                           },//LOGOUT
-                          child: const Text("Sobre o App", style: TextStyle(fontSize: 20, fontFamily: "Kanit")),
+                          child: const Text("Sobre o App", style: TextStyle(fontSize: 20)),
                         )
                     )
                   ],
@@ -229,26 +252,27 @@ class _ConfigScreen extends State<ConfigScreen> {
                 child: Row(
                   children: [
                     const Icon(
-                        Icons.logout
+                        Icons.logout,
+                        color: Color(0xFF7E72A6),
                     ),
+                    const SizedBox(width: 7.5),
                     SizedBox(
-                        width: 275,
+                        width: 315,
                         child:TextButton(
                           style: ButtonStyle(
-                            foregroundColor: MaterialStateProperty.all<Color>(const Color(0xff000000)),
-                            backgroundColor: MaterialStateProperty.all<Color>(const Color(0xffAEC3AE)),
+                            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                            backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF7E72A6)),
                           ),
                           onPressed: (){
                             showDialog(context: context, builder: (context)=> AlertDialog(
-                              //title: const Text(""),
-                              content: const Text("Deseja realmente sair do aplicativo?"),
+                              content: const Text("Deseja realmente sair do aplicativo?", style: TextStyle(color: Color(0xFF7E72A6))),
                               actions: [
-                                TextButton(onPressed: ()=> Navigator.pop(context), child: const Text('Cancelar')),
-                                TextButton(onPressed: ()=> Navigator.pushNamed(context, "/login"), child: const Text('Ok'))
+                                TextButton(onPressed: ()=> Navigator.pop(context), child: const Text('Cancelar', style: TextStyle(color: Color(0xFF7E72A6)))),
+                                TextButton(onPressed: ()=> Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const Login()), (Route<dynamic> route) => false), child: const Text('Ok', style: TextStyle(color: Color(0xFF7E72A6))))
                               ],
                             ));
                           },//LOGOUT
-                          child: const Text("Sair", style: TextStyle(fontSize: 20, fontFamily: "Kanit")),
+                          child: const Text("Sair", style: TextStyle(fontSize: 20)),
                         )
                     )
                   ],
@@ -258,7 +282,7 @@ class _ConfigScreen extends State<ConfigScreen> {
           ),
         ],
       ),
-      backgroundColor: const Color(0xffFAF1E4),
+      backgroundColor: const Color(0xFFD9D0C7),
     );
   }
 }

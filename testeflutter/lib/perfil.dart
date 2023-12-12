@@ -84,7 +84,6 @@ class _ProfileOriginal extends State<ProfileOriginal> {
                     onTap: () async {
                       user.setPhoto(await uploadImage(id: user.getIdUser()));
                       DbTableUser.UpdateUsertoTables(user);
-                      setState(() {});
                     },
                     child: Container(
                       width: 150, 

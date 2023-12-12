@@ -6,7 +6,6 @@ import 'package:testeflutter/DB/DbTableUser.dart';
 import 'package:testeflutter/pagEmpresa.dart';
 import 'package:testeflutter/perfil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'second.dart';
 import 'mainscreen.dart';
 import 'login/login.dart' as login;
 import 'config.dart' as config;
@@ -48,12 +47,11 @@ class MyApp extends StatelessWidget {
             }
             else
             {
-              home = login.Login();
+              home = const login.Login();
             }
             return MaterialApp(
               title: 'Agendify',
               routes: {
-                '/second': (context) => const SecondScreen(),
                 '/mainscreen': (context) => MainScreen(user: user),
                 '/login': (context) => const login.Login(),
                 '/config': (context) =>  config.ConfigScreen(),
