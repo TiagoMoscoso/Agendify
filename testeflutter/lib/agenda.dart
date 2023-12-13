@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:testeflutter/Classes/ClassEnterprise.dart';
 import 'package:testeflutter/Classes/ClassUser.dart';
+import 'package:testeflutter/DB/DbTableService.dart';
+import 'package:testeflutter/Firebase/Db/ServiceTableFB.dart';
 
 class Agenda extends StatefulWidget {
   final ClassUser user;
@@ -86,12 +88,13 @@ class _AgendaState extends State<Agenda> {
   @override
   void initState() {
     super.initState();
-    // addHorarios();
+    addHorarios();
     
   }
 
   Future addHorarios() async {
     //Preencher com histórico local
+    _horariosUsuario = await DbTableService.GetHistoric(user.getIdUser());
   }
 
   List<DateTime> _getHorariosDoDia(DateTime day) {
@@ -140,10 +143,6 @@ class _AgendaState extends State<Agenda> {
                       _hoje = DateTime.utc(DateTime.now().year, DateTime.now().month, DateTime.now().day, DateTime.now().hour);
                       _selectedDay = selectedDay;
                       _focusedDay = focusedDay;
-                      for (int i = 8; i <= 20; i++) {
-                        DateTime hour = DateTime.utc(_selectedDay!.year, _selectedDay!.month, _selectedDay!.day, i);
-                        _horariosUsuario[hour] = 1;  
-                      }
                       _horariosDoDia = ValueNotifier(_getHorariosDoDia(_selectedDay!));
                     });
                   },
@@ -195,9 +194,13 @@ class _AgendaState extends State<Agenda> {
                                       children: <Widget> [
                                         ElevatedButton(
                                           onPressed: () {
+                                            
+                                            DbTableService.DeleteUsertoTables(value[index]);
+                                            ServiceTableFB.removeSchedule(_horariosUsuario[value[index]]!,value[index]);
                                             _horariosUsuario[value[index]] = 0;
                                             setState(() => _horariosDoDia = ValueNotifier(_getHorariosDoDia(_selectedDay!)));
                                             Navigator.of(context).pop();
+                                          
                                           },
                                           style: ButtonStyle(backgroundColor: MaterialStateProperty.all(const Color(0xFF7E72A6)),),
                                           child: const Icon(Icons.done_rounded, color: Colors.white,),

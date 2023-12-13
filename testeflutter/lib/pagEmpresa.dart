@@ -1,7 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:testeflutter/Firebase/Db/ServiceTable.dart';
+import 'package:testeflutter/DB/DbTableService.dart';
+import 'package:testeflutter/Firebase/Db/ServiceTableFB.dart';
 import 'package:testeflutter/Classes/ClassEnterprise.dart';
 import 'Classes/ClassUser.dart';
 
@@ -274,6 +275,7 @@ class _PaginaEmpresa extends State<PaginaEmpresa> {
                                                   setState(() => _horariosDoDia = ValueNotifier(_getHorariosDoDia(_selectedDay!)));
                                                   empresa.service.addSchedule(value[index], _horarios[value[index]]!);
                                                   ServiceTableFB.addSchedule(empresa.getid(), value[index], user.getIdUser());
+                                                  DbTableService.addHistoric(empresa.getid(),user.getIdUser(),value[index]);
                                                   Navigator.of(context).pop();
                                                 },
                                                 style: ButtonStyle(backgroundColor: MaterialStateProperty.all(const Color(0xFF7E72A6)),),

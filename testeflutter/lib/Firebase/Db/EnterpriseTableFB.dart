@@ -98,7 +98,12 @@ class EnterpriseTableFB
       Set<int> indicesUsados = Set<int>();
       for (ClassEnterprise item in nomesEnt) 
       {
-        indicesUsados.add(item.getid() as int);
+        try 
+        {
+          indicesUsados.add(item.getid() as int);
+        } on Exception catch (e) {
+          indicesUsados.add(await item.getid());
+        }
       }
 
       for(int x = 0; x < numero; x++)

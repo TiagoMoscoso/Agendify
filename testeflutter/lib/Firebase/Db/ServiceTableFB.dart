@@ -42,5 +42,18 @@ class ServiceTableFB
     }
 
   }
+  
+  static removeSchedule(int id, DateTime value) async 
+  {
+    final DatabaseReference serviceRef = database.ref('/Services/$id');
 
+    try 
+    {
+      String aux = value.toString().split(".")[0];
+      await serviceRef.child(aux).remove();
+    } catch (error) {
+      print("Erro ao definir dados no Firebase: $error");
+    }
+
+  }
 }

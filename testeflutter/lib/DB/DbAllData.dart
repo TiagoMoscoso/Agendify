@@ -28,7 +28,7 @@ class DbAllData {
           DbTableUser.createUserTable(db);
         }
       },
-      version: 17,
+      version: 27,
     );
 
     return database;

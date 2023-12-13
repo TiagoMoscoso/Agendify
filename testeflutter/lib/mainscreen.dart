@@ -37,7 +37,7 @@ void _onScroll() {
 }
 
 Future<void> loadData() async {
-  top10ent = await EnterpriseTableFB.GetEnterprisesList(10);
+  top10ent = await EnterpriseTableFB.GetEnterprisesList(12);
   nomesEnt = List.from(top10ent);
   try{
   setState(() {
@@ -55,7 +55,7 @@ Future<void> loadMoreData() async {
       isLoading = true;
     });
 
-    List<ClassEnterprise> novosItens = await EnterpriseTableFB.GetMoreEnterprisesList(10, nomesEnt);
+    List<ClassEnterprise> novosItens = await EnterpriseTableFB.GetMoreEnterprisesList(8, nomesEnt);
 
     setState(() {
       nomesEnt.addAll(novosItens);
